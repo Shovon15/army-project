@@ -61,7 +61,7 @@ const AboutMuseum = ({
   images = { main: mainImage, arch: archImage },
 }: AboutMuseumProps) => {
   return (
-    <section className="relative overflow-hidden bg-[#f4f4f4] py-10 text-[#0b0b0b] min-[1025px]:py-[90px]">
+    <section className="relative overflow-hidden bg-surface-light py-10 text-ink min-[1025px]:py-[90px]">
       {/* Decorative sculpted hands, bottom-right. The file is a transparent
           284×313 PNG: it is never drawn wider than 284px (larger = blurry),
           h-auto keeps the ratio, and unoptimized serves the original PNG
@@ -126,7 +126,7 @@ const AboutMuseum = ({
           />
 
           <p
-            className="mt-6 font-dmSans text-[clamp(15px,1vw,17px)] leading-text text-[#5b5b5b]"
+            className="mt-6 font-dmSans text-[clamp(15px,1vw,17px)] leading-text text-ink-muted"
             {...revealItem("down", 30, 0.35, 1)}
           >
             {description}
@@ -139,12 +139,12 @@ const AboutMuseum = ({
                 className="group flex gap-4"
                 {...revealItem("down", 30, 0.45 + i * 0.12, 1)}
               >
-                <Icon className="h-12 w-12 shrink-0 text-[#0b0b0b] transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-[-6deg]" />
+                <Icon className="h-12 w-12 shrink-0 text-ink transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-[-6deg]" />
                 <div>
                   <h3 className="font-boldCond text-[clamp(0.95rem,1vw,1.15rem)] leading-title uppercase">
                     {title}
                   </h3>
-                  <p className="mt-2 font-dmSans text-[15px] leading-text text-[#5b5b5b]">
+                  <p className="mt-2 font-dmSans text-[15px] leading-text text-ink-muted">
                     {text}
                   </p>
                 </div>
@@ -177,7 +177,7 @@ const AboutMuseum = ({
                 <p className="font-boldCond text-[clamp(0.95rem,1vw,1.15rem)] leading-title uppercase">
                   {person.name}
                 </p>
-                <p className="mt-1.5 font-dmSans text-[15px] text-[#5b5b5b]">
+                <p className="mt-1.5 font-dmSans text-[15px] text-ink-muted">
                   {person.role}
                 </p>
               </div>

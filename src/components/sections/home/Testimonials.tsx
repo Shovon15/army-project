@@ -36,7 +36,7 @@ const Testimonials = ({
   },
   summary = { rating: 4.9, label: "Over 25,000 Happy Visitors" },
 }: TestimonialsProps) => (
-  <section className="relative isolate overflow-hidden bg-[#050505] py-20 text-white md:py-28">
+  <section className="relative isolate overflow-hidden bg-surface-dark py-20 text-white md:py-28">
     <GlowBackground />
 
     <ContentContainer size="narrow" className="h-auto">
@@ -52,7 +52,7 @@ const Testimonials = ({
           <NavLink
             href={cta.href}
             hover={false}
-            className="font-semibold text-[var(--primary)] underline decoration-1 underline-offset-4 transition-colors duration-300 hover:text-white"
+            className="font-semibold text-accent underline decoration-1 underline-offset-4 transition-colors duration-300 hover:text-white"
           >
             {cta.linkLabel}
           </NavLink>

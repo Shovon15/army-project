@@ -91,7 +91,7 @@ const CollectionCard = ({
 
       {/* Readability gradient, deepens on hover */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 from-10% via-black/65 via-45% to-transparent to-80% opacity-95 transition-opacity duration-700 group-hover:opacity-100" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_70%_at_50%_110%,rgba(230,31,37,0.45),transparent_60%)] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_70%_at_50%_110%,rgb(var(--primary-rgb)/0.45),transparent_60%)] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
 
       {/* Corner arrow pops in on hover */}
       <span className="pointer-events-none absolute top-5 right-5 z-[3] flex h-12 w-12 scale-0 -rotate-45 items-center justify-center rounded-full bg-primary text-white transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-100 group-hover:rotate-0">
@@ -105,7 +105,7 @@ const CollectionCard = ({
         </h3>
         <span
           aria-hidden
-          className="mx-auto mt-3 block h-px w-0 bg-[var(--primary)] transition-[width] duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:w-16"
+          className="mx-auto mt-3 block h-px w-0 bg-accent transition-[width] duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:w-16"
         />
         <p className="mx-auto mt-3 max-w-[300px] font-dmSans text-[15px] leading-text text-white/85">
           {item.description}
@@ -125,7 +125,7 @@ const FeaturedCollections = ({
     href: "/collection",
   },
 }: FeaturedCollectionsProps) => (
-  <section className="relative isolate overflow-hidden bg-[#050505] py-20 text-white md:py-28">
+  <section className="relative isolate overflow-hidden bg-surface-dark py-20 text-white md:py-28">
     <GlowBackground />
 
     <ContentContainer size="narrow" className="h-auto">

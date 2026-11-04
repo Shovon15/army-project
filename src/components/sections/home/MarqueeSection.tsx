@@ -24,13 +24,13 @@ const MarqueeSection = ({
 }: MarqueeSectionProps) => (
   <section
     aria-label="Highlights"
-    className={cn("relative z-10 bg-primary py-5 text-white md:py-6", className)}
+    className={cn("relative z-10 border-y border-accent/50 bg-primary py-5 text-white md:py-6", className)}
   >
     <Marquee
       items={items}
       duration={duration}
       itemClassName="font-boldCond text-[clamp(1.05rem,1.5vw,1.75rem)] leading-title uppercase"
-      separator={<SparkIcon className="h-6 w-6 md:h-7 md:w-7" strokeWidth={2.6} />}
+      separator={<SparkIcon className="h-6 w-6 text-accent md:h-7 md:w-7" strokeWidth={2.6} />}
     />
   </section>
 );

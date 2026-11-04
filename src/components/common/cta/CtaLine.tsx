@@ -28,13 +28,13 @@ const CtaLine = ({
   avatar = defaultAvatar,
   className,
 }: CtaLineProps) => {
-  const ring = tone === "dark" ? "border-[#050505]" : "border-[#f4f4f4]";
+  const ring = tone === "dark" ? "border-surface-dark" : "border-surface-light";
   return (
     <Reveal once className={cn("flex justify-center", className)}>
       <p
         className={cn(
           "flex flex-wrap items-center justify-center gap-3 text-center font-dmSans text-[16px]",
-          tone === "dark" ? "text-white/90" : "text-[#3a3a3a]",
+          tone === "dark" ? "text-white/90" : "text-ink-soft",
         )}
         {...revealItem("down", 24, 0.4, 1)}
       >
@@ -60,8 +60,8 @@ const CtaLine = ({
           href={href}
           hover={false}
           className={cn(
-            "font-semibold text-[var(--primary)] underline decoration-1 underline-offset-4 transition-colors duration-300",
-            tone === "dark" ? "hover:text-white" : "hover:text-[#0b0b0b]",
+            "font-semibold underline decoration-1 underline-offset-4 transition-colors duration-300",
+            tone === "dark" ? "text-accent hover:text-white" : "text-primary hover:text-ink",
           )}
         >
           {linkLabel}

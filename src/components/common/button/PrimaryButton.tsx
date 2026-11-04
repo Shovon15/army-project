@@ -33,27 +33,27 @@ const VARIANTS: Record<
   primary: {
     base: "bg-primary text-white",
     fill: "bg-white",
-    hoverText: "group-hover:text-[#0b0b0b]",
-    chip: "bg-white text-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-white",
+    hoverText: "group-hover:text-ink",
+    chip: "bg-white text-primary group-hover:bg-primary group-hover:text-white",
   },
   /* Red at rest, black on hover (ring keeps the shape visible on dark bgs). */
   dark: {
     base: "bg-primary text-white ring-1 ring-transparent transition-shadow hover:ring-white/15",
-    fill: "bg-[#050505]",
+    fill: "bg-surface-dark",
     hoverText: "group-hover:text-white",
-    chip: "bg-white text-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-white",
+    chip: "bg-white text-primary group-hover:bg-primary group-hover:text-white",
   },
   light: {
-    base: "bg-white text-[#0b0b0b]",
+    base: "bg-white text-ink",
     fill: "bg-primary",
     hoverText: "group-hover:text-white",
-    chip: "bg-[var(--primary)] text-white group-hover:bg-white group-hover:text-[var(--primary)]",
+    chip: "bg-primary text-white group-hover:bg-white group-hover:text-primary",
   },
   outline: {
     base: "bg-transparent text-white border border-white/25",
     fill: "bg-white",
-    hoverText: "group-hover:text-[#0b0b0b]",
-    chip: "bg-white/10 text-white group-hover:bg-[var(--primary)]",
+    hoverText: "group-hover:text-ink",
+    chip: "bg-white/10 text-white group-hover:bg-primary",
   },
 };
 
@@ -124,7 +124,7 @@ const PrimaryButton = ({
         className={cn(
           "group relative isolate w-full overflow-hidden rounded-full font-dmSans font-semibold capitalize",
           "transition-[transform,box-shadow] duration-300",
-          "hover:shadow-[0_14px_40px_-12px_rgba(230,31,37,0.65)]",
+          "hover:shadow-[0_14px_40px_-12px_rgb(var(--primary-rgb)/0.65)]",
           v.base,
           arrowMode === "circle" ? s.circle : s.inline,
           "gap-3",

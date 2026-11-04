@@ -75,7 +75,7 @@ const NewsCard = ({
             {post.title}
           </h3>
           <span aria-hidden className="relative mt-5 block h-px w-full overflow-hidden bg-white/20">
-            <span className="absolute inset-0 origin-left scale-x-0 bg-[var(--primary)] transition-transform duration-700 ease-[cubic-bezier(.77,0,.175,1)] group-hover:scale-x-100" />
+            <span className="absolute inset-0 origin-left scale-x-0 bg-accent transition-transform duration-700 ease-[cubic-bezier(.77,0,.175,1)] group-hover:scale-x-100" />
           </span>
           <span className="mt-5 flex items-center gap-3 font-dmSans text-[15px] font-semibold text-white">
             {linkLabel}
@@ -95,7 +95,7 @@ const LatestNews = ({
   posts = DEFAULT_POSTS,
   linkLabel = "Explore More",
 }: LatestNewsProps) => (
-  <section className="relative overflow-hidden bg-[#f4f4f4] py-20 text-[#0b0b0b] md:py-28">
+  <section className="relative overflow-hidden bg-surface-light py-20 text-ink md:py-28">
     <ContentContainer size="narrow" className="h-auto">
       <SectionHeading badge={badge} lines={titleLines} tone="light" />
 

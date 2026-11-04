@@ -75,8 +75,8 @@ const NavItems = ({ navItems }: Props) => {
               className={cn(
                 "group relative flex items-center gap-1.5 py-2 font-dmSans text-[16px] font-medium whitespace-nowrap transition-colors duration-300",
                 isActive
-                  ? "text-[var(--primary)]"
-                  : "text-white hover:text-[var(--primary)]",
+                  ? "text-accent"
+                  : "text-white hover:text-accent",
               )}
             >
               {item.title}
@@ -86,7 +86,7 @@ const NavItems = ({ navItems }: Props) => {
               <span
                 aria-hidden
                 className={cn(
-                  "absolute bottom-0 left-0 h-px w-full origin-left bg-[var(--primary)] transition-transform duration-500",
+                  "absolute bottom-0 left-0 h-px w-full origin-left bg-accent transition-transform duration-500",
                   EASE,
                   isActive ? "scale-x-0" : "scale-x-0 group-hover:scale-x-100",
                 )}
@@ -102,7 +102,7 @@ const NavItems = ({ navItems }: Props) => {
                     : "invisible -translate-y-2 opacity-0",
                 )}
               >
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0b0b0b]/95 p-2 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl">
+                <div className="overflow-hidden rounded-2xl border border-white/10 bg-ink/95 p-2 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl">
                   {item.children.map((child: any) => {
                     const childPath = getChildPath(linkPath, child);
                     const childActive = pathname === childPath;
@@ -115,14 +115,14 @@ const NavItems = ({ navItems }: Props) => {
                         className={cn(
                           "group/item flex items-center gap-2 rounded-xl px-4 py-2.5 font-dmSans text-sm transition-colors duration-200 hover:bg-white/5",
                           childActive
-                            ? "text-[var(--primary)]"
+                            ? "text-accent"
                             : "text-white/75 hover:text-white",
                         )}
                       >
                         <span
                           aria-hidden
                           className={cn(
-                            "h-1.5 w-0 rounded-full bg-[var(--primary)] transition-all duration-300 group-hover/item:w-1.5",
+                            "h-1.5 w-0 rounded-full bg-accent transition-all duration-300 group-hover/item:w-1.5",
                             childActive && "w-1.5",
                           )}
                         />

@@ -6,19 +6,68 @@
 @import "swiper/css/navigation";
 @import "swiper/css/pagination";
 
-:root {
-  --background: #ffffff;
-  --foreground: #081212;
+/* =====================================================================
+   THEME: the single place to change the site's colours.
+   Taken from the emblem (src/assets/images/logo.png): crimson, royal navy
+   and gold.
 
-  /* Was #ee2026 (4.31:1 with white text). 3.5% darker meets WCAG AA 4.5:1 for
-     the white text on red buttons and the footer promo bar. */
-  --primary: #e61f25;
+   Brand colours are written ONCE as "R G B" triplets; the solid colour and
+   every transparent tint (glows, shadows, borders) are derived from them.
+   To re-theme, edit the triplets (and the surfaces / text below).
+
+   Tailwind utilities generated from these (see @theme below):
+     bg-primary  text-primary  border-primary/30   (crimson)
+     bg-secondary text-secondary                   (royal navy)
+     bg-accent   text-accent                       (gold)
+     bg-surface-dark / -deep / -card / -light      (section backgrounds)
+     text-ink / text-ink-soft / text-ink-muted     (text on light sections)
+   In arbitrary values / CSS use rgb(var(--primary-rgb) / 0.4) for tints.
+   ===================================================================== */
+:root {
+  /* Brand */
+  --primary-rgb: 165 1 0; /* #a50100 crimson: buttons, links, highlights */
+  --primary-hover-rgb: 122 0 0; /* #7a0000 darker crimson for pressed/hover */
+  --secondary-rgb: 27 0 115; /* #1b0073 royal navy */
+  --accent-rgb: 213 181 70; /* #d5b546 gold: badges, lines, small details */
+
+  --primary: rgb(var(--primary-rgb));
+  --primary-hover: rgb(var(--primary-hover-rgb));
+  --secondary: rgb(var(--secondary-rgb));
+  --accent: rgb(var(--accent-rgb));
+  --on-primary: #ffffff; /* text on crimson (≈8:1 contrast) */
+
+  /* Surfaces */
+  --surface-dark: #0b0638; /* dark sections (deep navy) */
+  --surface-deep: #070325; /* header bar, scrollbar track, darkest areas */
+  --surface-card: #151049; /* cards on dark sections */
+  --surface-light: #f6f3ea; /* light sections (warm ivory) */
+
+  /* Text on light surfaces */
+  --ink: #120c33; /* headings */
+  --ink-soft: #3b3654; /* strong body text */
+  --ink-muted: #5c5874; /* paragraphs (≈6:1 on --surface-light) */
+
+  --background: #ffffff;
+  --foreground: var(--ink);
   color-scheme: light;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-on-primary: var(--on-primary);
+  --color-surface-dark: var(--surface-dark);
+  --color-surface-deep: var(--surface-deep);
+  --color-surface-card: var(--surface-card);
+  --color-surface-light: var(--surface-light);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
 
   /* Line-height tokens (leading-display / leading-title / leading-text).
      Values come from the active font preset in src/config/fonts.ts, so each
@@ -66,27 +115,33 @@ body {
   font-family: var(--font-ui), var(--font-body), sans-serif;
 }
 
-/* Page scrollbar: thin red thumb on a near-black track. */
+/* Page scrollbar: thin gold-to-crimson thumb on a deep navy track. */
 html {
   scrollbar-width: thin; /* Firefox */
-  scrollbar-color: var(--primary) #050505;
+  scrollbar-color: var(--primary) var(--surface-deep);
 }
 html::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 html::-webkit-scrollbar-track {
-  background: #050505;
+  background: var(--surface-deep);
 }
 html::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ff3b30, var(--primary) 40%, #a5141a);
+  background: linear-gradient(180deg, var(--accent), var(--primary) 40%, var(--primary-hover));
   border-radius: 9999px;
 }
 html::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
 }
 html::-webkit-scrollbar-corner {
-  background: #050505;
+  background: var(--surface-deep);
+}
+
+/* Text selection in brand colours. */
+::selection {
+  background: rgb(var(--accent-rgb) / 0.85);
+  color: var(--ink);
 }
 
 /* Marquee (components/common/marquee/Marquee.tsx): two copies side by side,
@@ -994,7 +1049,7 @@ html::-webkit-scrollbar-corner {
   stroke-dasharray: 25 85; /* tweak 28 to taste (26/30 etc.) */
 }
 
-/* Header: red light that travels along the top edge */
+/* Header: gold light that travels along the bottom hairline */
 .header-sheen {
   animation: headerSheen 6s ease-in-out infinite;
 }

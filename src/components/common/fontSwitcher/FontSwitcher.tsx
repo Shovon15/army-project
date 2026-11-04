@@ -96,7 +96,7 @@ const FontSwitcher = () => {
           aria-label="Font style"
           inert={!open}
           className={cn(
-            "absolute bottom-[calc(100%+12px)] left-0 w-[min(300px,calc(100vw-32px))] origin-bottom-left rounded-[20px] border border-white/10 bg-[#0b0b0b]/95 p-3 text-white shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] backdrop-blur-md transition-[opacity,scale,translate] duration-300 ease-[cubic-bezier(.22,1,.36,1)]",
+            "absolute bottom-[calc(100%+12px)] left-0 w-[min(300px,calc(100vw-32px))] origin-bottom-left rounded-[20px] border border-white/10 bg-ink/95 p-3 text-white shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] backdrop-blur-md transition-[opacity,scale,translate] duration-300 ease-[cubic-bezier(.22,1,.36,1)]",
             open
               ? "visible scale-100 opacity-100"
               : "invisible translate-y-2 scale-95 opacity-0",
@@ -112,7 +112,7 @@ const FontSwitcher = () => {
           >
             {GROUPS.map((group) => (
               <div key={group} className="mb-2 last:mb-0">
-                <p className="px-2 pt-2 pb-1.5 font-dmSans text-[11px] tracking-[0.12em] text-[var(--primary)] uppercase">
+                <p className="px-2 pt-2 pb-1.5 font-dmSans text-[11px] tracking-[0.12em] text-accent uppercase">
                   {group}
                 </p>
                 <ul className="space-y-1">
@@ -128,7 +128,7 @@ const FontSwitcher = () => {
                             className={cn(
                               "group flex w-full items-center gap-4 rounded-[14px] border px-3 py-2.5 text-left transition-colors duration-300",
                               isActive
-                                ? "border-[var(--primary)] bg-[var(--primary)]/15"
+                                ? "border-primary bg-primary/15"
                                 : "border-transparent hover:border-white/15 hover:bg-white/[0.06]",
                             )}
                           >
@@ -138,7 +138,7 @@ const FontSwitcher = () => {
                               className={cn(
                                 "flex h-12 w-12 shrink-0 items-center justify-center rounded-[10px] text-[22px] leading-none transition-colors duration-300",
                                 isActive
-                                  ? "bg-[var(--primary)] text-white"
+                                  ? "bg-primary text-white"
                                   : "bg-white/10 group-hover:bg-white/15",
                               )}
                               style={{
@@ -171,7 +171,7 @@ const FontSwitcher = () => {
                               className={cn(
                                 "h-2.5 w-2.5 shrink-0 rounded-full transition-[scale,background-color] duration-300",
                                 isActive
-                                  ? "scale-100 bg-[var(--primary)]"
+                                  ? "scale-100 bg-primary"
                                   : "scale-0 bg-white/40",
                               )}
                             />
@@ -199,8 +199,8 @@ const FontSwitcher = () => {
         className={cn(
           "relative flex h-12 w-12 items-center justify-center rounded-full border shadow-[0_15px_35px_-12px_rgba(0,0,0,0.55)] transition-colors duration-300 md:h-[52px] md:w-[52px]",
           open
-            ? "border-[var(--primary)] bg-[var(--primary)] text-white"
-            : "border-white/15 bg-[#050505] text-white hover:border-[var(--primary)] hover:bg-[var(--primary)]",
+            ? "border-primary bg-primary text-white"
+            : "border-white/15 bg-surface-dark text-white hover:border-primary hover:bg-primary",
         )}
       >
         <span aria-hidden className="relative block h-3.5 w-5">

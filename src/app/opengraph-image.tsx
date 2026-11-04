@@ -23,13 +23,14 @@ export default async function OpengraphImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "radial-gradient(circle at 50% 120%, rgba(230,31,37,0.45), #050505 60%)",
+          // Literal theme colours (CSS variables are not available here): crimson glow on deep navy.
+          background: "radial-gradient(circle at 50% 120%, rgba(165,1,0,0.55), #0b0638 62%)",
           color: "#fff",
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={logoSrc} width={300} height={300} alt="" />
-        <div style={{ display: "flex", marginTop: 36, fontSize: 64, fontWeight: 800, letterSpacing: 4 }}>
+        <div style={{ display: "flex", marginTop: 36, fontSize: 64, fontWeight: 800, letterSpacing: 4, color: "#d5b546" }}>
           {SITE_INFORMATION.appName.toUpperCase()}
         </div>
       </div>

@@ -85,7 +85,7 @@ const NewsletterForm = ({ className }: { className?: string }) => {
           className={cn(
             "h-[50px] min-w-0 flex-1 rounded-full border bg-white/[0.08] px-5 font-dmSans text-[15px] text-white placeholder:text-white/80 transition-colors duration-300 outline-none focus:bg-white/[0.12]",
             error
-              ? "input-error-shake border-[var(--primary)]"
+              ? "input-error-shake border-primary"
               : "border-transparent focus:border-white/20",
           )}
         />
@@ -93,7 +93,7 @@ const NewsletterForm = ({ className }: { className?: string }) => {
           type="submit"
           disabled={loading}
           aria-label="Subscribe now"
-          className="group flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full bg-primary text-white transition-[background-color,transform] duration-300 hover:bg-white hover:text-[var(--primary)] active:scale-95 disabled:opacity-60"
+          className="group flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full bg-primary text-white transition-[background-color,transform] duration-300 hover:bg-white hover:text-accent active:scale-95 disabled:opacity-60"
         >
           <SendIcon className="h-5 w-5 transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:rotate-12" />
         </button>

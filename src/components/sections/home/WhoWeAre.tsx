@@ -48,7 +48,7 @@ const WhoWeAre = ({
     href: "/contact",
   },
 }: WhoWeAreProps) => (
-  <section className="relative isolate overflow-hidden bg-[#f4f4f4] pt-20 pb-20 text-[#0b0b0b] md:pt-28 md:pb-24">
+  <section className="relative isolate overflow-hidden bg-surface-light pt-20 pb-20 text-ink md:pt-28 md:pb-24">
     <ContentContainer size="narrow" className="h-auto">
       <SectionHeading badge={badge} lines={titleLines} tone="light" />
 

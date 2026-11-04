@@ -62,7 +62,7 @@ const InfoHalf = ({
     <div
       className={cn(
         "relative flex h-full flex-col items-center justify-center overflow-hidden px-8 text-center",
-        "bg-gradient-to-b from-[#1b1b1b] to-[#160d0e]",
+        "bg-gradient-to-b from-surface-card to-surface-dark",
         position === "top" ? "pt-14 pb-8" : "pt-8 pb-14",
       )}
     >
@@ -73,8 +73,8 @@ const InfoHalf = ({
           "pointer-events-none absolute inset-x-0 h-full scale-y-0 transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-y-100",
           // Glow grows from the edge that touches the image half.
           position === "top"
-            ? "bottom-0 origin-bottom bg-[radial-gradient(90%_80%_at_50%_100%,rgba(230,31,37,0.35),transparent_70%)]"
-            : "top-0 origin-top bg-[radial-gradient(90%_80%_at_50%_0%,rgba(230,31,37,0.35),transparent_70%)]",
+            ? "bottom-0 origin-bottom bg-[radial-gradient(90%_80%_at_50%_100%,rgb(var(--primary-rgb)/0.35),transparent_70%)]"
+            : "top-0 origin-top bg-[radial-gradient(90%_80%_at_50%_0%,rgb(var(--primary-rgb)/0.35),transparent_70%)]",
         )}
       />
       <span className="relative [perspective:400px]">
@@ -142,7 +142,7 @@ const CurrentExhibitions = ({
   titleLines = ["Inspiring Exhibitions", "Happening Right Now"],
   exhibitions = DEFAULT_EXHIBITIONS,
 }: CurrentExhibitionsProps) => (
-  <section className="relative isolate overflow-hidden bg-[#050505] py-20 text-white md:py-28">
+  <section className="relative isolate overflow-hidden bg-surface-dark py-20 text-white md:py-28">
     <GlowBackground />
 
     <ContentContainer size="narrow" className="h-auto">

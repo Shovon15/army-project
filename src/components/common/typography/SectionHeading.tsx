@@ -40,7 +40,7 @@ const SectionHeading = ({
       lines={lines}
       className={cn(
         "mt-5 text-[clamp(1.5rem,2.3vw,2.0rem)]",
-        tone === "dark" ? "text-white" : "text-[#0b0b0b]",
+        tone === "dark" ? "text-white" : "text-ink",
         headingClassName,
       )}
     />

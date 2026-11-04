@@ -168,13 +168,13 @@ const BackToTop = () => {
         data-btn
         type="button"
         aria-label="Back to top"
-        className="group invisible relative flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-[#081212]/85 text-white shadow-[0_15px_40px_-10px_rgba(0,0,0,0.5)] ring-1 ring-white/10 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_0_0_6px_rgba(230,31,37,0.15),0_15px_40px_-10px_rgba(230,31,37,0.6)] md:h-16 md:w-16"
+        className="group invisible relative flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-surface-deep/85 text-white shadow-[0_15px_40px_-10px_rgba(0,0,0,0.5)] ring-1 ring-white/10 backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_0_0_6px_rgb(var(--primary-rgb)/0.15),0_15px_40px_-10px_rgb(var(--primary-rgb)/0.6)] md:h-16 md:w-16"
       >
         {/* Shockwave on launch */}
         <span
           data-shock
           aria-hidden
-          className="pointer-events-none invisible absolute inset-0 rounded-full border-2 border-[var(--primary)] opacity-0"
+          className="pointer-events-none invisible absolute inset-0 rounded-full border-2 border-primary opacity-0"
         />
 
         {/* Scroll progress ring */}
@@ -208,7 +208,7 @@ const BackToTop = () => {
         {/* Inner red core grows on hover */}
         <span
           aria-hidden
-          className="absolute inset-[7px] scale-0 rounded-full bg-[var(--primary)] transition-transform duration-500 ease-[cubic-bezier(.7,0,.2,1)] group-hover:scale-100"
+          className="absolute inset-[7px] scale-0 rounded-full bg-primary transition-transform duration-500 ease-[cubic-bezier(.7,0,.2,1)] group-hover:scale-100"
         />
 
         {/* Arrow (rolls on hover) + launch trail */}

@@ -22,12 +22,14 @@ const SectionBadge = ({
     className={cn(
       "inline-flex items-center gap-2.5 rounded-full border px-4 py-2 font-dmSans text-[11px] font-semibold tracking-[0.14em] uppercase md:text-xs",
       tone === "dark"
-        ? "border-white/15 bg-white/[0.04] text-white backdrop-blur-sm"
-        : "border-black/10 bg-white text-[#0b0b0b]",
+        ? "border-accent/30 bg-white/[0.04] text-white backdrop-blur-sm"
+        : "border-black/10 bg-white text-ink",
       className,
     )}
   >
-    <SparkIcon className="hero-spark h-3.5 w-3.5 text-[var(--primary)]" />
+    <SparkIcon
+      className={cn("hero-spark h-3.5 w-3.5", tone === "dark" ? "text-accent" : "text-primary")}
+    />
     {children}
   </span>
 );

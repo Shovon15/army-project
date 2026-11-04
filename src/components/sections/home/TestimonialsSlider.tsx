@@ -28,21 +28,21 @@ export const Stars = ({ rating, className }: { rating: number; className?: strin
     {Array.from({ length: 5 }, (_, i) => (
       <StarIcon
         key={i}
-        className={i < Math.round(rating) ? "h-4 w-4 text-[var(--primary)]" : "h-4 w-4 text-white/20"}
+        className={i < Math.round(rating) ? "h-4 w-4 text-accent" : "h-4 w-4 text-white/20"}
       />
     ))}
   </span>
 );
 
 const TestimonialCard = ({ item }: { item: Testimonial }) => (
-  <figure className="group relative isolate flex h-full flex-col overflow-hidden rounded-[20px] border border-white/10 bg-[#141414] p-7 transition-colors duration-500 hover:border-[var(--primary)]/50 md:p-9">
+  <figure className="group relative isolate flex h-full flex-col overflow-hidden rounded-[20px] border border-white/10 bg-surface-card p-7 transition-colors duration-500 hover:border-primary/50 md:p-9">
     {/* Red glow rises from the bottom on hover */}
     <span
       aria-hidden
-      className="absolute inset-0 -z-10 origin-bottom scale-y-0 bg-[radial-gradient(120%_80%_at_50%_100%,rgba(230,31,37,0.28),transparent_70%)] transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-y-100"
+      className="absolute inset-0 -z-10 origin-bottom scale-y-0 bg-[radial-gradient(120%_80%_at_50%_100%,rgb(var(--primary-rgb)/0.28),transparent_70%)] transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-y-100"
     />
     {/* Big faint quote mark drifts on hover */}
-    <QuoteIcon className="absolute top-7 right-7 -z-10 h-20 w-20 text-white/[0.05] transition-[translate,rotate,color] duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:-translate-y-1 group-hover:-rotate-12 group-hover:text-[var(--primary)]/20" />
+    <QuoteIcon className="absolute top-7 right-7 -z-10 h-20 w-20 text-white/[0.05] transition-[translate,rotate,color] duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:-translate-y-1 group-hover:-rotate-12 group-hover:text-accent/20" />
 
     <Stars rating={item.rating} className="flex gap-1" />
     <blockquote className="mt-6 flex-1 font-dmSans text-[17px] leading-text text-white/90">
@@ -61,7 +61,7 @@ const TestimonialCard = ({ item }: { item: Testimonial }) => (
       ) : (
         <span
           aria-hidden
-          className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[var(--primary)] to-[#6b0f13] font-heading text-[15px] text-white transition-transform duration-500 group-hover:scale-110"
+          className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary font-heading text-[15px] text-white transition-transform duration-500 group-hover:scale-110"
         >
           {initials(item.name)}
         </span>

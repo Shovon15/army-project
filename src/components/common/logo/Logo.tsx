@@ -31,12 +31,12 @@ const Logo = ({ className, brand = "Museon", iconOnly = false, onClick }: LogoPr
         alt=""
         priority
         sizes="56px"
-        className="h-11 w-11 shrink-0 rounded-full transition-[scale,box-shadow] duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-105 group-hover:shadow-[0_0_0_3px_rgba(213,181,70,0.35)] lg:h-[52px] lg:w-[52px]"
+        className="h-11 w-11 shrink-0 rounded-full transition-[scale,box-shadow] duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-105 group-hover:shadow-[0_0_0_3px_rgb(var(--accent-rgb)/0.35)] lg:h-[52px] lg:w-[52px]"
       />
       {!iconOnly && (
         <span className="font-boldCond text-[18px] leading-title text-white uppercase lg:text-[21px]">
           {brand}
-          <span className="text-[var(--primary)]">.</span>
+          <span className="text-accent">.</span>
         </span>
       )}
     </NavLink>

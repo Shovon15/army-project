@@ -37,7 +37,7 @@ const HeroBanner = ({
   return (
     <section
       className={cn(
-        "relative isolate flex min-h-[100svh] overflow-hidden bg-[#050505] text-white",
+        "relative isolate flex min-h-[100svh] overflow-hidden bg-surface-dark text-white",
         className,
       )}
     >

@@ -90,7 +90,7 @@ const Footer = () => {
   ).filter((s) => s.url && SOCIAL_ICONS[s.name?.trim().toLowerCase()]);
 
   return (
-    <footer className="relative isolate w-full overflow-hidden bg-[#050505] text-white">
+    <footer className="relative isolate w-full overflow-hidden bg-surface-dark text-white">
       <GlowBackground />
 
       <ContentContainer size="narrow" className="relative h-auto">
@@ -137,7 +137,7 @@ const Footer = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={social.name}
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--primary)] hover:bg-[var(--primary)] [&_svg]:h-4 [&_svg]:w-4"
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:bg-primary [&_svg]:h-4 [&_svg]:w-4"
                       >
                         <Icon />
                       </a>
@@ -162,11 +162,11 @@ const Footer = () => {
                     <NavLink
                       href={link.href}
                       hover={false}
-                      className="group/link inline-flex items-center gap-3 font-dmSans text-[15px] text-white transition-colors duration-300 hover:text-[var(--primary)]"
+                      className="group/link inline-flex items-center gap-3 font-dmSans text-[15px] text-white transition-colors duration-300 hover:text-accent"
                     >
                       <span
                         aria-hidden
-                        className="h-[5px] w-[5px] shrink-0 rounded-full bg-[var(--primary)] transition-transform duration-300 group-hover/link:scale-150"
+                        className="h-[5px] w-[5px] shrink-0 rounded-full bg-accent transition-transform duration-300 group-hover/link:scale-150"
                       />
                       <span className="transition-transform duration-300 group-hover/link:translate-x-1">
                         {link.label}
@@ -204,7 +204,7 @@ const Footer = () => {
           <NavLink
             href={routes.home}
             hover={false}
-            className="transition-colors duration-300 hover:text-[var(--primary)]"
+            className="transition-colors duration-300 hover:text-accent"
           >
             {BRAND}
           </NavLink>

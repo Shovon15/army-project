@@ -98,7 +98,7 @@ export default function InspirationBadge({
         // badge container
         "relative inline-block overflow-hidden",
         "px-6 py-4 md:px-8 md:py-5",
-        "bg-[#0b0b0b]",
+        "bg-ink",
         "shadow-[0_10px_28px_rgba(0,0,0,0.45)]",
        
         // diagonal red corner (bottom-right)

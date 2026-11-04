@@ -135,7 +135,7 @@ const HeaderComponent = ({ data }: any) => {
           className={cn(
             "relative transition-[background-color,backdrop-filter] duration-500",
             scrolled || isMobileMenuOpen
-              ? "bg-[#050505]/85 backdrop-blur-xl"
+              ? "bg-surface-dark/85 backdrop-blur-xl"
               : "bg-transparent",
           )}
         >
@@ -191,7 +191,7 @@ const HeaderComponent = ({ data }: any) => {
             aria-hidden
             className="absolute inset-x-0 bottom-0 h-px origin-left overflow-hidden bg-white/10"
           >
-            <span className="header-sheen absolute top-0 left-0 h-px w-1/3 bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent" />
+            <span className="header-sheen absolute top-0 left-0 h-px w-1/3 bg-gradient-to-r from-transparent via-accent to-transparent" />
           </span>
         </header>
       </div>

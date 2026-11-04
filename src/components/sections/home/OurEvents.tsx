@@ -95,7 +95,7 @@ const EventCard = ({ event, index }: { event: MuseumEvent; index: number }) => {
           </ImageShine>
 
           {/* Date chip turns red on hover */}
-          <span className="pointer-events-none absolute top-4 left-4 z-[3] flex w-[58px] flex-col items-center rounded-[12px] bg-white py-2 text-[#0b0b0b] transition-colors duration-500 group-hover:bg-[var(--primary)] group-hover:text-white">
+          <span className="pointer-events-none absolute top-4 left-4 z-[3] flex w-[58px] flex-col items-center rounded-[12px] bg-white py-2 text-ink transition-colors duration-500 group-hover:bg-primary group-hover:text-white">
             <span className="font-heading text-[20px] leading-none">
               {fmt(event.date, { day: "2-digit" })}
             </span>
@@ -112,20 +112,20 @@ const EventCard = ({ event, index }: { event: MuseumEvent; index: number }) => {
 
         {/* Body */}
         <div className="flex flex-1 flex-col px-3 pt-6 pb-4 md:px-4">
-          <h3 className="font-heading text-[clamp(0.95rem,1.1vw,1.15rem)] leading-title text-[#0b0b0b] uppercase transition-colors duration-300 group-hover:text-[var(--primary)]">
+          <h3 className="font-heading text-[clamp(0.95rem,1.1vw,1.15rem)] leading-title text-ink uppercase transition-colors duration-300 group-hover:text-primary">
             {event.title}
           </h3>
-          <p className="mt-3 line-clamp-2 font-dmSans text-[15px] leading-text text-[#5b5b5b]">
+          <p className="mt-3 line-clamp-2 font-dmSans text-[15px] leading-text text-ink-muted">
             {event.description}
           </p>
 
           <span aria-hidden className="relative mt-5 block h-px w-full overflow-hidden bg-black/10">
-            <span className="absolute inset-0 origin-left scale-x-0 bg-[var(--primary)] transition-transform duration-700 ease-[cubic-bezier(.77,0,.175,1)] group-hover:scale-x-100" />
+            <span className="absolute inset-0 origin-left scale-x-0 bg-primary transition-transform duration-700 ease-[cubic-bezier(.77,0,.175,1)] group-hover:scale-x-100" />
           </span>
 
-          <ul className="mt-5 space-y-2.5 font-dmSans text-[14px] text-[#3a3a3a]">
+          <ul className="mt-5 space-y-2.5 font-dmSans text-[14px] text-ink-soft">
             <li className="flex items-center gap-2.5">
-              <CalendarIcon className="h-[18px] w-[18px] shrink-0 text-[var(--primary)]" />
+              <CalendarIcon className="h-[18px] w-[18px] shrink-0 text-primary" />
               <time dateTime={event.date}>
                 {fmt(event.date, { month: "long", day: "numeric", year: "numeric" })}
               </time>
@@ -133,7 +133,7 @@ const EventCard = ({ event, index }: { event: MuseumEvent; index: number }) => {
               {event.time}
             </li>
             <li className="flex items-center gap-2.5">
-              <MapPinIcon className="h-[18px] w-[18px] shrink-0 text-[var(--primary)]" />
+              <MapPinIcon className="h-[18px] w-[18px] shrink-0 text-primary" />
               {event.venue}
             </li>
           </ul>
@@ -150,14 +150,14 @@ const OurEvents = ({
   cta = { label: "View All Events", href: "/events" },
   events = DEFAULT_EVENTS,
 }: OurEventsProps) => (
-  <section className="relative overflow-hidden bg-[#f4f4f4] py-20 text-[#0b0b0b] md:py-28">
+  <section className="relative overflow-hidden bg-surface-light py-20 text-ink md:py-28">
     <ContentContainer size="narrow" className="h-auto">
       {/* Header row */}
       <div className="grid items-end gap-8 lg:grid-cols-2 lg:gap-16">
         <SectionHeading badge={badge} lines={titleLines} align="left" tone="light" />
         <Reveal once className="lg:pb-2">
           <p
-            className="font-dmSans text-[clamp(15px,1vw,17px)] leading-text text-[#5b5b5b]"
+            className="font-dmSans text-[clamp(15px,1vw,17px)] leading-text text-ink-muted"
             {...revealItem("down", 30, 0.25, 1)}
           >
             {description}
