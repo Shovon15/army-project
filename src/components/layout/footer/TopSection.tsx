@@ -70,8 +70,8 @@ const FooterLogo = ({
   return (
     <NavLink href={routes.home}>
       <ImageComponent
-        src={logo || "/logo.svg"}
-        fallbackSrc="/logo.svg"
+        src={logo || "/logo.png"}
+        fallbackSrc="/logo.png"
         alt="footer logo"
         className={cn("w-full h-full object-contain", className)}
       />

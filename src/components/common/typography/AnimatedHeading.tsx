@@ -29,7 +29,7 @@ const AnimatedHeading = ({
   const heading = (
     <Tag
       className={cn(
-        "font-boldCond leading-[1.22] uppercase",
+        "font-boldCond leading-display uppercase",
         className,
       )}
     >

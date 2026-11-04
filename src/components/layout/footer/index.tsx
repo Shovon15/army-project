@@ -78,7 +78,7 @@ const DESCRIPTION =
   "Discover timeless art, culture, and heritage through curated exhibitions and inspiring creative experiences that connect past and present.";
 
 const ColumnTitle = ({ children }: { children: React.ReactNode }) => (
-  <h3 className="font-heading text-[clamp(0.95rem,1.05vw,1.15rem)] leading-[1.3] uppercase">
+  <h3 className="font-heading text-[clamp(0.95rem,1.05vw,1.15rem)] leading-title uppercase">
     {children}
   </h3>
 );
@@ -108,7 +108,7 @@ const Footer = () => {
             className="w-full lg:max-w-[420px] lg:justify-self-end"
             {...revealItem("down", 30, 0.2, 1)}
           >
-            <h3 className="mb-5 font-heading text-[clamp(0.95rem,1.05vw,1.15rem)] leading-[1.3] uppercase">
+            <h3 className="mb-5 font-heading text-[clamp(0.95rem,1.05vw,1.15rem)] leading-title uppercase">
               Subscribe Newsletter&apos;s
             </h3>
             <NewsletterForm />
@@ -123,7 +123,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1 lg:pr-10" {...revealItem("down", 40, 0, 1)}>
             <Logo brand={BRAND} />
-            <p className="mt-6 max-w-[420px] font-dmSans text-[15px] leading-[1.7] text-white/85">
+            <p className="mt-6 max-w-[420px] font-dmSans text-[15px] leading-text text-white/85">
               {DESCRIPTION}
             </p>
             {socials.length > 0 && (
@@ -181,7 +181,7 @@ const Footer = () => {
           {/* Hours + location */}
           <div {...revealItem("down", 40, 0.3, 1)}>
             <ColumnTitle>Opening Hours</ColumnTitle>
-            <ul className="mt-6 space-y-1 font-dmSans text-[15px] leading-[1.7] text-white">
+            <ul className="mt-6 space-y-1 font-dmSans text-[15px] leading-text text-white">
               {OPENING_HOURS.map(({ day, time }) => (
                 <li key={day}>
                   {day}: {time}
@@ -191,7 +191,7 @@ const Footer = () => {
 
             <div className="mt-10">
               <ColumnTitle>Location</ColumnTitle>
-              <address className="mt-6 font-dmSans text-[15px] leading-[1.7] text-white not-italic">
+              <address className="mt-6 font-dmSans text-[15px] leading-text text-white not-italic">
                 {CONTACT_INFO.address}
               </address>
             </div>

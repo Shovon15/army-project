@@ -100,14 +100,14 @@ const CollectionCard = ({
 
       {/* Caption lifts slightly on hover */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] px-6 pb-8 text-center [text-shadow:0_2px_12px_rgba(0,0,0,0.55)] transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:-translate-y-2">
-        <h3 className="font-heading text-[clamp(1rem,1.15vw,1.2rem)] leading-[1.3] text-white uppercase">
+        <h3 className="font-heading text-[clamp(1rem,1.15vw,1.2rem)] leading-title text-white uppercase">
           {item.title}
         </h3>
         <span
           aria-hidden
           className="mx-auto mt-3 block h-px w-0 bg-[var(--primary)] transition-[width] duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:w-16"
         />
-        <p className="mx-auto mt-3 max-w-[300px] font-dmSans text-[15px] leading-[1.6] text-white/85">
+        <p className="mx-auto mt-3 max-w-[300px] font-dmSans text-[15px] leading-text text-white/85">
           {item.description}
         </p>
       </div>

@@ -29,7 +29,7 @@ const MarqueeSection = ({
     <Marquee
       items={items}
       duration={duration}
-      itemClassName="font-boldCond text-[clamp(1.05rem,1.5vw,1.75rem)] leading-[1.3] uppercase"
+      itemClassName="font-boldCond text-[clamp(1.05rem,1.5vw,1.75rem)] leading-title uppercase"
       separator={<SparkIcon className="h-6 w-6 md:h-7 md:w-7" strokeWidth={2.6} />}
     />
   </section>

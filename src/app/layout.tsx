@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { BodyFont, HeadingFont, UIFont } from "./font";
+import { FONT_VARIABLE_CLASSES } from "./font";
+import { buildFontThemeCss, fontInitScript } from "@/config/fonts";
+import FontSwitcher from "@/components/common/fontSwitcher/FontSwitcher";
 import CustomCursor from "@/components/common/cursor/CustomCursor";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
@@ -36,12 +38,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // suppressHydrationWarning: fontInitScript may set data-font before React hydrates.
+    <html lang="en" className={FONT_VARIABLE_CLASSES} suppressHydrationWarning>
       <head>
         <meta name="darkreader-lock"></meta>
+        {/* Font presets (src/config/fonts.ts) + apply the saved one before paint */}
+        <style dangerouslySetInnerHTML={{ __html: buildFontThemeCss() }} />
+        <script dangerouslySetInnerHTML={{ __html: fontInitScript }} />
       </head>
       <body
-        className={`${HeadingFont.variable} ${BodyFont.variable} ${UIFont.variable} font-body antialiased`}
+        className="font-body antialiased"
       >
         {/* End Google Tag Manager (noscript) */}
         <ReduxProvider>
@@ -52,6 +58,7 @@ export default function RootLayout({
             </div>
             <Footer />
             <BackToTop />
+            <FontSwitcher />
           </SmoothScroll>
           <ToastListener />
           <CustomCursor />

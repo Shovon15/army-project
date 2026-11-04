@@ -62,7 +62,7 @@ const HeroBanner = ({
           />
 
           <p
-            className="hero-fade mt-6 max-w-[580px] font-dmSans text-[clamp(15px,1vw,18px)] leading-[1.65] text-white/85"
+            className="hero-fade mt-6 max-w-[580px] font-dmSans text-[clamp(15px,1vw,18px)] leading-text text-white/85"
             style={fade(afterTitle)}
           >
             {description}

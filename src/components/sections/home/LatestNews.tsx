@@ -71,7 +71,7 @@ const NewsCard = ({
 
         {/* Caption: lifts on hover, red line draws across */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] px-6 pb-7 transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:-translate-y-2 md:px-7">
-          <h3 className="font-heading text-[clamp(0.95rem,1.15vw,1.25rem)] leading-[1.4] text-white uppercase">
+          <h3 className="font-heading text-[clamp(0.95rem,1.15vw,1.25rem)] leading-title text-white uppercase">
             {post.title}
           </h3>
           <span aria-hidden className="relative mt-5 block h-px w-full overflow-hidden bg-white/20">

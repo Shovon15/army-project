@@ -18,7 +18,7 @@ export const WEBSITE_ID = `${SITE_URL}#website`;
 export const ORGANIZATION_REF = { "@id": ORGANIZATION_ID };
 export const WEBSITE_REF = { "@id": WEBSITE_ID };
 
-export const ORGANIZATION_LOGO = absoluteUrl("/logo.svg");
+export const ORGANIZATION_LOGO = absoluteUrl("/logo.png");
 
 export const SITE_LANGUAGE = "en-US";
 

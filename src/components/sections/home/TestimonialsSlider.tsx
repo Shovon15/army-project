@@ -45,7 +45,7 @@ const TestimonialCard = ({ item }: { item: Testimonial }) => (
     <QuoteIcon className="absolute top-7 right-7 -z-10 h-20 w-20 text-white/[0.05] transition-[translate,rotate,color] duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:-translate-y-1 group-hover:-rotate-12 group-hover:text-[var(--primary)]/20" />
 
     <Stars rating={item.rating} className="flex gap-1" />
-    <blockquote className="mt-6 flex-1 font-dmSans text-[17px] leading-[1.7] text-white/90">
+    <blockquote className="mt-6 flex-1 font-dmSans text-[17px] leading-text text-white/90">
       {item.quote}
     </blockquote>
 
@@ -67,7 +67,7 @@ const TestimonialCard = ({ item }: { item: Testimonial }) => (
         </span>
       )}
       <span>
-        <span className="block font-heading text-[15px] leading-[1.3] text-white uppercase">
+        <span className="block font-heading text-[15px] leading-title text-white uppercase">
           {item.name}
         </span>
         <span className="mt-1 block font-dmSans text-[14px] text-white/65">{item.role}</span>

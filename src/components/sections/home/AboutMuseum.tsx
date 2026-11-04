@@ -126,7 +126,7 @@ const AboutMuseum = ({
           />
 
           <p
-            className="mt-6 font-dmSans text-[clamp(15px,1vw,17px)] leading-[1.7] text-[#5b5b5b]"
+            className="mt-6 font-dmSans text-[clamp(15px,1vw,17px)] leading-text text-[#5b5b5b]"
             {...revealItem("down", 30, 0.35, 1)}
           >
             {description}
@@ -141,10 +141,10 @@ const AboutMuseum = ({
               >
                 <Icon className="h-12 w-12 shrink-0 text-[#0b0b0b] transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-[-6deg]" />
                 <div>
-                  <h3 className="font-boldCond text-[clamp(0.95rem,1vw,1.15rem)] leading-[1.35] uppercase">
+                  <h3 className="font-boldCond text-[clamp(0.95rem,1vw,1.15rem)] leading-title uppercase">
                     {title}
                   </h3>
-                  <p className="mt-2 font-dmSans text-[15px] leading-[1.7] text-[#5b5b5b]">
+                  <p className="mt-2 font-dmSans text-[15px] leading-text text-[#5b5b5b]">
                     {text}
                   </p>
                 </div>
@@ -174,7 +174,7 @@ const AboutMuseum = ({
                 className="h-[52px] w-[52px] rounded-full object-cover"
               />
               <div>
-                <p className="font-boldCond text-[clamp(0.95rem,1vw,1.15rem)] leading-[1.3] uppercase">
+                <p className="font-boldCond text-[clamp(0.95rem,1vw,1.15rem)] leading-title uppercase">
                   {person.name}
                 </p>
                 <p className="mt-1.5 font-dmSans text-[15px] text-[#5b5b5b]">

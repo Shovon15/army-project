@@ -112,10 +112,10 @@ const EventCard = ({ event, index }: { event: MuseumEvent; index: number }) => {
 
         {/* Body */}
         <div className="flex flex-1 flex-col px-3 pt-6 pb-4 md:px-4">
-          <h3 className="font-heading text-[clamp(0.95rem,1.1vw,1.15rem)] leading-[1.35] text-[#0b0b0b] uppercase transition-colors duration-300 group-hover:text-[var(--primary)]">
+          <h3 className="font-heading text-[clamp(0.95rem,1.1vw,1.15rem)] leading-title text-[#0b0b0b] uppercase transition-colors duration-300 group-hover:text-[var(--primary)]">
             {event.title}
           </h3>
-          <p className="mt-3 line-clamp-2 font-dmSans text-[15px] leading-[1.6] text-[#5b5b5b]">
+          <p className="mt-3 line-clamp-2 font-dmSans text-[15px] leading-text text-[#5b5b5b]">
             {event.description}
           </p>
 
@@ -157,7 +157,7 @@ const OurEvents = ({
         <SectionHeading badge={badge} lines={titleLines} align="left" tone="light" />
         <Reveal once className="lg:pb-2">
           <p
-            className="font-dmSans text-[clamp(15px,1vw,17px)] leading-[1.7] text-[#5b5b5b]"
+            className="font-dmSans text-[clamp(15px,1vw,17px)] leading-text text-[#5b5b5b]"
             {...revealItem("down", 30, 0.25, 1)}
           >
             {description}

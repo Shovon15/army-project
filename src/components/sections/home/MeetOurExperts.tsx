@@ -111,7 +111,7 @@ const MemberCard = ({ member, index }: { member: TeamMember; index: number }) =>
       </div>
 
       <div {...revealItem("down", 30, d + 0.35, 1)}>
-        <h3 className="mt-6 font-heading text-[clamp(0.95rem,1.1vw,1.15rem)] leading-[1.3] text-white uppercase transition-colors duration-300 group-hover:text-[var(--primary)]">
+        <h3 className="mt-6 font-heading text-[clamp(0.95rem,1.1vw,1.15rem)] leading-title text-white uppercase transition-colors duration-300 group-hover:text-[var(--primary)]">
           {member.name}
         </h3>
         <p className="mt-2 font-dmSans text-[15px] text-white/75">{member.role}</p>

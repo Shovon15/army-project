@@ -80,10 +80,10 @@ const InfoHalf = ({
       <span className="relative [perspective:400px]">
         <Icon className="icon-flip h-12 w-12 text-white md:h-14 md:w-14" />
       </span>
-      <h3 className="relative mt-7 font-heading text-[clamp(1rem,1.2vw,1.3rem)] leading-[1.3] text-white uppercase">
+      <h3 className="relative mt-7 font-heading text-[clamp(1rem,1.2vw,1.3rem)] leading-title text-white uppercase">
         {item.title}
       </h3>
-      <p className="relative mx-auto mt-3 max-w-[280px] font-dmSans text-[15px] leading-[1.6] text-white/80">
+      <p className="relative mx-auto mt-3 max-w-[280px] font-dmSans text-[15px] leading-text text-white/80">
         {item.description}
       </p>
     </div>

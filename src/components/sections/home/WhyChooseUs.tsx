@@ -86,7 +86,7 @@ const StatItem = ({
           className="font-heading text-[clamp(2rem,2.8vw,2.55rem)] leading-none text-[#0b0b0b] tabular-nums"
         />
       </div>
-      <h3 className="mt-5 font-heading text-[clamp(0.95rem,1.05vw,1.15rem)] leading-[1.3] text-[#0b0b0b] uppercase transition-colors duration-300 group-hover:text-[var(--primary)]">
+      <h3 className="mt-5 font-heading text-[clamp(0.95rem,1.05vw,1.15rem)] leading-title text-[#0b0b0b] uppercase transition-colors duration-300 group-hover:text-[var(--primary)]">
         {stat.title}
       </h3>
       <span
@@ -94,7 +94,7 @@ const StatItem = ({
         className="reveal-draw mt-5 block h-px w-full bg-black/10"
         style={delay(d + 0.2)}
       />
-      <p className="mt-5 max-w-[300px] font-dmSans text-[15px] leading-[1.7] text-[#5b5b5b]">
+      <p className="mt-5 max-w-[300px] font-dmSans text-[15px] leading-text text-[#5b5b5b]">
         {stat.text}
       </p>
     </div>
@@ -149,7 +149,7 @@ const WhyChooseUs = ({
         />
         <Reveal once>
           <p
-            className="font-dmSans text-[clamp(15px,1vw,17px)] leading-[1.7] text-[#5b5b5b] lg:pb-2"
+            className="font-dmSans text-[clamp(15px,1vw,17px)] leading-text text-[#5b5b5b] lg:pb-2"
             {...revealItem("down", 30, 0.3, 1)}
           >
             {description}

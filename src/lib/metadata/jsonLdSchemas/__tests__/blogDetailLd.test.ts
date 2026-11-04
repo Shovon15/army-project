@@ -50,15 +50,15 @@ describe("getBlogDetailJsonLd", () => {
       author: {
         "@type": "Organization",
         "@id": "https://softwindtech.com/#organization",
-        name: "Softwind Tech",
+        name: "Museon",
       },
       publisher: {
         "@type": "Organization",
         "@id": "https://softwindtech.com/#organization",
-        name: "Softwind Tech",
+        name: "Museon",
         logo: {
           "@type": "ImageObject",
-          url: "https://softwindtech.com/logo.svg",
+          url: "https://softwindtech.com/logo.png",
         },
       },
       keywords: "what is Next.js, Next.js meaning",
