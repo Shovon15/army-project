@@ -51,8 +51,8 @@ const LINK_COLUMNS: { title: string; links: LinkItem[] }[] = [
     links: [
       { label: "Home", href: routes.home },
       { label: "About Us", href: routes.about },
-      { label: "Collection", href: "/collection" },
-      { label: "Blog", href: routes.blog },
+      { label: "Events", href: "/events" },
+      { label: "FAQs", href: "/faq" },
       { label: "Contact Us", href: routes.contact },
     ],
   },

@@ -11,7 +11,6 @@ export const headerData = {
       children: [
         { title: "About us", slug: "about" },
         { title: "Events", slug: "events" },
-        { title: "Collection", slug: "collection" },
         { title: "Gallery", slug: "image-gallery" },
       ],
     },
@@ -20,13 +19,10 @@ export const headerData = {
       slug: "about",
     },
     {
-      title: "Collection",
-      slug: "collection",
+      title: "Events",
+      slug: "events",
     },
-    {
-      title: "Blog",
-      slug: "blog",
-    },
+
     {
       title: "Pages",
       slug: "pages",

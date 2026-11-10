@@ -22,7 +22,7 @@ gsap.registerPlugin(useGSAP);
 
 const emptySubscribe = () => () => {};
 
-const CTA = { label: "Explore Collections", href: "/collection" };
+const CTA = { label: "Explore Events", href: "/events" };
 
 const HeaderComponent = ({ data }: any) => {
   const dispatch = useAppDispatch();
