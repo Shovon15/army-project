@@ -85,7 +85,7 @@ export default function AboutPage() {
         description="We are dedicated to preserving cultural heritage and inspiring meaningful connections through curated exhibitions, educational programs and experiences that bring art to life for every visitor."
         stats={WHO_WE_ARE_STATS}
       />
-      <CurrentExhibitions />
+      {/* <CurrentExhibitions /> */}
       <CommonQuestions />
       <Testimonials />
       <ConnectWithUs />

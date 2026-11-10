@@ -45,6 +45,7 @@ export type FontPreset = {
   };
 };
 
+const TREBUCHET = `"Trebuchet MS", Arial, sans-serif`;
 // System font stacks (no download; shown only if installed on the device).
 const HELVETICA = `"Helvetica Neue", Helvetica, Arial, sans-serif`;
 const SEGOE = `"Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif`;
@@ -72,6 +73,25 @@ const single = (
 
 export const FONT_PRESETS: FontPreset[] = [
   // ---- Designer pairs ----
+
+  single(
+    "trebuchet",
+    "Trebuchet MS",
+    TREBUCHET,
+    "System font",
+    { display: 1.12, title: 1.28, text: 1.65 },
+    700,
+    "0em",
+  ),
+  single(
+    "changa-one",
+    "Changa One",
+    "var(--ff-changa-one)",
+    "Google font",
+    { display: 1.2, title: 1.3, text: 1.7 },
+    400,
+    "0em",
+  ),
   {
     id: "modern",
     label: "Modern Bold",
@@ -115,16 +135,75 @@ export const FONT_PRESETS: FontPreset[] = [
   },
 
   // ---- Popular fonts (one font for everything) ----
-  single("inter", "Inter", "var(--ff-inter)", "Google font", { display: 1.12, title: 1.28, text: 1.65 }, 800, "0em"),
-  single("roboto", "Roboto", "var(--ff-roboto)", "Google font", { display: 1.15, title: 1.3, text: 1.65 }),
-  single("open-sans", "Open Sans", "var(--ff-open-sans)", "Google font", { display: 1.15, title: 1.3, text: 1.7 }, 800),
-  single("montserrat", "Montserrat", "var(--ff-montserrat)", "Google font", { display: 1.15, title: 1.3, text: 1.7 }, 800),
-  single("poppins", "Poppins", "var(--ff-poppins)", "Google font", { display: 1.12, title: 1.3, text: 1.7 }, 700),
-  single("lato", "Lato", "var(--ff-lato)", "Google font", { display: 1.15, title: 1.3, text: 1.7 }, 900),
-  single("helvetica", "Helvetica / Arial", HELVETICA, "System font", { display: 1.12, title: 1.28, text: 1.65 }),
-  single("segoe", "Segoe UI", SEGOE, "System font (Windows)", { display: 1.15, title: 1.3, text: 1.65 }),
-  single("sf-pro", "SF Pro", SF_PRO, "System font (Apple)", { display: 1.12, title: 1.28, text: 1.6 }),
-  single("noto-sans", "Noto Sans", "var(--ff-noto-sans)", "Google font", { display: 1.18, title: 1.32, text: 1.7 }, 800),
+  single(
+    "inter",
+    "Inter",
+    "var(--ff-inter)",
+    "Google font",
+    { display: 1.12, title: 1.28, text: 1.65 },
+    800,
+    "0em",
+  ),
+  single("roboto", "Roboto", "var(--ff-roboto)", "Google font", {
+    display: 1.15,
+    title: 1.3,
+    text: 1.65,
+  }),
+  single(
+    "open-sans",
+    "Open Sans",
+    "var(--ff-open-sans)",
+    "Google font",
+    { display: 1.15, title: 1.3, text: 1.7 },
+    800,
+  ),
+  single(
+    "montserrat",
+    "Montserrat",
+    "var(--ff-montserrat)",
+    "Google font",
+    { display: 1.15, title: 1.3, text: 1.7 },
+    800,
+  ),
+  single(
+    "poppins",
+    "Poppins",
+    "var(--ff-poppins)",
+    "Google font",
+    { display: 1.12, title: 1.3, text: 1.7 },
+    700,
+  ),
+  single(
+    "lato",
+    "Lato",
+    "var(--ff-lato)",
+    "Google font",
+    { display: 1.15, title: 1.3, text: 1.7 },
+    900,
+  ),
+  // single("helvetica", "Helvetica / Arial", HELVETICA, "System font", {
+  //   display: 1.12,
+  //   title: 1.28,
+  //   text: 1.65,
+  // }),
+  // single("segoe", "Segoe UI", SEGOE, "System font (Windows)", {
+  //   display: 1.15,
+  //   title: 1.3,
+  //   text: 1.65,
+  // }),
+  // single("sf-pro", "SF Pro", SF_PRO, "System font (Apple)", {
+  //   display: 1.12,
+  //   title: 1.28,
+  //   text: 1.6,
+  // }),
+  single(
+    "noto-sans",
+    "Noto Sans",
+    "var(--ff-noto-sans)",
+    "Google font",
+    { display: 1.18, title: 1.32, text: 1.7 },
+    800,
+  ),
 ];
 
 export const DEFAULT_FONT_ID = FONT_PRESETS[0].id;
@@ -146,8 +225,9 @@ const presetVars = (p: FontPreset) =>
 
 /** CSS for every preset; the default also applies with no data-font set. */
 export const buildFontThemeCss = () =>
-  FONT_PRESETS.map((p, i) =>
-    `${i === 0 ? ":root," : ""}html[data-font="${p.id}"]{${presetVars(p)}}`,
+  FONT_PRESETS.map(
+    (p, i) =>
+      `${i === 0 ? ":root," : ""}html[data-font="${p.id}"]{${presetVars(p)}}`,
   ).join("");
 
 /**

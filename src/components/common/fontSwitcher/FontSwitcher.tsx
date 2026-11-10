@@ -194,36 +194,23 @@ const FontSwitcher = () => {
         onClick={toggle}
         aria-expanded={open}
         aria-controls={mounted ? panelId : undefined}
-        aria-label={open ? "Close font options" : "Change font"}
-        title="Change font"
+        aria-label={open ? "Close font options" : "Change font style"}
+        title="Change font style"
         className={cn(
-          "relative flex h-12 w-12 items-center justify-center rounded-full border shadow-[0_15px_35px_-12px_rgba(0,0,0,0.55)] transition-colors duration-300 md:h-[52px] md:w-[52px]",
+          "group relative flex h-12 items-center gap-3 rounded-full border px-4 shadow-[0_15px_35px_-12px_rgba(0,0,0,0.55)] transition-all duration-300 md:h-[52px]",
           open
             ? "border-primary bg-primary text-white"
             : "border-white/15 bg-surface-dark text-white hover:border-primary hover:bg-primary",
         )}
       >
-        <span aria-hidden className="relative block h-3.5 w-5">
-          <span
-            className={cn(
-              "absolute left-0 h-0.5 w-full rounded-full bg-current transition-[top,rotate] duration-300",
-              open ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0",
-            )}
-          />
-          <span
-            className={cn(
-              "absolute top-1/2 left-0 h-0.5 w-full -translate-y-1/2 rounded-full bg-current transition-[opacity,scale] duration-300",
-              open ? "scale-x-0 opacity-0" : "opacity-100",
-            )}
-          />
-          <span
-            className={cn(
-              "absolute left-0 h-0.5 w-full rounded-full bg-current transition-[top,bottom,rotate] duration-300",
-              open
-                ? "top-1/2 -translate-y-1/2 -rotate-45"
-                : "top-[calc(100%-2px)]",
-            )}
-          />
+        <span className="font-heading text-lg font-bold tracking-tight">
+          Aa
+        </span>
+
+        <span className="h-5 w-px bg-current/25" />
+
+        <span className="font-dmSans text-sm font-semibold whitespace-nowrap">
+          {open ? "Close Fonts" : "Font Style"}
         </span>
       </button>
     </div>

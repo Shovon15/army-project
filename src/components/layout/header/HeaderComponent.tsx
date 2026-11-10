@@ -81,7 +81,6 @@ const HeaderComponent = ({ data }: any) => {
             0.4,
           );
       }
-
     },
     { dependencies: [mounted] },
   );

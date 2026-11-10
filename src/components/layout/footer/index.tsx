@@ -22,7 +22,7 @@ import routes from "@/config/routes";
 import { CONTACT_INFO, OPENING_HOURS } from "@/config/static";
 import { useAppSelector } from "@/store/hooks";
 
-const BRAND = "Museon";
+const BRAND = "Army Project";
 
 const SOCIAL_ICONS: Record<string, ComponentType<any>> = {
   facebook: FacebookIcon,
@@ -56,16 +56,16 @@ const LINK_COLUMNS: { title: string; links: LinkItem[] }[] = [
       { label: "Contact Us", href: routes.contact },
     ],
   },
-  {
-    title: "Collections",
-    links: [
-      { label: "Classical Art", href: "/collection/classical-art" },
-      { label: "Sculpture Gallery", href: "/collection/sculpture-gallery" },
-      { label: "Photography Collection", href: "/collection/photography" },
-      { label: "Contemporary Collection", href: "/collection/contemporary" },
-      { label: "Cultural Heritage", href: "/collection/cultural-heritage" },
-    ],
-  },
+  // {
+  //   title: "Collections",
+  //   links: [
+  //     { label: "Classical Art", href: "/collection/classical-art" },
+  //     { label: "Sculpture Gallery", href: "/collection/sculpture-gallery" },
+  //     { label: "Photography Collection", href: "/collection/photography" },
+  //     { label: "Contemporary Collection", href: "/collection/contemporary" },
+  //     { label: "Cultural Heritage", href: "/collection/cultural-heritage" },
+  //   ],
+  // },
 ];
 
 const DESCRIPTION =
@@ -89,7 +89,7 @@ const Footer = () => {
 
       <ContentContainer size="narrow" className="relative h-auto">
         {/* ---------- Top: headline + newsletter ---------- */}
-        <Reveal
+        {/* <Reveal
           once
           className="grid items-center gap-10 border-b border-white/10 pt-[clamp(64px,7vw,110px)] pb-[clamp(48px,5vw,76px)] lg:grid-cols-[1.4fr_1fr] lg:gap-16"
         >
@@ -107,7 +107,7 @@ const Footer = () => {
             </h3>
             <NewsletterForm />
           </div>
-        </Reveal>
+        </Reveal> */}
 
         {/* ---------- Middle: brand + link columns ---------- */}
         <Reveal
@@ -115,12 +115,15 @@ const Footer = () => {
           className="grid gap-12 py-[clamp(56px,5vw,80px)] sm:grid-cols-2 lg:grid-cols-[1.45fr_0.8fr_1fr_1fr] lg:gap-10"
         >
           {/* Brand */}
-          <div className="sm:col-span-2 lg:col-span-1 lg:pr-10" {...revealItem("down", 40, 0, 1)}>
+          <div
+            className="sm:col-span-2 lg:col-span-1 lg:pr-10"
+            {...revealItem("down", 40, 0, 1)}
+          >
             <Logo brand={BRAND} />
             <p className="mt-6 max-w-[420px] font-dmSans text-[15px] leading-text text-white/85">
               {DESCRIPTION}
             </p>
-            {socials.length > 0 && (
+            {/* {socials.length > 0 && (
               <ul className="mt-9 flex flex-wrap gap-3">
                 {socials.map((social) => {
                   const Icon = SOCIAL_ICONS[social.name.trim().toLowerCase()];
@@ -139,7 +142,7 @@ const Footer = () => {
                   );
                 })}
               </ul>
-            )}
+            )} */}
           </div>
 
           {/* Link columns */}
@@ -174,16 +177,16 @@ const Footer = () => {
 
           {/* Hours + location */}
           <div {...revealItem("down", 40, 0.3, 1)}>
-            <ColumnTitle>Opening Hours</ColumnTitle>
+            {/* <ColumnTitle>Opening Hours</ColumnTitle>
             <ul className="mt-6 space-y-1 font-dmSans text-[15px] leading-text text-white">
               {OPENING_HOURS.map(({ day, time }) => (
                 <li key={day}>
                   {day}: {time}
                 </li>
               ))}
-            </ul>
+            </ul> */}
 
-            <div className="mt-10">
+            <div className="">
               <ColumnTitle>Location</ColumnTitle>
               <address className="mt-6 font-dmSans text-[15px] leading-text text-white not-italic">
                 {CONTACT_INFO.address}

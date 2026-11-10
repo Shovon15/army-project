@@ -53,7 +53,7 @@ export default function CollectionPage() {
         collections={COLLECTIONS}
         cta={null}
       />
-      <CurrentExhibitions />
+      {/* <CurrentExhibitions /> */}
       <WhyChooseUs />
       <Testimonials />
       <CommonQuestions />

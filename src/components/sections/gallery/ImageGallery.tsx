@@ -1,7 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import { createPortal } from "react-dom";
 import type Lenis from "lenis";
 import ContentContainer from "@/components/layout/container/contentContainer";
@@ -13,10 +19,26 @@ import type { GalleryImage } from "@/lib/gallery/gallery";
 const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
 
 // Repeating tall / square / wide rhythm so the masonry columns interlock.
-const RATIOS = ["aspect-[4/5]", "aspect-square", "aspect-[4/3]", "aspect-[3/4]", "aspect-[4/3]", "aspect-[5/6]"];
+const RATIOS = [
+  "aspect-[4/5]",
+  "aspect-square",
+  "aspect-[4/3]",
+  "aspect-[3/4]",
+  "aspect-[4/3]",
+  "aspect-[5/6]",
+];
 
 const Icon = ({ d, className }: { d: string; className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden
+  >
     <path d={d} />
   </svg>
 );
@@ -40,7 +62,10 @@ const Lightbox = ({
   const touchX = useRef<number | null>(null);
   const count = images.length;
   const img = images[index];
-  const go = useCallback((step: number) => onIndex((index + step + count) % count), [index, count, onIndex]);
+  const go = useCallback(
+    (step: number) => onIndex((index + step + count) % count),
+    [index, count, onIndex],
+  );
 
   // Lock page scroll (Lenis + native) and move focus into the dialog.
   useEffect(() => {
@@ -87,9 +112,18 @@ const Lightbox = ({
       {/* Top bar */}
       <div className="flex items-center justify-between px-4 py-4 text-white md:px-8 md:py-6">
         <p className="font-dmSans text-[14px] tracking-[0.12em] text-white/70 tabular-nums">
-          <span className="text-accent">{String(index + 1).padStart(2, "0")}</span> / {String(count).padStart(2, "0")}
+          <span className="text-accent">
+            {String(index + 1).padStart(2, "0")}
+          </span>{" "}
+          / {String(count).padStart(2, "0")}
         </p>
-        <button ref={closeRef} type="button" onClick={onClose} aria-label="Close gallery" className={navBtn}>
+        <button
+          ref={closeRef}
+          type="button"
+          onClick={onClose}
+          aria-label="Close gallery"
+          className={navBtn}
+        >
           <Icon d="M18 6 6 18M6 6l12 12" className="h-5 w-5" />
         </button>
       </div>
@@ -99,7 +133,10 @@ const Lightbox = ({
         className="relative mx-auto flex w-full min-h-0 flex-1 items-center justify-center px-4 md:px-24"
         onClick={(e) => e.target === e.currentTarget && onClose()}
       >
-        <div key={index} className="gallery-lightbox-img relative h-full w-full max-w-[1200px]">
+        <div
+          key={index}
+          className="gallery-lightbox-img relative h-full w-full max-w-[1200px]"
+        >
           <Image
             src={img.src}
             alt={img.alt}
@@ -110,17 +147,35 @@ const Lightbox = ({
           />
         </div>
 
-        <button type="button" onClick={() => go(-1)} aria-label="Previous image" className={cn(navBtn, "absolute top-1/2 left-3 -translate-y-1/2 md:left-8")}>
+        <button
+          type="button"
+          onClick={() => go(-1)}
+          aria-label="Previous image"
+          className={cn(
+            navBtn,
+            "absolute top-1/2 left-3 -translate-y-1/2 md:left-8",
+          )}
+        >
           <Icon d="M15 18l-6-6 6-6" className="h-5 w-5" />
         </button>
-        <button type="button" onClick={() => go(1)} aria-label="Next image" className={cn(navBtn, "absolute top-1/2 right-3 -translate-y-1/2 md:right-8")}>
+        <button
+          type="button"
+          onClick={() => go(1)}
+          aria-label="Next image"
+          className={cn(
+            navBtn,
+            "absolute top-1/2 right-3 -translate-y-1/2 md:right-8",
+          )}
+        >
           <Icon d="M9 18l6-6-6-6" className="h-5 w-5" />
         </button>
       </div>
 
       {/* Caption + thumbnails */}
       <div className="px-4 pt-4 pb-5 text-center md:pb-7">
-        <p className="font-heading text-[clamp(1rem,1.3vw,1.25rem)] text-white uppercase">{img.caption}</p>
+        <p className="font-heading text-[clamp(1rem,1.3vw,1.25rem)] text-white uppercase">
+          {img.caption}
+        </p>
         <ul className="mx-auto mt-4 flex max-w-full justify-start gap-2 overflow-x-auto pb-1 md:justify-center">
           {images.map((t, i) => (
             <li key={i} className="shrink-0">
@@ -131,10 +186,18 @@ const Lightbox = ({
                 aria-current={i === index || undefined}
                 className={cn(
                   "relative block h-12 w-16 cursor-pointer overflow-hidden rounded-lg transition-[opacity,box-shadow] duration-300 md:h-14 md:w-20",
-                  i === index ? "opacity-100 ring-2 ring-accent" : "opacity-45 hover:opacity-80",
+                  i === index
+                    ? "opacity-100 ring-2 ring-accent"
+                    : "opacity-45 hover:opacity-80",
                 )}
               >
-                <Image src={t.src} alt="" fill sizes="80px" className="object-cover" />
+                <Image
+                  src={t.src}
+                  alt=""
+                  fill
+                  sizes="80px"
+                  className="object-cover"
+                />
               </button>
             </li>
           ))}
@@ -148,7 +211,13 @@ const Lightbox = ({
 /* ------------------------------ Grid ------------------------------ */
 
 /** Masonry photo grid; each photo opens a full-screen lightbox. */
-const ImageGallery = ({ images }: { images: GalleryImage[] }) => {
+const ImageGallery = ({
+  images,
+  theme = "light",
+}: {
+  images: GalleryImage[];
+  theme?: "light" | "dark";
+}) => {
   const [open, setOpen] = useState<number | null>(null);
   const lastTrigger = useRef<HTMLButtonElement | null>(null);
 
@@ -159,9 +228,17 @@ const ImageGallery = ({ images }: { images: GalleryImage[] }) => {
   }, []);
 
   return (
-    <section className="relative bg-surface-light py-16 text-ink md:py-24">
+    <section
+      className={cn(
+        "relative bg-surface-light py-16 text-ink md:py-24",
+        theme === "dark" && "bg-surface-dark text-white",
+      )}
+    >
       <ContentContainer size="narrow" className="h-auto">
-        <Reveal once className="columns-1 gap-5 sm:columns-2 lg:columns-3 lg:gap-[30px]">
+        <Reveal
+          once
+          className="columns-1 gap-5 sm:columns-2 lg:columns-3 lg:gap-[30px]"
+        >
           {images.map((img, i) => (
             <button
               key={i}
@@ -174,11 +251,22 @@ const ImageGallery = ({ images }: { images: GalleryImage[] }) => {
               className="group relative mb-5 block w-full cursor-zoom-in break-inside-avoid overflow-hidden rounded-[20px] text-left focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:outline-none lg:mb-[30px]"
             >
               <div
-                className={cn("reveal-clip relative overflow-hidden rounded-[20px]", RATIOS[i % RATIOS.length])}
-                style={{ ...delay(0.1 + (i % 3) * 0.12), "--clip-r": "20px" } as CSSProperties}
+                className={cn(
+                  "reveal-clip relative overflow-hidden rounded-[20px]",
+                  RATIOS[i % RATIOS.length],
+                )}
+                style={
+                  {
+                    ...delay(0.1 + (i % 3) * 0.12),
+                    "--clip-r": "20px",
+                  } as CSSProperties
+                }
               >
                 <ImageShine className="absolute inset-0">
-                  <div className="reveal-zoom absolute inset-0" style={delay(0.1 + (i % 3) * 0.12)}>
+                  <div
+                    className="reveal-zoom absolute inset-0"
+                    style={delay(0.1 + (i % 3) * 0.12)}
+                  >
                     <Image
                       src={img.src}
                       alt={img.alt}
@@ -204,7 +292,12 @@ const ImageGallery = ({ images }: { images: GalleryImage[] }) => {
       </ContentContainer>
 
       {open !== null && (
-        <Lightbox images={images} index={open} onClose={close} onIndex={setOpen} />
+        <Lightbox
+          images={images}
+          index={open}
+          onClose={close}
+          onIndex={setOpen}
+        />
       )}
     </section>
   );

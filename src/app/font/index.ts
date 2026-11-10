@@ -14,6 +14,7 @@ import {
   Poppins,
   Roboto,
   Syne,
+  Changa_One,
 } from "next/font/google";
 
 /*
@@ -30,8 +31,26 @@ import {
  */
 
 // ---- Default preset ("Modern Bold") ----
-const boldonse = Boldonse({ subsets: ["latin"], weight: "400", variable: "--ff-boldonse", display: "swap" });
-const inter = Inter({ subsets: ["latin"], variable: "--ff-inter", display: "swap" });
+
+const changaOne = Changa_One({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  preload: false,
+  variable: "--ff-changa-one",
+});
+
+const boldonse = Boldonse({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--ff-boldonse",
+  display: "swap",
+});
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--ff-inter",
+  display: "swap",
+});
 const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -41,19 +60,81 @@ const dmSans = DM_Sans({
 
 // ---- Other presets (lazy) ----
 
-const playfair = Playfair_Display({ subsets: ["latin"], display: "swap", preload: false, variable: "--ff-playfair" });
-const lora = Lora({ subsets: ["latin"], display: "swap", preload: false, variable: "--ff-lora" });
-const syne = Syne({ subsets: ["latin"], display: "swap", preload: false, variable: "--ff-syne" });
-const manrope = Manrope({ subsets: ["latin"], display: "swap", preload: false, variable: "--ff-manrope" });
-const cinzel = Cinzel({ subsets: ["latin"], display: "swap", preload: false, variable: "--ff-cinzel" });
-const jost = Jost({ subsets: ["latin"], display: "swap", preload: false, variable: "--ff-jost" });
-const roboto = Roboto({ subsets: ["latin"], display: "swap", preload: false, variable: "--ff-roboto" });
-const openSans = Open_Sans({ subsets: ["latin"], display: "swap", preload: false, variable: "--ff-open-sans" });
-const montserrat = Montserrat({ subsets: ["latin"], display: "swap", preload: false, variable: "--ff-montserrat" });
-const notoSans = Noto_Sans({ subsets: ["latin"], display: "swap", preload: false, variable: "--ff-noto-sans" });
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+  variable: "--ff-playfair",
+});
+const lora = Lora({
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+  variable: "--ff-lora",
+});
+const syne = Syne({
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+  variable: "--ff-syne",
+});
+const manrope = Manrope({
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+  variable: "--ff-manrope",
+});
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+  variable: "--ff-cinzel",
+});
+const jost = Jost({
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+  variable: "--ff-jost",
+});
+const roboto = Roboto({
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+  variable: "--ff-roboto",
+});
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+  variable: "--ff-open-sans",
+});
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+  variable: "--ff-montserrat",
+});
+const notoSans = Noto_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+  variable: "--ff-noto-sans",
+});
 // Static (non-variable) families need their weights listed.
-const poppins = Poppins({ subsets: ["latin"], display: "swap", preload: false, weight: ["300", "400", "500", "600", "700", "800"], variable: "--ff-poppins" });
-const lato = Lato({ subsets: ["latin"], display: "swap", preload: false, weight: ["300", "400", "700", "900"], variable: "--ff-lato" });
+const poppins = Poppins({
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--ff-poppins",
+});
+const lato = Lato({
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+  weight: ["300", "400", "700", "900"],
+  variable: "--ff-lato",
+});
 
 /** Put on <html> so every --ff-* variable is available to the presets. */
 export const FONT_VARIABLE_CLASSES = [
@@ -72,6 +153,7 @@ export const FONT_VARIABLE_CLASSES = [
   notoSans,
   poppins,
   lato,
+  changaOne,
 ]
   .map((font) => font.variable)
   .join(" ");

@@ -8,10 +8,12 @@ export const headerData = {
     {
       title: "Home",
       slug: "home",
-      // children: [
-      //   { title: "Exhibitions", slug: "exhibitions" },
-      //   { title: "Events", slug: "events" },
-      // ],
+      children: [
+        { title: "About us", slug: "about" },
+        { title: "Events", slug: "events" },
+        { title: "Collection", slug: "collection" },
+        { title: "Gallery", slug: "image-gallery" },
+      ],
     },
     {
       title: "About Us",

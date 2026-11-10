@@ -34,7 +34,7 @@ type OurEventsProps = {
   events?: MuseumEvent[];
 };
 
-const DEFAULT_EVENTS: MuseumEvent[] = [
+export const DEFAULT_EVENTS: MuseumEvent[] = [
   {
     title: "Art Through The Ages Exhibition",
     description:
@@ -73,17 +73,23 @@ const fmt = (iso: string, opts: Intl.DateTimeFormatOptions) =>
   toDate(iso).toLocaleDateString("en-US", { timeZone: "UTC", ...opts });
 
 const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
-
-const EventCard = ({ event, index }: { event: MuseumEvent; index: number }) => {
+export const EventCard = ({
+  event,
+  index,
+}: {
+  event: MuseumEvent;
+  index: number;
+}) => {
   const d = 0.15 + index * 0.15;
+
   return (
     <div className="h-full" {...revealItem("down", 70, d, 1.2)}>
-      <article className="group/card flex h-full flex-col rounded-[20px] bg-white p-[10px] shadow-[0_1px_0_rgba(0,0,0,0.04)] transition-[translate,box-shadow] duration-500 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-2 hover:shadow-[0_30px_60px_-25px_rgba(0,0,0,0.25)]">
+      <article className="group/card flex h-full flex-col overflow-hidden rounded-[20px] bg-white p-[10px] shadow-[0_1px_0_rgba(0,0,0,0.04)] transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-2 hover:shadow-[0_30px_60px_-25px_rgba(0,0,0,0.2)]">
         {/* Image */}
         <NavLink
           href={event.href}
           hover={false}
-          ariaLabel={event.title}
+          ariaLabel={`View ${event.title}`}
           tabIndex={-1}
           className="relative block aspect-[4/3] overflow-hidden rounded-[14px]"
         >
@@ -99,19 +105,13 @@ const EventCard = ({ event, index }: { event: MuseumEvent; index: number }) => {
             </div>
           </ImageShine>
 
-          {/* Date chip turns red on hover */}
-          <span className="pointer-events-none absolute top-4 left-4 z-[3] flex w-[58px] flex-col items-center rounded-[12px] bg-white py-2 text-ink transition-colors duration-500 group-hover/card:bg-primary group-hover/card:text-white">
-            <span className="font-heading text-[20px] leading-none">
-              {fmt(event.date, { day: "2-digit" })}
-            </span>
-            <span className="mt-1.5 font-dmSans text-[11px] font-semibold tracking-[0.12em] uppercase">
-              {fmt(event.date, { month: "short" })}
-            </span>
-          </span>
+          {/* Modern Expandable Arrow */}
+          <span className="absolute right-4 top-4 z-[3] flex h-11 w-11 shrink-0 items-center justify-center gap-2 overflow-hidden rounded-full bg-primary text-white shadow-lg transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover/card:w-[132px] group-hover/card:px-5 group-hover/card:shadow-xl">
+            <ArrowUpRightIcon className="h-5 w-5 shrink-0 transition-transform duration-500 group-hover/card:rotate-45" />
 
-          {/* Arrow pops in on hover */}
-          <span className="pointer-events-none absolute top-4 right-4 z-[3] flex h-11 w-11 scale-0 -rotate-45 items-center justify-center rounded-full bg-primary text-white transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover/card:scale-100 group-hover/card:rotate-0">
-            <ArrowUpRightIcon className="h-5 w-5" />
+            <span className="grid max-w-0 overflow-hidden whitespace-nowrap text-sm font-semibold opacity-0 transition-all duration-500 group-hover/card:max-w-24 group-hover/card:opacity-100">
+              Read More
+            </span>
           </span>
         </NavLink>
 
@@ -122,45 +122,26 @@ const EventCard = ({ event, index }: { event: MuseumEvent; index: number }) => {
               {event.title}
             </NavLink>
           </h3>
+
           <EventDescription text={event.description} />
 
-          <span
-            aria-hidden
-            className="relative mt-5 block h-px w-full overflow-hidden bg-black/10"
-          >
-            <span className="absolute inset-0 origin-left scale-x-0 bg-primary transition-transform duration-700 ease-[cubic-bezier(.77,0,.175,1)] group-hover/card:scale-x-100" />
-          </span>
-
-          <ul className="mt-5 space-y-2.5 font-dmSans text-[14px] text-ink-soft">
-            <li className="flex items-center gap-2.5">
-              <CalendarIcon className="h-[18px] w-[18px] shrink-0 text-primary" />
-              <time dateTime={event.date}>
-                {fmt(event.date, {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </time>
-              <span aria-hidden className="text-black/30">
-                /
-              </span>
-              {event.time}
-            </li>
-            <li className="flex items-center gap-2.5">
-              <MapPinIcon className="h-[18px] w-[18px] shrink-0 text-primary" />
-              {event.venue}
-            </li>
-          </ul>
-
+          {/* Bottom Read More */}
           <div className="mt-auto pt-6">
-            <PrimaryButton
+            <NavLink
               href={event.href}
-              size="sm"
-              arrow
-              aria-label={`Read more about ${event.title}`}
+              hover={false}
+              ariaLabel={`Read more about ${event.title}`}
+              className="group/link inline-flex items-center gap-2 text-sm font-semibold text-ink transition-colors duration-300 hover:text-primary"
             >
-              Read More
-            </PrimaryButton>
+              <span className="relative">
+                Read More
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-primary transition-all duration-300 group-hover/link:w-full" />
+              </span>
+
+              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-black/10 transition-all duration-300 group-hover/link:border-primary group-hover/link:bg-primary group-hover/link:text-white">
+                <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-300 group-hover/link:rotate-45" />
+              </span>
+            </NavLink>
           </div>
         </div>
       </article>
@@ -186,13 +167,16 @@ const OurEvents = ({
           tone="light"
         />
         <Reveal once className="lg:pb-2">
-          <p
+          {/* <p
             className="font-dmSans text-[clamp(15px,1vw,17px)] leading-text text-ink-muted"
             {...revealItem("down", 30, 0.25, 1)}
           >
             {description}
-          </p>
-          <div className="mt-7" {...revealItem("down", 30, 0.4, 1)}>
+          </p> */}
+          <div
+            className="mt-7 flex justify-center lg:justify-end"
+            {...revealItem("down", 30, 0.4, 1)}
+          >
             <PrimaryButton href={cta.href} arrow>
               {cta.label}
             </PrimaryButton>

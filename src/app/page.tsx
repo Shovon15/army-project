@@ -16,7 +16,11 @@ import { GetMetaData } from "@/lib/metadata/getMetaData";
 import { getHomeJsonLd } from "@/lib/metadata/jsonLdSchemas/homeLd";
 import { Metadata } from "next";
 import { getBlogPosts } from "@/lib/blog/posts";
-
+import ImageGallery from "@/components/sections/gallery/ImageGallery";
+import { GALLERY_IMAGES } from "@/lib/gallery/gallery";
+import GlowBackground from "@/components/common/background/GlowBackground";
+import ContentContainer from "@/components/layout/container/contentContainer";
+import SectionHeading from "@/components/common/typography/SectionHeading";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await GetMetaData({
@@ -27,19 +31,32 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   const posts = await getBlogPosts();
+  const titleLines = ["Discover The Beauty Of", "Art & Creativity"];
   return (
     <SchemaWrapper jsonLd={getHomeJsonLd()}>
       <HeroBanner />
       <MarqueeSection />
       <AboutMuseum />
-      <FeaturedCollections />
+      {/* <FeaturedCollections /> */}
       <WhyChooseUs />
-      <CurrentExhibitions />
+      {/* <CurrentExhibitions /> */}
       <OurEvents />
       <MeetOurExperts />
-      <WhoWeAre />
+      {/* <WhoWeAre /> */}
+      <section className="relative isolate overflow-hidden bg-surface-dark py-20 text-white md:py-28 h-full">
+        {/* <GlowBackground /> */}
+
+        <ContentContainer className="h-auto">
+          <SectionHeading
+            badge={"explore gallery"}
+            lines={titleLines}
+            tone="dark"
+          />
+          <ImageGallery images={GALLERY_IMAGES} theme={"dark"} />
+        </ContentContainer>
+      </section>
       <Testimonials />
-      <LatestNews posts={posts} limit={3} />
+      {/* <LatestNews posts={posts} limit={3} /> */}
     </SchemaWrapper>
   );
 }

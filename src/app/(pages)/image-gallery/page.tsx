@@ -38,7 +38,7 @@ export default function ImageGalleryPage() {
         breadcrumbs={[{ label: PAGE_NAME }]}
         image={galleryBanner}
       />
-      <ImageGallery images={GALLERY_IMAGES} />
+      <ImageGallery theme={"light"} images={GALLERY_IMAGES} />
     </SchemaWrapper>
   );
 }
