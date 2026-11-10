@@ -9,6 +9,7 @@ import NavLink from "@/components/common/link/NavLink";
 import PrimaryButton from "@/components/common/button/PrimaryButton";
 import ArrowUpRightIcon from "@/assets/icons/ArrowUpRightIcon";
 import { CalendarIcon, MapPinIcon } from "@/assets/icons/MetaIcons";
+import EventDescription from "./EventDescription";
 
 import eventImage1 from "@/assets/images/event-item-image-1.jpg";
 import eventImage2 from "@/assets/images/event-item-image-2.jpg";
@@ -36,7 +37,8 @@ type OurEventsProps = {
 const DEFAULT_EVENTS: MuseumEvent[] = [
   {
     title: "Art Through The Ages Exhibition",
-    description: "A guided walk through five centuries of painting, from the Renaissance to the modern era.",
+    description:
+      "A guided walk through five centuries of painting, from the Renaissance to the modern era. Discover the evolution of artistic expression and the stories behind iconic masterpieces.Meet the artists behind our newest acquisitions and hear the stories behind their work. ",
     date: "2026-03-15",
     time: "5:00 PM",
     venue: "Grand Heritage Gallery",
@@ -45,7 +47,8 @@ const DEFAULT_EVENTS: MuseumEvent[] = [
   },
   {
     title: "Modern Artist Showcase",
-    description: "Meet the artists behind our newest acquisitions and hear the stories behind their work.",
+    description:
+      "Meet the artists behind our newest acquisitions and hear the stories behind their work.",
     date: "2026-06-12",
     time: "7:00 PM",
     venue: "Contemporary Art Wing",
@@ -54,7 +57,8 @@ const DEFAULT_EVENTS: MuseumEvent[] = [
   },
   {
     title: "Museum Guided Heritage Tour",
-    description: "An expert-led tour of our heritage halls and the treasures they preserve.",
+    description:
+      "An expert-led tour of our heritage halls and the treasures they preserve.",
     date: "2026-11-25",
     time: "10:30 AM",
     venue: "Heritage Exhibition Hall",
@@ -74,14 +78,15 @@ const EventCard = ({ event, index }: { event: MuseumEvent; index: number }) => {
   const d = 0.15 + index * 0.15;
   return (
     <div className="h-full" {...revealItem("down", 70, d, 1.2)}>
-      <NavLink
-        href={event.href}
-        hover={false}
-        ariaLabel={event.title}
-        className="group flex h-full flex-col rounded-[20px] bg-white p-[10px] shadow-[0_1px_0_rgba(0,0,0,0.04)] transition-[translate,box-shadow] duration-500 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-2 hover:shadow-[0_30px_60px_-25px_rgba(0,0,0,0.25)]"
-      >
+      <article className="group/card flex h-full flex-col rounded-[20px] bg-white p-[10px] shadow-[0_1px_0_rgba(0,0,0,0.04)] transition-[translate,box-shadow] duration-500 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-2 hover:shadow-[0_30px_60px_-25px_rgba(0,0,0,0.25)]">
         {/* Image */}
-        <div className="relative aspect-[4/3] overflow-hidden rounded-[14px]">
+        <NavLink
+          href={event.href}
+          hover={false}
+          ariaLabel={event.title}
+          tabIndex={-1}
+          className="relative block aspect-[4/3] overflow-hidden rounded-[14px]"
+        >
           <ImageShine className="absolute inset-0">
             <div className="reveal-zoom absolute inset-0" style={delay(d)}>
               <Image
@@ -89,13 +94,13 @@ const EventCard = ({ event, index }: { event: MuseumEvent; index: number }) => {
                 alt=""
                 fill
                 sizes="(min-width: 1024px) 28vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-110"
+                className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.22,1,.36,1)] group-hover/card:scale-110"
               />
             </div>
           </ImageShine>
 
           {/* Date chip turns red on hover */}
-          <span className="pointer-events-none absolute top-4 left-4 z-[3] flex w-[58px] flex-col items-center rounded-[12px] bg-white py-2 text-ink transition-colors duration-500 group-hover:bg-primary group-hover:text-white">
+          <span className="pointer-events-none absolute top-4 left-4 z-[3] flex w-[58px] flex-col items-center rounded-[12px] bg-white py-2 text-ink transition-colors duration-500 group-hover/card:bg-primary group-hover/card:text-white">
             <span className="font-heading text-[20px] leading-none">
               {fmt(event.date, { day: "2-digit" })}
             </span>
@@ -105,31 +110,40 @@ const EventCard = ({ event, index }: { event: MuseumEvent; index: number }) => {
           </span>
 
           {/* Arrow pops in on hover */}
-          <span className="pointer-events-none absolute top-4 right-4 z-[3] flex h-11 w-11 scale-0 -rotate-45 items-center justify-center rounded-full bg-primary text-white transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-100 group-hover:rotate-0">
+          <span className="pointer-events-none absolute top-4 right-4 z-[3] flex h-11 w-11 scale-0 -rotate-45 items-center justify-center rounded-full bg-primary text-white transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover/card:scale-100 group-hover/card:rotate-0">
             <ArrowUpRightIcon className="h-5 w-5" />
           </span>
-        </div>
+        </NavLink>
 
         {/* Body */}
         <div className="flex flex-1 flex-col px-3 pt-6 pb-4 md:px-4">
-          <h3 className="font-heading text-[clamp(0.95rem,1.1vw,1.15rem)] leading-title text-ink uppercase transition-colors duration-300 group-hover:text-primary">
-            {event.title}
+          <h3 className="font-heading text-[clamp(0.95rem,1.1vw,1.15rem)] leading-title text-ink uppercase transition-colors duration-300 group-hover/card:text-primary">
+            <NavLink href={event.href} hover={false}>
+              {event.title}
+            </NavLink>
           </h3>
-          <p className="mt-3 line-clamp-2 font-dmSans text-[15px] leading-text text-ink-muted">
-            {event.description}
-          </p>
+          <EventDescription text={event.description} />
 
-          <span aria-hidden className="relative mt-5 block h-px w-full overflow-hidden bg-black/10">
-            <span className="absolute inset-0 origin-left scale-x-0 bg-primary transition-transform duration-700 ease-[cubic-bezier(.77,0,.175,1)] group-hover:scale-x-100" />
+          <span
+            aria-hidden
+            className="relative mt-5 block h-px w-full overflow-hidden bg-black/10"
+          >
+            <span className="absolute inset-0 origin-left scale-x-0 bg-primary transition-transform duration-700 ease-[cubic-bezier(.77,0,.175,1)] group-hover/card:scale-x-100" />
           </span>
 
           <ul className="mt-5 space-y-2.5 font-dmSans text-[14px] text-ink-soft">
             <li className="flex items-center gap-2.5">
               <CalendarIcon className="h-[18px] w-[18px] shrink-0 text-primary" />
               <time dateTime={event.date}>
-                {fmt(event.date, { month: "long", day: "numeric", year: "numeric" })}
+                {fmt(event.date, {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
               </time>
-              <span aria-hidden className="text-black/30">/</span>
+              <span aria-hidden className="text-black/30">
+                /
+              </span>
               {event.time}
             </li>
             <li className="flex items-center gap-2.5">
@@ -137,8 +151,19 @@ const EventCard = ({ event, index }: { event: MuseumEvent; index: number }) => {
               {event.venue}
             </li>
           </ul>
+
+          <div className="mt-auto pt-6">
+            <PrimaryButton
+              href={event.href}
+              size="sm"
+              arrow
+              aria-label={`Read more about ${event.title}`}
+            >
+              Read More
+            </PrimaryButton>
+          </div>
         </div>
-      </NavLink>
+      </article>
     </div>
   );
 };
@@ -154,7 +179,12 @@ const OurEvents = ({
     <ContentContainer size="narrow" className="h-auto">
       {/* Header row */}
       <div className="grid items-end gap-8 lg:grid-cols-2 lg:gap-16">
-        <SectionHeading badge={badge} lines={titleLines} align="left" tone="light" />
+        <SectionHeading
+          badge={badge}
+          lines={titleLines}
+          align="left"
+          tone="light"
+        />
         <Reveal once className="lg:pb-2">
           <p
             className="font-dmSans text-[clamp(15px,1vw,17px)] leading-text text-ink-muted"
@@ -177,7 +207,11 @@ const OurEvents = ({
         {events.map((event, i) => (
           <div
             key={event.title}
-            className={i === 2 ? "sm:col-span-2 sm:mx-auto sm:w-1/2 lg:col-span-1 lg:mx-0 lg:w-full" : undefined}
+            className={
+              i === 2
+                ? "sm:col-span-2 sm:mx-auto sm:w-1/2 lg:col-span-1 lg:mx-0 lg:w-full"
+                : undefined
+            }
           >
             <EventCard event={event} index={i} />
           </div>

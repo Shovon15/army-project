@@ -5,40 +5,32 @@ import logoImage from "@/assets/images/logo.png";
 
 type LogoProps = {
   className?: string;
-  /** Wordmark next to the emblem. */
+  /** Brand name, used only for the link's accessible label. */
   brand?: string;
-  /** Hide the wordmark and show only the emblem. */
-  iconOnly?: boolean;
   onClick?: () => void;
 };
 
 /**
  * Round emblem (src/assets/images/logo.png, transparent PNG cut from
- * logo.jpeg) + wordmark. The same emblem is used for the favicon
- * (src/app/icon.png), apple-icon.png, public/logo.png and the share image.
+ * logo.jpeg). The same emblem is used for the favicon (src/app/icon.png),
+ * apple-icon.png, public/logo.png and the share image.
  */
-const Logo = ({ className, brand = "Museon", iconOnly = false, onClick }: LogoProps) => {
+const Logo = ({ className, brand = "Museon", onClick }: LogoProps) => {
   return (
     <NavLink
       href="/"
       hover={false}
       ariaLabel={`${brand} home`}
       onClick={onClick}
-      className={cn("group inline-flex items-center gap-3", className)}
+      className={cn("group inline-flex items-center", className)}
     >
       <Image
         src={logoImage}
         alt=""
         priority
-        sizes="56px"
-        className="h-11 w-11 shrink-0 rounded-full transition-[scale,box-shadow] duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-105 group-hover:shadow-[0_0_0_3px_rgb(var(--accent-rgb)/0.35)] lg:h-[52px] lg:w-[52px]"
+        sizes="76px"
+        className="h-16 w-16 shrink-0 rounded-full transition-[scale,box-shadow] duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-105 group-hover:shadow-[0_0_0_3px_rgb(var(--accent-rgb)/0.35)] lg:h-[76px] lg:w-[76px]"
       />
-      {!iconOnly && (
-        <span className="font-boldCond text-[18px] leading-title text-white uppercase lg:text-[21px]">
-          {brand}
-          <span className="text-accent">.</span>
-        </span>
-      )}
     </NavLink>
   );
 };
