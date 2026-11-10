@@ -2,11 +2,11 @@
 
 import { useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useScrollMetrics } from "@/hooks/useScrollMetrics";
 import { useGSAP } from "@gsap/react";
 import type Lenis from "lenis";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP);
 
 const RADIUS = 26;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
@@ -35,56 +35,64 @@ const Arrow = ({ className }: { className?: string }) => (
  */
 const BackToTop = () => {
   const rootRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<SVGCircleElement>(null);
+  const visibleRef = useRef(false);
+  const launchingRef = useRef(false);
+
+  /** Pops the button in or out (no-op if already in that state). */
+  const setVisible = (shouldShow: boolean) => {
+    const btn = rootRef.current?.querySelector("[data-btn]");
+    if (!btn || shouldShow === visibleRef.current) return;
+    visibleRef.current = shouldShow;
+
+    gsap.to(
+      btn,
+      shouldShow
+        ? {
+            scale: 1,
+            rotate: 0,
+            autoAlpha: 1,
+            duration: 0.9,
+            ease: "elastic.out(1, 0.55)",
+            overwrite: "auto",
+          }
+        : {
+            scale: 0,
+            rotate: 180,
+            autoAlpha: 0,
+            duration: 0.45,
+            ease: "back.in(1.6)",
+            overwrite: "auto",
+          },
+    );
+  };
+
+  /* ---------- Ring = live page progress; pop in / out past SHOW_AFTER ---------- */
+  useScrollMetrics(({ y, progress }) => {
+    // Written straight to the attribute: no tween lag, always in sync.
+    ringRef.current?.setAttribute(
+      "stroke-dashoffset",
+      String(CIRCUMFERENCE * (1 - progress)),
+    );
+
+    const shouldShow = y > SHOW_AFTER;
+    // While launching, don't hide mid-animation; onComplete re-checks.
+    if (launchingRef.current && !shouldShow) return;
+    setVisible(shouldShow);
+  });
 
   useGSAP(
     () => {
       const q = gsap.utils.selector(rootRef);
       const btn = q("[data-btn]")[0];
-      const ring = q("[data-ring]")[0];
-      let visible = false;
-      let launching = false;
 
-      gsap.set(btn, { scale: 0, rotate: -180, autoAlpha: 0 });
-
-      ScrollTrigger.create({
-        start: 0,
-        end: "max",
-        onUpdate: (self) => {
-          gsap.set(ring, {
-            strokeDashoffset: CIRCUMFERENCE * (1 - self.progress),
-          });
-
-          const shouldShow = self.scroll() > SHOW_AFTER;
-          if (shouldShow === visible || launching) return;
-          visible = shouldShow;
-
-          gsap.to(
-            btn,
-            shouldShow
-              ? {
-                  scale: 1,
-                  rotate: 0,
-                  autoAlpha: 1,
-                  duration: 0.9,
-                  ease: "elastic.out(1, 0.55)",
-                  overwrite: true,
-                }
-              : {
-                  scale: 0,
-                  rotate: 180,
-                  autoAlpha: 0,
-                  duration: 0.45,
-                  ease: "back.in(1.6)",
-                  overwrite: true,
-                },
-          );
-        },
-      });
+      // Start hidden unless the page is already scrolled (e.g. on reload).
+      if (!visibleRef.current) gsap.set(btn, { scale: 0, rotate: -180, autoAlpha: 0 });
 
       /* ---------- Launch on click ---------- */
       const launch = () => {
-        if (launching) return;
-        launching = true;
+        if (launchingRef.current) return;
+        launchingRef.current = true;
 
         const reduceMotion = window.matchMedia(
           "(prefers-reduced-motion: reduce)",
@@ -102,14 +110,17 @@ const BackToTop = () => {
 
         if (reduceMotion) {
           scrollUp();
-          launching = false;
+          launchingRef.current = false;
+          setVisible(false);
           return;
         }
 
         gsap
           .timeline({
             onComplete: () => {
-              launching = false;
+              launchingRef.current = false;
+              // The scroll-up may have finished during the animation.
+              if (window.scrollY <= SHOW_AFTER) setVisible(false);
             },
           })
           // Charge up: squash down
@@ -192,7 +203,7 @@ const BackToTop = () => {
             strokeWidth="2"
           />
           <circle
-            data-ring
+            ref={ringRef}
             cx="30"
             cy="30"
             r={RADIUS}

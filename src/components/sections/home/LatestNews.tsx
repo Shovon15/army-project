@@ -23,6 +23,10 @@ type LatestNewsProps = {
   titleLines?: string[];
   posts?: NewsPost[];
   linkLabel?: string;
+  /** false hides the badge + title (e.g. /blog under the page banner). */
+  showHeading?: boolean;
+  /** Max cards to show; omit to show every post. */
+  limit?: number;
 };
 
 const DEFAULT_POSTS: NewsPost[] = [
@@ -94,26 +98,41 @@ const LatestNews = ({
   titleLines = ["Discover The Stories", "Behind Every Masterpiece"],
   posts = DEFAULT_POSTS,
   linkLabel = "Explore More",
-}: LatestNewsProps) => (
-  <section className="relative overflow-hidden bg-surface-light py-20 text-ink md:py-28">
-    <ContentContainer size="narrow" className="h-auto">
-      <SectionHeading badge={badge} lines={titleLines} tone="light" />
+  showHeading = true,
+  limit,
+}: LatestNewsProps) => {
+  const shown = limit ? posts.slice(0, limit) : posts;
+  // On the 2-column (tablet) grid an odd last card is centred at half width.
+  const oddLast = shown.length % 2 === 1;
 
-      <Reveal
-        once
-        className="mt-14 grid gap-6 sm:grid-cols-2 md:mt-16 lg:grid-cols-3 lg:gap-[30px]"
-      >
-        {posts.slice(0, 3).map((post, i) => (
-          <div
-            key={post.slug}
-            className={i === 2 ? "sm:col-span-2 sm:mx-auto sm:w-1/2 lg:col-span-1 lg:mx-0 lg:w-full" : undefined}
-          >
-            <NewsCard post={post} index={i} linkLabel={linkLabel} />
-          </div>
-        ))}
-      </Reveal>
-    </ContentContainer>
-  </section>
-);
+  return (
+    <section className="relative overflow-hidden bg-surface-light py-20 text-ink md:py-28">
+      <ContentContainer size="narrow" className="h-auto">
+        {showHeading && (
+          <SectionHeading badge={badge} lines={titleLines} tone="light" />
+        )}
+
+        <Reveal
+          once
+          className={`grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-[30px] ${showHeading ? "mt-14 md:mt-16" : ""}`}
+        >
+          {shown.map((post, i) => (
+            <div
+              key={post.slug}
+              className={
+                oddLast && i === shown.length - 1
+                  ? "sm:col-span-2 sm:mx-auto sm:w-1/2 lg:col-span-1 lg:mx-0 lg:w-full"
+                  : undefined
+              }
+            >
+              {/* Stagger restarts every row so later rows don't lag behind. */}
+              <NewsCard post={post} index={i % 3} linkLabel={linkLabel} />
+            </div>
+          ))}
+        </Reveal>
+      </ContentContainer>
+    </section>
+  );
+};
 
 export default LatestNews;

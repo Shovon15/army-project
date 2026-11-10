@@ -1,3 +1,5 @@
+import routes from "@/config/routes";
+
 // Fallback navigation (used until / unless the CMS returns header items).
 export const headerData = {
   title: "Header",
@@ -6,10 +8,10 @@ export const headerData = {
     {
       title: "Home",
       slug: "home",
-      children: [
-        { title: "Exhibitions", slug: "exhibitions" },
-        { title: "Events", slug: "events" },
-      ],
+      // children: [
+      //   { title: "Exhibitions", slug: "exhibitions" },
+      //   { title: "Events", slug: "events" },
+      // ],
     },
     {
       title: "About Us",
@@ -26,9 +28,16 @@ export const headerData = {
     {
       title: "Pages",
       slug: "pages",
+      // Dropdown only: there is no /pages page (see utils/helpers/navPaths).
+      group: true,
       children: [
-        { title: "FAQ", slug: "faq" },
-        { title: "Privacy Policy", slug: "privacy-policy" },
+        { title: "Image Gallery", slug: "image-gallery", href: routes.gallery },
+        { title: "FAQ", slug: "faq", href: routes.faq },
+        {
+          title: "Privacy Policy",
+          slug: "privacy-policy",
+          href: routes.privacyPolicy,
+        },
       ],
     },
     {

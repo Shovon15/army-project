@@ -11,19 +11,24 @@ type Props = {
   items: IFaqItem[];
   defaultOpenFirst?: boolean;
   tag?: "h2" | "h3" | "h4";
+  /** 2 = masonry columns on desktop, 1 = single stacked list. */
+  columns?: 1 | 2;
 };
 
 export function Accordion({
   items,
   defaultOpenFirst = true,
   tag = "h2",
+  columns = 2,
 }: Props) {
   const [activeIndex, setActiveIndex] = useState<number | null>(
     defaultOpenFirst ? 0 : null,
   );
 
   return (
-    <div className="columns-1 lg:columns-2 gap-3 w-full">
+    <div
+      className={columns === 2 ? "columns-1 lg:columns-2 gap-3 w-full" : "w-full"}
+    >
       {items.map((item, index) => (
         <FaqRow
           key={index}
@@ -89,21 +94,25 @@ function FaqRow({
   );
 
   return (
-    <div className="break-inside-avoid mb-3 rounded-xl bg-[#F3F3F3] px-4 py-4 transition lg:py-5">
+    <div
+      className={`break-inside-avoid mb-3 rounded-[16px] border bg-white px-5 py-4 transition-colors duration-300 lg:px-7 lg:py-6 ${active ? "border-primary/30" : "border-black/5"}`}
+    >
       <button
         type="button"
         aria-expanded={active}
         onClick={onToggle}
         className="flex w-full cursor-pointer items-center justify-between gap-4 text-left"
       >
-        <Tag className="font-body text-sm font-medium text-[#151515] lg:text-base">
+        <Tag
+          className={`font-heading text-[15px] leading-title uppercase transition-colors duration-300 lg:text-[17px] ${active ? "text-primary" : "text-ink"}`}
+        >
           {item.question}
         </Tag>
 
         <span
           ref={iconWrapRef}
           aria-hidden
-          className="relative ml-auto inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center"
+          className={`relative ml-auto inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full p-2 transition-colors duration-300 ${active ? "bg-primary text-white" : "bg-surface-light text-ink"}`}
           style={initiallyActive ? { transform: "rotate(180deg)" } : undefined}
         >
           <svg
@@ -129,7 +138,7 @@ function FaqRow({
           initiallyActive ? "mt-4 overflow-hidden" : "h-0 overflow-hidden opacity-0"
         }
       >
-        <div className="font-body text-sm font-normal leading-relaxed text-[#666666] whitespace-pre-line lg:text-base ">
+        <div className="font-dmSans text-[15px] leading-text text-ink-muted whitespace-pre-line">
           <SafeHtml content={item.answer} />
         </div>
       </div>

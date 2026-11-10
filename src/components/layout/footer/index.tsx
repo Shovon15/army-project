@@ -19,7 +19,7 @@ import {
   YoutubeIcon,
 } from "@/assets/icons";
 import routes from "@/config/routes";
-import { CONTACT_INFO } from "@/config/static";
+import { CONTACT_INFO, OPENING_HOURS } from "@/config/static";
 import { useAppSelector } from "@/store/hooks";
 
 const BRAND = "Museon";
@@ -66,12 +66,6 @@ const LINK_COLUMNS: { title: string; links: LinkItem[] }[] = [
       { label: "Cultural Heritage", href: "/collection/cultural-heritage" },
     ],
   },
-];
-
-// TODO: move to CMS site settings
-const OPENING_HOURS = [
-  { day: "Daily", time: "10:00AM - 6:00PM" },
-  { day: "Closed", time: "Sundays & Holidays" },
 ];
 
 const DESCRIPTION =
@@ -199,16 +193,36 @@ const Footer = () => {
         </Reveal>
 
         {/* ---------- Bottom: copyright ---------- */}
-        <div className="border-t border-white/10 py-7 text-center font-dmSans text-[15px] text-white/90">
-          Copyright © {new Date().getFullYear()}{" "}
-          <NavLink
-            href={routes.home}
-            hover={false}
-            className="transition-colors duration-300 hover:text-accent"
-          >
-            {BRAND}
-          </NavLink>
-          . All rights reserved.
+        <div className="flex flex-col items-center gap-3 border-t border-white/10 py-7 text-center font-dmSans text-[15px] text-white/90 md:flex-row md:justify-between md:text-left">
+          <p>
+            Copyright © {new Date().getFullYear()}{" "}
+            <NavLink
+              href={routes.home}
+              hover={false}
+              className="transition-colors duration-300 hover:text-accent"
+            >
+              {BRAND}
+            </NavLink>
+            . All rights reserved.
+          </p>
+          <nav aria-label="Legal">
+            <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+              {[
+                { label: "FAQs", href: routes.faq },
+                { label: "Privacy Policy", href: routes.privacyPolicy },
+              ].map((link) => (
+                <li key={link.href}>
+                  <NavLink
+                    href={link.href}
+                    hover={false}
+                    className="transition-colors duration-300 hover:text-accent"
+                  >
+                    {link.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </ContentContainer>
     </footer>

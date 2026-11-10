@@ -6,6 +6,7 @@ import SectionBadge from "@/components/common/typography/SectionBadge";
 import GlowBackground from "@/components/common/background/GlowBackground";
 import AnimatedHeading from "@/components/common/typography/AnimatedHeading";
 import { cn } from "@/utils/helpers/cn";
+import routes from "@/config/routes";
 import bannerImage from "@/assets/images/banner-image.png";
 
 type HeroBannerProps = {
@@ -25,7 +26,7 @@ const HeroBanner = ({
   titleLines = ["Discover Timeless", "Art Beyond Every", "Generation"],
   description = "Step into a world where creativity, history, and culture come together. Explore extraordinary collections for every visitor.",
   ctaLabel = "Explore The Gallery",
-  ctaHref = "/",
+  ctaHref = routes.gallery,
   image = bannerImage,
   imageAlt = "Classical marble sculpture of a draped woman",
   className,

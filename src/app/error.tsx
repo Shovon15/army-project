@@ -1,41 +1,46 @@
-"use client";
+"use client"; // Error boundaries must be Client Components
+
+import { useEffect } from "react";
+import StatusScreen from "@/components/common/fallback/StatusScreen";
 import PrimaryButton from "@/components/common/button/PrimaryButton";
-import Heading1 from "@/components/common/typography/Heading1";
+import routes from "@/config/routes";
 
 export default function Error({
   error,
-  reset,
+  retry,
 }: {
-  error: Error & { digest?: string };
-  reset: () => void;
+  error: unknown;
+  /** Re-fetches and re-renders the failed segment (Next 16.3+). */
+  retry: () => void;
 }) {
-  return (
-    <section className="h-full min-h-[calc(100dvh-338px)] md:min-h-[calc(100dvh-360px)] w-full flex items-center justify-center">
-      <div className="max-w-[670px] w-[90%] mx-auto">
-        <div className="w-full mx-auto">
-          {/* <ImageComponent src={pageNotFound} alt="Sad Face Emoji" /> */}
-        </div>
-        <div className="flex flex-col items-center justify-center text-center mx-auto w-full">
-          <Heading1
-            wrapperClassName="mx-auto w-fit"
-            className="text-center text-primary"
-          >
-            Page Not Found
-          </Heading1>
-          <p
-            className={
-              "font-dmSans font-[300] text-white py-5 text-[clamp(14px,1.2vw,16px)] leading-[clamp(20px,1.6vw,26px)]"
-            }
-          >
-            We’re sorry, the page you requested could not be found Please go
-            back to the homepage
-          </p>
+  useEffect(() => {
+    // TODO: send to an error reporting service.
+    console.error(error);
+  }, [error]);
 
-          <PrimaryButton href="/" arrow className="my-5">
-            Home
+  // Server errors carry a digest that matches the server log entry.
+  const digest =
+    typeof error === "object" && error !== null && "digest" in error
+      ? String((error as { digest?: string }).digest ?? "")
+      : "";
+
+  return (
+    <StatusScreen
+      code="Oops"
+      badge="Something Went Wrong"
+      titleLines={["A Brushstroke Out", "Of Place"]}
+      description="An unexpected error stopped this page from loading. Please try again, or head back to the homepage."
+      actions={
+        <>
+          <PrimaryButton type="button" onClick={() => retry()} arrow>
+            Try Again
           </PrimaryButton>
-        </div>
-      </div>
-    </section>
+          <PrimaryButton href={routes.home} variant="outline" arrow>
+            Back To Home
+          </PrimaryButton>
+        </>
+      }
+      footnote={digest ? <>Error reference: {digest}</> : undefined}
+    />
   );
 }

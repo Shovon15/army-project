@@ -10,10 +10,7 @@ import CtaLine from "@/components/common/cta/CtaLine";
 import ArrowUpRightIcon from "@/assets/icons/ArrowUpRightIcon";
 import { cn } from "@/utils/helpers/cn";
 
-// Collection photos
-import collectionImage1 from "@/assets/images/collection-item-image-1.jpg";
-import collectionImage2 from "@/assets/images/collection-item-image-2.jpg";
-import collectionImage3 from "@/assets/images/collection-item-image-3.jpg";
+import { COLLECTIONS } from "@/lib/collections/collections";
 
 export type Collection = {
   title: string;
@@ -25,32 +22,17 @@ export type Collection = {
 type FeaturedCollectionsProps = {
   badge?: string;
   titleLines?: string[];
+  /** false hides the badge + title (e.g. on /collection under the page banner). */
+  showHeading?: boolean;
   collections?: Collection[];
-  cta?: { text: string; linkLabel: string; href: string };
+  /** null hides the closing CTA line. */
+  cta?: { text: string; linkLabel: string; href: string } | null;
+  /** "dark" = navy section with glows (home), "light" = ivory section. */
+  tone?: "dark" | "light";
 };
 
-const DEFAULT_COLLECTIONS: Collection[] = [
-  {
-    title: "Sculpture Gallery",
-    description:
-      "Explore remarkable sculptures crafted across centuries and cultures.",
-    href: "/collection/sculpture-gallery",
-    image: collectionImage1,
-  },
-  {
-    title: "Photography Collection",
-    description: "Moments in light and shadow from pioneering photographers.",
-    href: "/collection/photography",
-    image: collectionImage2,
-  },
-  {
-    title: "Cultural Heritage",
-    description:
-      "Artefacts and stories that carry the memory of civilisations.",
-    href: "/collection/cultural-heritage",
-    image: collectionImage3,
-  },
-];
+// Home shows the first three collections (data: src/lib/collections).
+const DEFAULT_COLLECTIONS: Collection[] = COLLECTIONS.slice(0, 3);
 
 const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
 
@@ -118,41 +100,59 @@ const CollectionCard = ({
 const FeaturedCollections = ({
   badge = "Featured Collections",
   titleLines = ["Explore Our Exceptional", "Art Collections"],
+  showHeading = true,
   collections = DEFAULT_COLLECTIONS,
   cta = {
     text: "Reach out and begin your artistic journey today –",
     linkLabel: "View Our Collection.",
     href: "/collection",
   },
-}: FeaturedCollectionsProps) => (
-  <section className="relative isolate overflow-hidden bg-surface-dark py-20 text-white md:py-28">
-    <GlowBackground />
+  tone = "dark",
+}: FeaturedCollectionsProps) => {
+  const dark = tone === "dark";
+  // On the 2-column (tablet) grid an odd last card is centred at half width.
+  const oddLast = collections.length % 2 === 1;
 
-    <ContentContainer size="narrow" className="h-auto">
-      <SectionHeading badge={badge} lines={titleLines} tone="dark" />
+  return (
+    <section
+      className={cn(
+        "relative isolate overflow-hidden py-20 md:py-28",
+        dark ? "bg-surface-dark text-white" : "bg-surface-light text-ink",
+      )}
+    >
+      {dark && <GlowBackground />}
 
-      <Reveal
-        once
-        className={cn(
-          "mt-14 grid gap-6 sm:grid-cols-2 md:mt-16 lg:grid-cols-3 lg:gap-[30px]",
+      <ContentContainer size="narrow" className="h-auto">
+        {showHeading && (
+          <SectionHeading badge={badge} lines={titleLines} tone={tone} />
         )}
-      >
-        {collections.map((item, i) => (
-          <div
-            key={item.title}
-            className={cn(
-              i === 2 &&
-                "sm:col-span-2 sm:mx-auto sm:w-1/2 lg:col-span-1 lg:mx-0 lg:w-full",
-            )}
-          >
-            <CollectionCard item={item} index={i} />
-          </div>
-        ))}
-      </Reveal>
 
-      <CtaLine {...cta} className="mt-12" />
-    </ContentContainer>
-  </section>
-);
+        <Reveal
+          once
+          className={cn(
+            "grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-[30px]",
+            showHeading && "mt-14 md:mt-16",
+          )}
+        >
+          {collections.map((item, i) => (
+            <div
+              key={item.title}
+              className={cn(
+                oddLast &&
+                  i === collections.length - 1 &&
+                  "sm:col-span-2 sm:mx-auto sm:w-1/2 lg:col-span-1 lg:mx-0 lg:w-full",
+              )}
+            >
+              {/* Stagger restarts every row so later rows don't lag behind. */}
+              <CollectionCard item={item} index={i % 3} />
+            </div>
+          ))}
+        </Reveal>
+
+        {cta && <CtaLine {...cta} tone={tone} className="mt-12" />}
+      </ContentContainer>
+    </section>
+  );
+};
 
 export default FeaturedCollections;

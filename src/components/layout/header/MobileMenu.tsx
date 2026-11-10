@@ -2,6 +2,7 @@
 
 import NavLink from "@/components/common/link/NavLink";
 import { cn } from "@/utils/helpers/cn";
+import { getNavChildPath, getNavPath, isGroupItem } from "@/utils/helpers/navPaths";
 import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useState } from "react";
 
@@ -33,22 +34,15 @@ const MobileMenu: React.FC<MobileDropdownProps> = ({
     });
   };
 
-  const getPath = (slug?: string) => {
-    if (!slug || slug === "home") return "/";
-    return `/${slug}`;
-  };
-
   const handleRedirect = (item: any) => {
-    router.push(getPath(item.slug));
+    // Group parents ("Pages") have no page of their own: just expand them.
+    if (isGroupItem(item)) return;
+    router.push(getNavPath(item));
     onClose();
   };
 
   const handleChildRedirect = (item: any, child: any) => {
-    const parentPath = getPath(item.slug);
-    const path =
-      parentPath === "/" ? `/${child.slug}` : `${parentPath}/${child.slug}`;
-
-    router.push(path);
+    router.push(getNavChildPath(item, child));
     onClose();
   };
 

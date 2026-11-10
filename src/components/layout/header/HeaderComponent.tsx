@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useScrollMetrics } from "@/hooks/useScrollMetrics";
 import { useGSAP } from "@gsap/react";
 import ContentContainer from "../container/contentContainer";
 import Hamburger from "./hamburger/Hamburger";
@@ -18,7 +18,7 @@ import {
 import { normalizeSiteInfoNavigation } from "@/hooks/useNavigationData";
 import { cn } from "@/utils/helpers/cn";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP);
 
 const emptySubscribe = () => () => {};
 
@@ -82,43 +82,45 @@ const HeaderComponent = ({ data }: any) => {
           );
       }
 
-      /* ---------- Hide on scroll down, reveal on scroll up ---------- */
-      let hidden = false;
-      const show = () => {
-        if (!hidden) return;
-        hidden = false;
-        gsap.to(wrapperRef.current, {
-          yPercent: 0,
-          duration: 0.7,
-          ease: "power3.out",
-          overwrite: true,
-        });
-      };
-      const hide = () => {
-        if (hidden || menuOpenRef.current) return;
-        hidden = true;
-        gsap.to(wrapperRef.current, {
-          yPercent: -110,
-          duration: 0.6,
-          ease: "power3.inOut",
-          overwrite: true,
-        });
-      };
-
-      ScrollTrigger.create({
-        start: 0,
-        end: "max",
-        onUpdate: (self) => {
-          const y = self.scroll();
-          setScrolled(y > 60);
-          if (y < 140) show();
-          else if (self.direction === 1) hide();
-          else show();
-        },
-      });
     },
     { dependencies: [mounted] },
   );
+
+  /* ---------- Hide on scroll down, reveal on scroll up ----------
+     Uses live scroll metrics instead of a ScrollTrigger: its `end: "max"`
+     was measured once, so after navigating to a page of different height
+     it stopped updating and the header got stuck hidden / shown. */
+  const hiddenRef = useRef(false);
+  const travelRef = useRef(0);
+
+  const setHidden = (hide: boolean) => {
+    if (hiddenRef.current === hide || !wrapperRef.current) return;
+    if (hide && menuOpenRef.current) return;
+    hiddenRef.current = hide;
+    gsap.to(wrapperRef.current, {
+      yPercent: hide ? -110 : 0,
+      duration: hide ? 0.6 : 0.7,
+      ease: hide ? "power3.inOut" : "power3.out",
+      overwrite: true,
+    });
+  };
+
+  useScrollMetrics(({ y, delta }) => {
+    setScrolled(y > 60);
+
+    if (y < 140) {
+      travelRef.current = 0;
+      setHidden(false);
+      return;
+    }
+
+    // Accumulate movement in one direction; reset when it flips. Needs a few
+    // px of real travel so trackpad jitter doesn't toggle the bar.
+    const t = travelRef.current;
+    travelRef.current = Math.sign(delta) === Math.sign(t) ? t + delta : delta;
+    if (travelRef.current > 8) setHidden(true);
+    else if (travelRef.current < -8) setHidden(false);
+  });
 
   if (!mounted) return null;
 

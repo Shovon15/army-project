@@ -4,16 +4,13 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import NavLink from "@/components/common/link/NavLink";
 import { cn } from "@/utils/helpers/cn";
+import { getNavChildPath, getNavPath, isGroupItem } from "@/utils/helpers/navPaths";
 
 type Props = {
   navItems: any;
 };
 
 const EASE = "ease-[cubic-bezier(.7,0,.2,1)]";
-
-const getPath = (slug: string) => (slug === "home" ? "/" : `/${slug}`);
-const getChildPath = (parent: string, child: any) =>
-  child.href ?? (parent === "/" ? `/${child.slug}` : `${parent}/${child.slug}`);
 
 const Chevron = ({ open }: { open: boolean }) => (
   <svg
@@ -35,24 +32,44 @@ const NavItems = ({ navItems }: Props) => {
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
 
   const activeIndex = navItems.findIndex((item: any) => {
-    const path = getPath(item.slug);
     const childActive = item.children?.some(
-      (c: any) => pathname === getChildPath(path, c),
+      (c: any) => pathname === getNavChildPath(item, c),
     );
-    return (
-      childActive ||
-      pathname === path ||
-      (path !== "/" && pathname.startsWith(`${path}/`))
-    );
+    if (childActive) return true;
+    if (isGroupItem(item)) return false;
+    const path = getNavPath(item);
+    return pathname === path || (path !== "/" && pathname.startsWith(`${path}/`));
   });
 
   return (
     <nav className="hidden h-full items-center gap-[clamp(20px,2.2vw,42px)] lg:flex">
       {navItems.map((item: any, index: number) => {
-        const linkPath = getPath(item.slug);
+        const linkPath = getNavPath(item);
         const isActive = index === activeIndex;
         const hasChildren = item.children && item.children.length > 0;
         const isOpen = openDropdown === index;
+        // A group parent has no page: render a button that only opens the menu.
+        const isGroup = hasChildren && isGroupItem(item);
+        const triggerClass = cn(
+          "group relative flex cursor-pointer items-center gap-1.5 py-2 font-dmSans text-[16px] font-medium whitespace-nowrap transition-colors duration-300",
+          isActive ? "text-accent" : "text-white hover:text-accent",
+        );
+        const triggerInner = (
+          <>
+            {item.title}
+            {hasChildren && <Chevron open={isOpen} />}
+
+            {/* Underline draws in from the left on hover */}
+            <span
+              aria-hidden
+              className={cn(
+                "absolute bottom-0 left-0 h-px w-full origin-left bg-accent transition-transform duration-500",
+                EASE,
+                isActive ? "scale-x-0" : "scale-x-0 group-hover:scale-x-100",
+              )}
+            />
+          </>
+        );
 
         return (
           <div
@@ -66,32 +83,28 @@ const NavItems = ({ navItems }: Props) => {
                 setOpenDropdown(null);
             }}
           >
-            <NavLink
-              href={linkPath}
-              hover={false}
-              aria-haspopup={hasChildren || undefined}
-              aria-expanded={hasChildren ? isOpen : undefined}
-              aria-current={isActive ? "page" : undefined}
-              className={cn(
-                "group relative flex items-center gap-1.5 py-2 font-dmSans text-[16px] font-medium whitespace-nowrap transition-colors duration-300",
-                isActive
-                  ? "text-accent"
-                  : "text-white hover:text-accent",
-              )}
-            >
-              {item.title}
-              {hasChildren && <Chevron open={isOpen} />}
-
-              {/* Underline draws in from the left on hover */}
-              <span
-                aria-hidden
-                className={cn(
-                  "absolute bottom-0 left-0 h-px w-full origin-left bg-accent transition-transform duration-500",
-                  EASE,
-                  isActive ? "scale-x-0" : "scale-x-0 group-hover:scale-x-100",
-                )}
-              />
-            </NavLink>
+            {isGroup ? (
+              <button
+                type="button"
+                aria-haspopup="true"
+                aria-expanded={isOpen}
+                onClick={() => setOpenDropdown(isOpen ? null : index)}
+                className={triggerClass}
+              >
+                {triggerInner}
+              </button>
+            ) : (
+              <NavLink
+                href={linkPath}
+                hover={false}
+                aria-haspopup={hasChildren || undefined}
+                aria-expanded={hasChildren ? isOpen : undefined}
+                aria-current={isActive && pathname === linkPath ? "page" : undefined}
+                className={triggerClass}
+              >
+                {triggerInner}
+              </NavLink>
+            )}
 
             {hasChildren && (
               <div
@@ -104,13 +117,14 @@ const NavItems = ({ navItems }: Props) => {
               >
                 <div className="overflow-hidden rounded-2xl border border-white/10 bg-ink/95 p-2 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl">
                   {item.children.map((child: any) => {
-                    const childPath = getChildPath(linkPath, child);
+                    const childPath = getNavChildPath(item, child);
                     const childActive = pathname === childPath;
                     return (
                       <NavLink
                         key={child.slug}
                         href={childPath}
                         hover={false}
+                        aria-current={childActive ? "page" : undefined}
                         onClick={() => setOpenDropdown(null)}
                         className={cn(
                           "group/item flex items-center gap-2 rounded-xl px-4 py-2.5 font-dmSans text-sm transition-colors duration-200 hover:bg-white/5",

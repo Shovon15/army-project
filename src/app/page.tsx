@@ -15,6 +15,7 @@ import routes from "@/config/routes";
 import { GetMetaData } from "@/lib/metadata/getMetaData";
 import { getHomeJsonLd } from "@/lib/metadata/jsonLdSchemas/homeLd";
 import { Metadata } from "next";
+import { getBlogPosts } from "@/lib/blog/posts";
 
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -24,7 +25,8 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default function Home() {
+export default async function Home() {
+  const posts = await getBlogPosts();
   return (
     <SchemaWrapper jsonLd={getHomeJsonLd()}>
       <HeroBanner />
@@ -37,7 +39,7 @@ export default function Home() {
       <MeetOurExperts />
       <WhoWeAre />
       <Testimonials />
-      <LatestNews />
+      <LatestNews posts={posts} limit={3} />
     </SchemaWrapper>
   );
 }

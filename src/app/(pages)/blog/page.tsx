@@ -1,0 +1,46 @@
+import { Metadata } from "next";
+import SchemaWrapper from "@/components/layout/schemaWrapper/SchemaWrapper";
+import PageHero from "@/components/sections/shared/PageHero";
+import LatestNews from "@/components/sections/home/LatestNews";
+import api from "@/config/api/apiList";
+import routes from "@/config/routes";
+import { getBlogPosts } from "@/lib/blog/posts";
+import { GetMetaData } from "@/lib/metadata/getMetaData";
+import { getWebPageJsonLd } from "@/lib/metadata/jsonLdSchemas/webPageLd";
+import { getBreadcrumbJsonLd } from "@/lib/metadata/jsonLdSchemas/breadcrumbLd";
+
+import blogBanner from "@/assets/images/post-2.jpg";
+
+const PAGE_NAME = "Our Blog";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return await GetMetaData({ url: api.page.blog, siteUrl: routes.blog });
+}
+
+export default async function BlogPage() {
+  const posts = await getBlogPosts();
+
+  return (
+    <SchemaWrapper
+      jsonLd={[
+        getWebPageJsonLd({
+          path: routes.blog,
+          name: PAGE_NAME,
+          description:
+            "Stories, guides and behind-the-scenes articles about art, artists and cultural heritage from Museon.",
+        }),
+        getBreadcrumbJsonLd([
+          { name: "Home", path: routes.home },
+          { name: "Blog", path: routes.blog },
+        ]),
+      ]}
+    >
+      <PageHero
+        titleLines={[PAGE_NAME]}
+        breadcrumbs={[{ label: "Blog" }]}
+        image={blogBanner}
+      />
+      <LatestNews posts={posts} showHeading={false} />
+    </SchemaWrapper>
+  );
+}
