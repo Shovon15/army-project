@@ -22,9 +22,9 @@ type HeroBannerProps = {
 };
 
 const HeroBanner = ({
-  badge = "Timeless Artistic Journeys",
-  titleLines = ["Discover Timeless", "Art Beyond Every", "Generation"],
-  description = "Step into a world where creativity, history, and culture come together. Explore extraordinary collections for every visitor.",
+  badge = "Bangladesh Army Bomb Disposal Team",
+  titleLines = ["Making Every", "Threat Safe,", "Protecting Every Life"],
+  description = "From Liberation War-era shells found in scrap yards to unexploded ordnance in remote hills, the Army's bomb disposal engineers answer the call, recovering and defusing explosives so communities can live and work in safety.",
   ctaLabel = "Explore The Gallery",
   ctaHref = routes.gallery,
   image = bannerImage,
