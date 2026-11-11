@@ -156,7 +156,10 @@ const OurEvents = ({
   cta = { label: "View All Events", href: "/events" },
   events = DEFAULT_EVENTS,
 }: OurEventsProps) => (
-  <section className="relative overflow-hidden bg-surface-light py-20 text-ink md:py-28">
+  <section
+    id="events"
+    className="relative overflow-hidden bg-surface-light py-20 text-ink md:py-28"
+  >
     <ContentContainer size="narrow" className="h-auto">
       {/* Header row */}
       <div className="grid items-end gap-8 lg:grid-cols-2 lg:gap-16">

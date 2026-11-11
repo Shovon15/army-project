@@ -9,9 +9,9 @@ export const headerData = {
       title: "Home",
       slug: "home",
       children: [
-        { title: "About us", slug: "about" },
-        { title: "Events", slug: "events" },
-        { title: "Gallery", slug: "image-gallery" },
+        { title: "About us", slug: "#about" },
+        { title: "Events", slug: "#events" },
+        { title: "Gallery", slug: "#gallery" },
       ],
     },
     {

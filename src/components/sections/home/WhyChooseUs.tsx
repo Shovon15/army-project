@@ -14,6 +14,7 @@ import {
 
 // Statue-in-circle artwork
 import whyChooseImage from "@/assets/images/why-choose-image.png";
+import GlowBackground from "@/components/common/background/GlowBackground";
 
 type Stat = {
   icon: React.ComponentType<{ className?: string }>;
@@ -78,23 +79,23 @@ const StatItem = ({
   return (
     <div className="group" {...revealItem(from, 60, d, 1.1)}>
       <div className="flex items-center gap-4">
-        <Icon className="icon-wobble h-12 w-12 shrink-0 text-ink md:h-14 md:w-14" />
+        <Icon className="icon-wobble h-12 w-12 shrink-0 text-white md:h-14 md:w-14" />
         <CountUp
           to={stat.value}
           suffix={stat.suffix}
           duration={2800}
-          className="font-heading text-[clamp(2rem,2.8vw,2.55rem)] leading-none text-ink tabular-nums"
+          className="font-heading text-[clamp(2rem,2.8vw,2.55rem)] leading-none text-white tabular-nums"
         />
       </div>
-      <h3 className="mt-5 font-heading text-[clamp(0.95rem,1.05vw,1.15rem)] leading-title text-ink uppercase transition-colors duration-300 group-hover:text-primary">
+      <h3 className="mt-5 font-heading text-[clamp(0.95rem,1.05vw,1.15rem)] leading-title text-white uppercase transition-colors duration-300 group-hover:text-accent">
         {stat.title}
       </h3>
       <span
         aria-hidden
-        className="reveal-draw mt-5 block h-px w-full bg-black/10"
+        className="reveal-draw mt-5 block h-px w-full bg-white/10"
         style={delay(d + 0.2)}
       />
-      <p className="mt-5 max-w-[300px] font-dmSans text-[15px] leading-text text-ink-muted">
+      <p className="mt-5 max-w-[300px] font-dmSans text-[15px] leading-text text-white/50">
         {stat.text}
       </p>
     </div>
@@ -109,10 +110,10 @@ const Centerpiece = ({ image }: { image: StaticImageData | string }) => (
       className="reveal-pop absolute top-[-4.5%] left-[-4%] aspect-square w-[108%]"
       style={delay(0)}
     >
-      <div className="spin-slow absolute inset-0 rounded-full border border-black/10">
+      <div className="spin-slow absolute inset-0 rounded-full border border-white/10">
         <span className="absolute top-1/2 -left-[5px] h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_12px_rgb(var(--primary-rgb)/0.6)]" />
       </div>
-      <div className="spin-slow-reverse absolute inset-[4%] rounded-full border border-dashed border-black/10" />
+      <div className="spin-slow-reverse absolute inset-[4%] rounded-full border border-dashed border-white/10" />
     </div>
 
     {/* Artwork pops in, then floats */}
@@ -137,7 +138,17 @@ const WhyChooseUs = ({
   stats = DEFAULT_STATS,
   image = whyChooseImage,
 }: WhyChooseUsProps) => (
-  <section className="relative overflow-hidden bg-surface-light py-20 text-ink md:py-28">
+  // <section
+  //   id="about"
+  //   className="relative overflow-hidden bg-surface-light py-20 text-ink md:py-28"
+  // >
+  //   <ContentContainer size="narrow" className="h-auto">
+  <section
+    id="about"
+    className="relative isolate overflow-hidden bg-surface-dark py-20 text-white md:py-28"
+  >
+    <GlowBackground />
+
     <ContentContainer size="narrow" className="h-auto">
       {/* Header row */}
       <div className="grid items-end gap-6 lg:grid-cols-2 lg:gap-16">
@@ -145,11 +156,11 @@ const WhyChooseUs = ({
           badge={badge}
           lines={titleLines}
           align="left"
-          tone="light"
+          tone="dark"
         />
         <Reveal once>
           <p
-            className="font-dmSans text-[clamp(15px,1vw,17px)] leading-text text-ink-muted lg:pb-2"
+            className="font-dmSans text-[clamp(15px,1vw,17px)] leading-text text-white/90 lg:pb-2"
             {...revealItem("down", 30, 0.3, 1)}
           >
             {description}

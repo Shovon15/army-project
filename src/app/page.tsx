@@ -43,16 +43,16 @@ export default async function Home() {
       <OurEvents />
       <MeetOurExperts />
       {/* <WhoWeAre /> */}
-      <section className="relative isolate overflow-hidden bg-surface-dark py-20 text-white md:py-28 h-full">
+      <section className="relative isolate overflow-hidden bg-surface-light py-20 text-white md:py-28 h-full">
         {/* <GlowBackground /> */}
 
         <ContentContainer className="h-auto">
           <SectionHeading
             badge={"explore gallery"}
             lines={titleLines}
-            tone="dark"
+            tone="light"
           />
-          <ImageGallery images={GALLERY_IMAGES} theme={"dark"} />
+          <ImageGallery images={GALLERY_IMAGES} theme={"light"} />
         </ContentContainer>
       </section>
       <Testimonials />

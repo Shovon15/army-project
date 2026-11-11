@@ -229,6 +229,7 @@ const ImageGallery = ({
 
   return (
     <section
+      id="gallery"
       className={cn(
         "relative bg-surface-light py-16 text-ink md:py-24",
         theme === "dark" && "bg-surface-dark text-white",

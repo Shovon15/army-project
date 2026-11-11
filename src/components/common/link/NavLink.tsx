@@ -1,9 +1,10 @@
 "use client";
+
 import { cn } from "@/utils/helpers/cn";
 import Link, { LinkProps } from "next/link";
 import React from "react";
 
-type NavLinkProps = LinkProps & {
+type NavLinkProps = Omit<LinkProps, "href"> & {
   children: React.ReactNode;
   href: string;
   replace?: boolean;
@@ -11,7 +12,7 @@ type NavLinkProps = LinkProps & {
   query?: Record<string, string | number>;
   className?: string;
   ariaLabel?: string;
-  onClick?: (e?: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
   disabled?: boolean;
   title?: string;
   hover?: boolean;
@@ -35,13 +36,14 @@ export default function NavLink({
   const absoluteHref = href.startsWith("/") ? href : `/${href}`;
   const isExternal = href.startsWith("http") || href.startsWith("//");
 
-  const combinedClass = `${
+  const combinedClass = cn(
     disabled
       ? "opacity-45 pointer-events-none"
       : hover
-      ? " hover:text-header cursor-pointer"
-      : "cursor-pointer"
-  }`;
+        ? "hover:text-header cursor-pointer"
+        : "cursor-pointer",
+    className,
+  );
 
   if (isExternal) {
     return (
@@ -52,7 +54,7 @@ export default function NavLink({
         aria-label={ariaLabel || title}
         title={title}
         onClick={onClick}
-        className={cn(combinedClass, className)}
+        className={combinedClass}
         {...props}
       >
         {children}
@@ -65,7 +67,7 @@ export default function NavLink({
       href={{ pathname: absoluteHref, query }}
       replace={replace}
       scroll={scroll}
-      className={cn(combinedClass, className)}
+      className={combinedClass}
       aria-label={ariaLabel || title}
       title={title}
       onClick={onClick}

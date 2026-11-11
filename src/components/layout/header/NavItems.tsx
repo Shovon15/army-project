@@ -4,7 +4,13 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import NavLink from "@/components/common/link/NavLink";
 import { cn } from "@/utils/helpers/cn";
-import { getNavChildPath, getNavPath, isGroupItem } from "@/utils/helpers/navPaths";
+// import { smoothScrollTo } from "@/utils/smoothScroll";
+import {
+  getNavChildPath,
+  getNavPath,
+  isGroupItem,
+} from "@/utils/helpers/navPaths";
+import smoothScrollTo from "@/utils/helpers/smoothScrollTo";
 
 type Props = {
   navItems: any;
@@ -15,7 +21,10 @@ const EASE = "ease-[cubic-bezier(.7,0,.2,1)]";
 const Chevron = ({ open }: { open: boolean }) => (
   <svg
     viewBox="0 0 24 24"
-    className={cn("h-4 w-4 transition-transform duration-300", open && "rotate-180")}
+    className={cn(
+      "h-4 w-4 transition-transform duration-300",
+      open && "rotate-180",
+    )}
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
@@ -38,7 +47,9 @@ const NavItems = ({ navItems }: Props) => {
     if (childActive) return true;
     if (isGroupItem(item)) return false;
     const path = getNavPath(item);
-    return pathname === path || (path !== "/" && pathname.startsWith(`${path}/`));
+    return (
+      pathname === path || (path !== "/" && pathname.startsWith(`${path}/`))
+    );
   });
 
   return (
@@ -99,7 +110,9 @@ const NavItems = ({ navItems }: Props) => {
                 hover={false}
                 aria-haspopup={hasChildren || undefined}
                 aria-expanded={hasChildren ? isOpen : undefined}
-                aria-current={isActive && pathname === linkPath ? "page" : undefined}
+                aria-current={
+                  isActive && pathname === linkPath ? "page" : undefined
+                }
                 className={triggerClass}
               >
                 {triggerInner}
@@ -125,7 +138,26 @@ const NavItems = ({ navItems }: Props) => {
                         href={childPath}
                         hover={false}
                         aria-current={childActive ? "page" : undefined}
-                        onClick={() => setOpenDropdown(null)}
+                        onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                          setOpenDropdown(null);
+
+                          const hash = new URL(
+                            childPath,
+                            window.location.origin,
+                          ).hash;
+
+                          if (hash) {
+                            e.preventDefault();
+
+                            const target =
+                              document.querySelector<HTMLElement>(hash);
+
+                            smoothScrollTo(target, {
+                              offset: -100,
+                              duration: 1.1,
+                            });
+                          }
+                        }}
                         className={cn(
                           "group/item flex items-center gap-2 rounded-xl px-4 py-2.5 font-dmSans text-sm transition-colors duration-200 hover:bg-white/5",
                           childActive
