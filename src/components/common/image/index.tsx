@@ -62,8 +62,9 @@ function InnerImage({
       // (128/256px) srcset. Default to the viewport width; pass a tighter
       // `sizes` where the rendered width is known.
       sizes={props.fill || props.sizes ? props.sizes : "100vw"}
-      width={props.width ?? 100}
-      height={props.height ?? 100}
+      // `fill` images must not also get a width/height.
+      width={props.fill ? undefined : (props.width ?? 100)}
+      height={props.fill ? undefined : (props.height ?? 100)}
       className={cn("w-full object-cover", className)}
       {...props}
     />

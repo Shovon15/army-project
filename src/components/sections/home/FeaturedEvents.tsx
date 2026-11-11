@@ -1,5 +1,9 @@
 
+"use client";
+
+import { useState } from "react";
 import ContentContainer from "@/components/layout/container/contentContainer";
+import PrimaryButton from "@/components/common/button/PrimaryButton";
 import GlowBackground from "@/components/common/background/GlowBackground";
 import SectionHeading from "@/components/common/typography/SectionHeading";
 import Reveal from "@/components/common/animations/Reveal";
@@ -29,6 +33,8 @@ type FeaturedEventsProps = {
     href: string;
   } | null;
   tone?: "dark" | "light";
+  /** Show this many events, then a "Load more" button for the next batch. Omit to show all. */
+  pageSize?: number;
 };
 
 // const DEFAULT_EVENTS: MuseumEvent[] = EVENTS.slice(0, 3);
@@ -44,8 +50,12 @@ const FeaturedEvents = ({
     href: "/events",
   },
   tone = "dark",
+  pageSize,
 }: FeaturedEventsProps) => {
   const dark = tone === "dark";
+  const [visibleCount, setVisibleCount] = useState(pageSize ?? events.length);
+  const visibleEvents = events.slice(0, visibleCount);
+  const hasMore = !!pageSize && visibleCount < events.length;
 
   return (
     <section
@@ -74,12 +84,28 @@ const FeaturedEvents = ({
             showHeading && "mt-14 md:mt-16",
           )}
         >
-          {events.map((event, index) => (
+          {visibleEvents.map((event, index) => (
             <div key={event.title} className="h-full">
               <EventCard event={event} index={index % 3} />
             </div>
           ))}
         </Reveal>
+
+        {hasMore && (
+          <div className="mt-12 flex justify-center">
+            <PrimaryButton
+              type="button"
+              variant={dark ? "dark" : "primary"}
+              onClick={() =>
+                setVisibleCount((count) =>
+                  Math.min(count + (pageSize ?? events.length), events.length),
+                )
+              }
+            >
+              Load More Events
+            </PrimaryButton>
+          </div>
+        )}
 
         {cta && (
           <CtaLine

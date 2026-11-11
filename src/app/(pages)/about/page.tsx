@@ -11,6 +11,7 @@ import ConnectWithUs from "@/components/sections/shared/ConnectWithUs";
 import { EaselIcon, PaletteIcon, TicketIcon, VaseIcon } from "@/assets/icons/MuseumIcons";
 import api from "@/config/api/apiList";
 import routes from "@/config/routes";
+import { pageTitle } from "@/config/seo";
 import { GetMetaData } from "@/lib/metadata/getMetaData";
 import { getWebPageJsonLd } from "@/lib/metadata/jsonLdSchemas/webPageLd";
 import { getBreadcrumbJsonLd } from "@/lib/metadata/jsonLdSchemas/breadcrumbLd";
@@ -18,12 +19,13 @@ import { getFaqPageJsonLd } from "@/lib/metadata/jsonLdSchemas/faqPageLd";
 
 const PAGE_NAME = "About Us";
 const PAGE_DESCRIPTION =
-  "Learn about Museon: our mission to preserve and celebrate artistic heritage, how we curate our collections, and how to plan your visit.";
+  "Learn about the Bangladesh Army Corps of Engineers: our history, mission and role in combat engineering, infrastructure development, disaster relief and UN peacekeeping.";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await GetMetaData({
     url: api.page.about,
     siteUrl: routes.about,
+    fallback: { title: pageTitle(PAGE_NAME), description: PAGE_DESCRIPTION },
   });
 }
 
@@ -77,7 +79,7 @@ export default function AboutPage() {
       ]}
     >
       <PageHero titleLines={[PAGE_NAME]} breadcrumbs={[{ label: PAGE_NAME }]} />
-      <AboutMuseum ctaLabel="View Our Collection" ctaHref={routes.collection} />
+      <AboutMuseum ctaLabel="Explore Our Events" ctaHref={routes.events} />
       <OurApproach />
       <WhyChooseUs
         badge="Who We Are"

@@ -4,7 +4,10 @@ import SectionHeading from "@/components/common/typography/SectionHeading";
 import Reveal from "@/components/common/animations/Reveal";
 import { revealItem } from "@/components/common/animations/revealItem";
 import NavLink from "@/components/common/link/NavLink";
-import TestimonialsSlider, { Stars, type Testimonial } from "./TestimonialsSlider";
+import TestimonialsSlider, {
+  Stars,
+  type Testimonial,
+} from "./TestimonialsSlider";
 
 type TestimonialsProps = {
   badge?: string;
@@ -17,12 +20,48 @@ type TestimonialsProps = {
 
 // TODO: sample copy. Replace with real visitor reviews before launch.
 const DEFAULT_ITEMS: Testimonial[] = [
-  { quote: "From classical masterpieces to contemporary works, every exhibit was thoughtfully presented. I can't wait to visit again.", name: "Amelia Harris", role: "Cultural Events Coordinator", rating: 5 },
-  { quote: "The guided tour brought centuries of history to life. Our guide's stories made every room feel personal.", name: "Emily Carter", role: "Art History Student", rating: 5 },
-  { quote: "A calm, beautifully lit space. The sculpture gallery alone is worth the trip — I lost track of time.", name: "William Foster", role: "Author & Collector", rating: 5 },
-  { quote: "We brought the kids to a weekend workshop and they haven't stopped painting since. Wonderful staff.", name: "Olivia Bennett", role: "Parent & Member", rating: 5 },
-  { quote: "Thoughtful curation and great accessibility. Every label and audio guide was clear and engaging.", name: "James Walker", role: "Museum Volunteer", rating: 4 },
-  { quote: "The evening artist talk was the highlight of my month. A genuinely welcoming cultural space.", name: "Sophia Turner", role: "Graphic Designer", rating: 5 },
+  {
+    quote:
+      "From classical masterpieces to contemporary works, every exhibit was thoughtfully presented. I can't wait to visit again.",
+    name: "Amelia Harris",
+    role: "Cultural Events Coordinator",
+    rating: 5,
+  },
+  {
+    quote:
+      "The guided tour brought centuries of history to life. Our guide's stories made every room feel personal.",
+    name: "Emily Carter",
+    role: "Art History Student",
+    rating: 5,
+  },
+  {
+    quote:
+      "A calm, beautifully lit space. The sculpture gallery alone is worth the trip — I lost track of time.",
+    name: "William Foster",
+    role: "Author & Collector",
+    rating: 5,
+  },
+  {
+    quote:
+      "We brought the kids to a weekend workshop and they haven't stopped painting since. Wonderful staff.",
+    name: "Olivia Bennett",
+    role: "Parent & Member",
+    rating: 5,
+  },
+  {
+    quote:
+      "Thoughtful curation and great accessibility. Every label and audio guide was clear and engaging.",
+    name: "James Walker",
+    role: "Museum Volunteer",
+    rating: 4,
+  },
+  {
+    quote:
+      "The evening artist talk was the highlight of my month. A genuinely welcoming cultural space.",
+    name: "Sophia Turner",
+    role: "Graphic Designer",
+    rating: 5,
+  },
 ];
 
 const Testimonials = ({
@@ -46,8 +85,14 @@ const Testimonials = ({
         <TestimonialsSlider items={items} />
       </Reveal>
 
-      <Reveal once className="mt-10 flex flex-col items-center gap-3 text-center font-dmSans">
-        <p className="text-[16px] text-white/90" {...revealItem("down", 24, 0.2, 1)}>
+      <Reveal
+        once
+        className="mt-10 flex flex-col items-center gap-3 text-center font-dmSans"
+      >
+        {/* <p
+          className="text-[16px] text-white/90"
+          {...revealItem("down", 24, 0.2, 1)}
+        >
           {cta.text}{" "}
           <NavLink
             href={cta.href}
@@ -56,12 +101,14 @@ const Testimonials = ({
           >
             {cta.linkLabel}
           </NavLink>
-        </p>
+        </p> */}
         <p
           className="flex flex-wrap items-center justify-center gap-3 text-[15px] text-white/85"
           {...revealItem("down", 24, 0.35, 1)}
         >
-          <span className="font-heading text-[15px] text-white">{summary.rating}</span>
+          <span className="font-heading text-[15px] text-white">
+            {summary.rating}
+          </span>
           <Stars rating={summary.rating} className="flex gap-1" />
           <span>{summary.label}</span>
         </p>

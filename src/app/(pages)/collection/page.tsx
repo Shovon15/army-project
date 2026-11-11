@@ -8,6 +8,7 @@ import WhyChooseUs from "@/components/sections/home/WhyChooseUs";
 import Testimonials from "@/components/sections/home/Testimonials";
 import CommonQuestions, { VISITOR_FAQS } from "@/components/sections/shared/CommonQuestions";
 import routes from "@/config/routes";
+import { pageTitle } from "@/config/seo";
 import { GetMetaData } from "@/lib/metadata/getMetaData";
 import { getWebPageJsonLd } from "@/lib/metadata/jsonLdSchemas/webPageLd";
 import { getBreadcrumbJsonLd } from "@/lib/metadata/jsonLdSchemas/breadcrumbLd";
@@ -18,12 +19,14 @@ import collectionBanner from "@/assets/images/collection-item-image-1.jpg";
 const PATH = routes.collection;
 const PAGE_NAME = "Collection";
 const PAGE_DESCRIPTION =
-  "Browse Museon's collections: classical art, sculpture, photography, contemporary works, cultural heritage and historical artifacts.";
+  "Explore the heritage of the Bangladesh Army Corps of Engineers: historic equipment, records and memorabilia from decades of military engineering.";
 
 export async function generateMetadata(): Promise<Metadata> {
-  // No CMS page entry for the collection yet, so GetMetaData falls back to
-  // the site defaults. Add `api.page.collection` once the backend has it.
-  return await GetMetaData({ siteUrl: PATH });
+  // No CMS page entry yet. Add `api.page.collection` once the backend has it.
+  return await GetMetaData({
+    siteUrl: PATH,
+    fallback: { title: pageTitle(PAGE_NAME), description: PAGE_DESCRIPTION },
+  });
 }
 
 export default function CollectionPage() {

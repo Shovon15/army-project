@@ -3,7 +3,8 @@
 import NavLink from "@/components/common/link/NavLink";
 import { cn } from "@/utils/helpers/cn";
 import { getNavChildPath, getNavPath, isGroupItem } from "@/utils/helpers/navPaths";
-import { useRouter } from "next/navigation";
+import { scrollToHash, splitHashPath } from "@/utils/helpers/scrollToHash";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useState } from "react";
 
 interface MobileDropdownProps {
@@ -19,6 +20,7 @@ const MobileMenu: React.FC<MobileDropdownProps> = ({
 }) => {
   const [openChildren, setOpenChildren] = useState<boolean[]>([]);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (isOpen) {
@@ -42,8 +44,13 @@ const MobileMenu: React.FC<MobileDropdownProps> = ({
   };
 
   const handleChildRedirect = (item: any, child: any) => {
-    router.push(getNavChildPath(item, child));
+    const childPath = getNavChildPath(item, child);
+    const { pathname: targetPath, hash } = splitHashPath(childPath);
     onClose();
+    // Same page + section exists: scroll smoothly in place.
+    if (hash && targetPath === pathname && scrollToHash(hash)) return;
+    // SmoothScroll handles the hash after navigation, so skip Next's own scroll.
+    router.push(childPath, { scroll: !hash });
   };
 
   return (

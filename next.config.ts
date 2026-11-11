@@ -32,6 +32,10 @@ const nextConfig: NextConfig = {
       hostname,
     })),
   },
+  async redirects() {
+    // The gallery page moved from /image-gallery to /gallery.
+    return [{ source: "/image-gallery", destination: "/gallery", permanent: true }];
+  },
   async headers() {
     return [
       {

@@ -13,7 +13,9 @@ import {
 } from "@/assets/icons/MuseumIcons";
 
 // Statue-in-circle artwork
-import whyChooseImage from "@/assets/images/why-choose-image.png";
+// Circular crop (transparent outside, gold ring) of
+// a-soldier-engaging-a-target.jpg. Previous: why-choose-image.png (museum bust).
+import whyChooseImage from "@/assets/images/why-choose-soldier.png";
 import GlowBackground from "@/components/common/background/GlowBackground";
 
 type Stat = {
@@ -121,7 +123,7 @@ const Centerpiece = ({ image }: { image: StaticImageData | string }) => (
       <div className="float-soft h-full w-full">
         <Image
           src={image}
-          alt="Classical marble bust framed by a gallery view"
+          alt="Bangladesh Army soldier in camouflage face paint aiming a rifle with a red-dot sight"
           fill
           sizes="(min-width: 1024px) 32vw, 90vw"
           className="object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.25)]"

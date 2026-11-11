@@ -4,21 +4,30 @@ import { metaDataGenerator } from "./generateMetadata";
 type GetMetaDataProps = {
   url?: string;
   siteUrl?: string;
+  /** Used when the CMS has no meta for this page (or leaves a field empty). */
+  fallback?: {
+    title?: string;
+    description?: string;
+    keywords?: string[];
+  };
 };
 
-export const GetMetaData = async ({ url, siteUrl }: GetMetaDataProps) => {
+export const GetMetaData = async ({
+  url,
+  siteUrl,
+  fallback = {},
+}: GetMetaDataProps) => {
+  const fallbackMeta = () =>
+    metaDataGenerator({ ...fallback, canonicalURL: siteUrl });
+
   try {
-    if (!url) {
-      return metaDataGenerator({});
-    }
+    if (!url) return fallbackMeta();
 
     const response: any = await get(url);
 
     const meta = response?.data?.data?.meta ?? response?.data?.meta;
 
-    if (!meta) {
-      return metaDataGenerator({});
-    }
+    if (!meta) return fallbackMeta();
 
     const { title, content, meta_image, keyword } = meta;
 
@@ -38,15 +47,15 @@ export const GetMetaData = async ({ url, siteUrl }: GetMetaDataProps) => {
       : undefined;
 
     return metaDataGenerator({
-      title,
-      description: content,
+      title: title || fallback.title,
+      description: content || fallback.description,
       canonicalURL: siteUrl,
-      keywords: keywordsArray,
+      keywords: keywordsArray ?? fallback.keywords,
       openGraphImages,
       twitterImages: meta_image ? [meta_image] : undefined,
     });
   } catch (error) {
     console.error("Metadata Error:", error);
-    return metaDataGenerator({});
+    return fallbackMeta();
   }
 };

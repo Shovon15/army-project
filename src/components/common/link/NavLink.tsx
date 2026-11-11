@@ -64,7 +64,8 @@ export default function NavLink({
 
   return (
     <Link
-      href={{ pathname: absoluteHref, query }}
+      // A string href keeps "#section" as a real hash instead of part of the pathname.
+      href={query ? { pathname: absoluteHref, query } : absoluteHref}
       replace={replace}
       scroll={scroll}
       className={combinedClass}

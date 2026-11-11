@@ -6,14 +6,12 @@ import AnimatedHeading from "@/components/common/typography/AnimatedHeading";
 import ImageShine from "@/components/common/image/ImageShine";
 import Reveal from "@/components/common/animations/Reveal";
 import { revealItem } from "@/components/common/animations/revealItem";
-import { EaselIcon, MaskIcon } from "@/assets/icons/MuseumIcons";
+import { BridgeIcon, ShieldIcon } from "@/assets/icons/EngineerIcons";
 import routes from "@/config/routes";
 
-// Curator avatar is still a placeholder crop from the design
-// reference; replace with a full-resolution file (same name) when available.
-import mainImage from "@/assets/images/museum-image.jpg";
-import archImage from "@/assets/images/museum-image-1.jpg";
-import curatorImage from "@/assets/images/about/curator.png";
+import mainImage from "@/assets/images/about-us.jpg";
+import archImage from "@/assets/images/event-2.jpg";
+import corpsLogo from "@/assets/images/logo.png";
 import handImage from "@/assets/images/about/hand.png";
 
 type Feature = {
@@ -30,35 +28,45 @@ type AboutMuseumProps = {
   ctaLabel?: string;
   ctaHref?: string;
   person?: { name: string; role: string; image: StaticImageData | string };
-  images?: { main: StaticImageData | string; arch: StaticImageData | string };
+  images?: {
+    main: StaticImageData | string;
+    arch: StaticImageData | string;
+    mainAlt?: string;
+    archAlt?: string;
+  };
 };
 
 const DEFAULT_FEATURES: Feature[] = [
   {
-    icon: MaskIcon,
-    title: "Showcasing Timeless",
-    text: "Our museum & art gallery is dedicated.",
+    icon: BridgeIcon,
+    title: "Combat Engineering",
+    text: "Bridging, field defences and mine clearance that keep the Army moving.",
   },
   {
-    icon: EaselIcon,
-    title: "Artistic Discovery",
-    text: "Our museum & art gallery is dedicated.",
+    icon: ShieldIcon,
+    title: "Nation Building",
+    text: "Roads, infrastructure, disaster relief and UN peacekeeping missions.",
   },
 ];
 
 const AboutMuseum = ({
-  badge = "About Our Museum",
-  titleLines = ["Showcasing Timeless Art For", "Every Generation"],
-  description = "Our museum and art gallery is dedicated to preserving and celebrating the world’s artistic heritage. Through carefully curated collections, engaging exhibitions, and educational experiences.",
+  badge = "About The Corps",
+  titleLines = ["Building The Nation", "In War And In Peace"],
+  description = "The Corps of Engineers is the engineering arm of the Bangladesh Army. Our engineers bridge rivers, build roads and defences and clear mines in support of the Army, and serve the nation beyond the battlefield through infrastructure projects, disaster relief and UN peacekeeping missions around the world.",
   features = DEFAULT_FEATURES,
   ctaLabel = "More About Us",
   ctaHref = routes.about,
   person = {
-    name: "William Foster",
-    role: "Chief Curator & Author",
-    image: curatorImage,
+    name: "Corps of Engineers",
+    role: "Bangladesh Army",
+    image: corpsLogo,
   },
-  images = { main: mainImage, arch: archImage },
+  images = {
+    main: mainImage,
+    arch: archImage,
+    mainAlt: "Senior officers inspecting a guard of honour of Bangladesh Army engineers",
+    archAlt: "Bangladesh Army contingent marching with flags",
+  },
 }: AboutMuseumProps) => {
   return (
     <section className="relative overflow-hidden bg-surface-light py-10 text-ink min-[1025px]:py-[90px]">
@@ -92,7 +100,7 @@ const AboutMuseum = ({
               <ImageShine className="aspect-[257/376]">
                 <Image
                   src={images.arch}
-                  alt="Domed rotunda hall with classical statues"
+                  alt={images.archAlt ?? ""}
                   fill
                   sizes="(min-width: 768px) 280px, 40vw"
                   className="object-cover"
@@ -105,10 +113,12 @@ const AboutMuseum = ({
             <ImageShine className="aspect-[480/564] rounded-[20px]">
               <Image
                 src={images.main}
-                alt="Visitor admiring paintings in the gallery"
+                alt={images.mainAlt ?? ""}
                 fill
                 sizes="(min-width: 1024px) 500px, 80vw"
-                className="object-cover"
+                // Landscape photo in a portrait frame: keep the inspecting
+                // officers (left) and the guard of honour in view.
+                className="object-cover object-[30%_center]"
               />
             </ImageShine>
           </div>

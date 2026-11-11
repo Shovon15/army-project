@@ -323,6 +323,23 @@ html::-webkit-scrollbar-corner {
   background: var(--primary);
 }
 
+/* Gallery coverflow slider pagination: same bar style as the testimonials,
+   dark bars for the light section background. */
+.gallery-coverflow .swiper-pagination-bullet {
+  width: 10px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.2);
+  opacity: 1;
+  transition:
+    width 0.5s var(--ease-soft),
+    background-color 0.3s;
+}
+.gallery-coverflow .swiper-pagination-bullet-active {
+  width: 32px;
+  background: var(--primary);
+}
+
 /* Slow continuous spin (decorative rings). */
 .spin-slow {
   animation: spinSlow 28s linear infinite;

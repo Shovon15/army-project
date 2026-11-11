@@ -12,12 +12,14 @@ import Testimonials from "@/components/sections/home/Testimonials";
 import LatestNews from "@/components/sections/home/LatestNews";
 import api from "@/config/api/apiList";
 import routes from "@/config/routes";
+import { SITE_INFORMATION } from "@/config/seo";
 import { GetMetaData } from "@/lib/metadata/getMetaData";
 import { getHomeJsonLd } from "@/lib/metadata/jsonLdSchemas/homeLd";
 import { Metadata } from "next";
 import { getBlogPosts } from "@/lib/blog/posts";
-import ImageGallery from "@/components/sections/gallery/ImageGallery";
-import { GALLERY_IMAGES } from "@/lib/gallery/gallery";
+// import ImageGallery from "@/components/sections/gallery/ImageGallery";
+import GallerySlider from "@/components/sections/gallery/GallerySlider";
+import { GALLERY_MEDIA } from "@/lib/gallery/gallery";
 import GlowBackground from "@/components/common/background/GlowBackground";
 import ContentContainer from "@/components/layout/container/contentContainer";
 import SectionHeading from "@/components/common/typography/SectionHeading";
@@ -26,6 +28,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return await GetMetaData({
     url: api.page.home,
     siteUrl: routes.home,
+    fallback: {
+      title: SITE_INFORMATION.metaTitle,
+      description: SITE_INFORMATION.metaDescription,
+    },
   });
 }
 
@@ -43,9 +49,8 @@ export default async function Home() {
       <OurEvents />
       <MeetOurExperts />
       {/* <WhoWeAre /> */}
+      {/* Previous gallery grid, replaced by GallerySlider:
       <section className="relative isolate overflow-hidden bg-surface-light py-20 text-white md:py-28 h-full">
-        {/* <GlowBackground /> */}
-
         <ContentContainer className="h-auto">
           <SectionHeading
             badge={"explore gallery"}
@@ -54,7 +59,8 @@ export default async function Home() {
           />
           <ImageGallery images={GALLERY_IMAGES} theme={"light"} />
         </ContentContainer>
-      </section>
+      </section> */}
+      <GallerySlider items={GALLERY_MEDIA} />
       <Testimonials />
       {/* <LatestNews posts={posts} limit={3} /> */}
     </SchemaWrapper>

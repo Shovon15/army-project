@@ -19,10 +19,9 @@ import {
   YoutubeIcon,
 } from "@/assets/icons";
 import routes from "@/config/routes";
-import { CONTACT_INFO, OPENING_HOURS } from "@/config/static";
 import { useAppSelector } from "@/store/hooks";
 
-const BRAND = "Army Project";
+const BRAND = "Bangladesh Army Corps of Engineers";
 
 const SOCIAL_ICONS: Record<string, ComponentType<any>> = {
   facebook: FacebookIcon,
@@ -52,8 +51,7 @@ const LINK_COLUMNS: { title: string; links: LinkItem[] }[] = [
       { label: "Home", href: routes.home },
       { label: "About Us", href: routes.about },
       { label: "Events", href: "/events" },
-      { label: "FAQs", href: "/faq" },
-      { label: "Contact Us", href: routes.contact },
+      { label: "Gallery", href: "/gallery" },
     ],
   },
   // {
@@ -69,7 +67,7 @@ const LINK_COLUMNS: { title: string; links: LinkItem[] }[] = [
 ];
 
 const DESCRIPTION =
-  "Discover timeless art, culture, and heritage through curated exhibitions and inspiring creative experiences that connect past and present.";
+  "Building bridges, roads and defences for the nation, in war and in peace.";
 
 const ColumnTitle = ({ children }: { children: React.ReactNode }) => (
   <h3 className="font-heading text-[clamp(0.95rem,1.05vw,1.15rem)] leading-title uppercase">
@@ -112,15 +110,19 @@ const Footer = () => {
         {/* ---------- Middle: brand + link columns ---------- */}
         <Reveal
           once
-          className="grid gap-12 py-[clamp(56px,5vw,80px)] sm:grid-cols-2 lg:grid-cols-[1.45fr_0.8fr_1fr_1fr] lg:gap-10"
+          className="flex flex-col items-center gap-8 py-[clamp(32px,3vw,48px)] text-center lg:flex-row lg:justify-between lg:text-left"
         >
           {/* Brand */}
           <div
-            className="sm:col-span-2 lg:col-span-1 lg:pr-10"
+            className="flex flex-col items-center gap-4 sm:flex-row sm:gap-5"
             {...revealItem("down", 40, 0, 1)}
           >
-            <Logo brand={BRAND} />
-            <p className="mt-6 max-w-[420px] font-dmSans text-[15px] leading-text text-white/85">
+            <Logo
+              brand={BRAND}
+              imageClassName="h-24 w-24 lg:h-[110px] lg:w-[110px]"
+              sizes="110px"
+            />
+            <p className="max-w-[300px] font-dmSans text-[15px] leading-text text-white/85">
               {DESCRIPTION}
             </p>
             {/* {socials.length > 0 && (
@@ -153,7 +155,7 @@ const Footer = () => {
               {...revealItem("down", 40, 0.1 + i * 0.1, 1)}
             >
               <ColumnTitle>{column.title}</ColumnTitle>
-              <ul className="mt-6 space-y-3.5">
+              <ul className="mt-4 flex flex-wrap justify-center gap-x-7 gap-y-3 lg:justify-start">
                 {column.links.map((link) => (
                   <li key={link.label}>
                     <NavLink
@@ -174,29 +176,10 @@ const Footer = () => {
               </ul>
             </nav>
           ))}
-
-          {/* Hours + location */}
-          <div {...revealItem("down", 40, 0.3, 1)}>
-            {/* <ColumnTitle>Opening Hours</ColumnTitle>
-            <ul className="mt-6 space-y-1 font-dmSans text-[15px] leading-text text-white">
-              {OPENING_HOURS.map(({ day, time }) => (
-                <li key={day}>
-                  {day}: {time}
-                </li>
-              ))}
-            </ul> */}
-
-            <div className="">
-              <ColumnTitle>Location</ColumnTitle>
-              <address className="mt-6 font-dmSans text-[15px] leading-text text-white not-italic">
-                {CONTACT_INFO.address}
-              </address>
-            </div>
-          </div>
         </Reveal>
 
         {/* ---------- Bottom: copyright ---------- */}
-        <div className="flex flex-col items-center gap-3 border-t border-white/10 py-7 text-center font-dmSans text-[15px] text-white/90 md:flex-row md:justify-between md:text-left">
+        <div className="flex flex-col items-center gap-3 border-t border-white/10 py-5 text-center font-dmSans text-[15px] text-white/90 md:flex-row md:justify-between md:text-left">
           <p>
             Copyright © {new Date().getFullYear()}{" "}
             <NavLink

@@ -1,6 +1,7 @@
 "use client";
 
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
+import { scrollToHashWhenReady } from "@/utils/helpers/scrollToHash";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import type Lenis from "lenis";
@@ -15,6 +16,10 @@ function ScrollToTopOnRouteChange({ lenis }: { lenis: Lenis | null }) {
   const routeKey = `${pathname}?${searchParams.toString()}`;
 
   useEffect(() => {
+    // Arrived via a "/#section" link: scroll to that section, not the top.
+    const hash = window.location.hash;
+    if (hash) return scrollToHashWhenReady(hash);
+
     requestAnimationFrame(() => {
       if (lenis) {
         lenis.scrollTo(0, {

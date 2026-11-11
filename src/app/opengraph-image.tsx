@@ -30,7 +30,7 @@ export default async function OpengraphImage() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={logoSrc} width={300} height={300} alt="" />
-        <div style={{ display: "flex", marginTop: 36, fontSize: 64, fontWeight: 800, letterSpacing: 4, color: "#d5b546" }}>
+        <div style={{ display: "flex", marginTop: 36, maxWidth: 1080, textAlign: "center", fontSize: 48, fontWeight: 800, letterSpacing: 2, color: "#d5b546" }}>
           {SITE_INFORMATION.appName.toUpperCase()}
         </div>
       </div>

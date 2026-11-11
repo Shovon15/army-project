@@ -11,9 +11,7 @@ import ArrowUpRightIcon from "@/assets/icons/ArrowUpRightIcon";
 import { CalendarIcon, MapPinIcon } from "@/assets/icons/MetaIcons";
 import EventDescription from "./EventDescription";
 
-import eventImage1 from "@/assets/images/event-item-image-1.jpg";
-import eventImage2 from "@/assets/images/event-item-image-2.jpg";
-import eventImage3 from "@/assets/images/event-item-image-3.jpg";
+import { EVENTS } from "@/lib/events/events";
 
 export type MuseumEvent = {
   title: string;
@@ -34,38 +32,8 @@ type OurEventsProps = {
   events?: MuseumEvent[];
 };
 
-export const DEFAULT_EVENTS: MuseumEvent[] = [
-  {
-    title: "Art Through The Ages Exhibition",
-    description:
-      "A guided walk through five centuries of painting, from the Renaissance to the modern era. Discover the evolution of artistic expression and the stories behind iconic masterpieces.Meet the artists behind our newest acquisitions and hear the stories behind their work. ",
-    date: "2026-03-15",
-    time: "5:00 PM",
-    venue: "Grand Heritage Gallery",
-    href: "/events/art-through-the-ages",
-    image: eventImage1,
-  },
-  {
-    title: "Modern Artist Showcase",
-    description:
-      "Meet the artists behind our newest acquisitions and hear the stories behind their work.",
-    date: "2026-06-12",
-    time: "7:00 PM",
-    venue: "Contemporary Art Wing",
-    href: "/events/modern-artist-showcase",
-    image: eventImage2,
-  },
-  {
-    title: "Museum Guided Heritage Tour",
-    description:
-      "An expert-led tour of our heritage halls and the treasures they preserve.",
-    date: "2026-11-25",
-    time: "10:30 AM",
-    venue: "Heritage Exhibition Hall",
-    href: "/events/guided-heritage-tour",
-    image: eventImage3,
-  },
-];
+/** Home page shows the next three events. */
+export const DEFAULT_EVENTS: MuseumEvent[] = EVENTS.slice(0, 3);
 
 // UTC so the server and browser always print the same calendar day.
 const toDate = (iso: string) => new Date(`${iso}T00:00:00Z`);
@@ -106,10 +74,13 @@ export const EventCard = ({
           </ImageShine>
 
           {/* Modern Expandable Arrow */}
-          <span className="absolute right-4 top-4 z-[3] flex h-11 w-11 shrink-0 items-center justify-center gap-2 overflow-hidden rounded-full bg-primary text-white shadow-lg transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover/card:w-[132px] group-hover/card:px-5 group-hover/card:shadow-xl">
+          {/* At rest: a 44px circle with the arrow centred (12px padding each
+              side, no gap). On hover the label's max-width opens up and the
+              pill grows to fit it, so the text is never clipped. */}
+          <span className="absolute right-4 top-4 z-[3] flex h-11 min-w-11 items-center justify-center gap-0 overflow-hidden rounded-full bg-primary px-3 text-white shadow-lg transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover/card:gap-2 group-hover/card:px-5 group-hover/card:shadow-xl">
             <ArrowUpRightIcon className="h-5 w-5 shrink-0 transition-transform duration-500 group-hover/card:rotate-45" />
 
-            <span className="grid max-w-0 overflow-hidden whitespace-nowrap text-sm font-semibold opacity-0 transition-all duration-500 group-hover/card:max-w-24 group-hover/card:opacity-100">
+            <span className="block max-w-0 overflow-hidden whitespace-nowrap text-sm font-semibold opacity-0 transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover/card:max-w-[120px] group-hover/card:opacity-100">
               Read More
             </span>
           </span>
@@ -151,8 +122,8 @@ export const EventCard = ({
 
 const OurEvents = ({
   badge = "Our Events",
-  titleLines = ["Don't Miss Our Featured", "Cultural Events"],
-  description = "Join us for a vibrant calendar of exhibitions, artist talks, workshops, and community gatherings that celebrate art, history, and creativity.",
+  titleLines = ["Upcoming Events &", "Ceremonies"],
+  description = "Demonstrations, drills, commemorations and ceremonies from the Bangladesh Army Corps of Engineers.",
   cta = { label: "View All Events", href: "/events" },
   events = DEFAULT_EVENTS,
 }: OurEventsProps) => (

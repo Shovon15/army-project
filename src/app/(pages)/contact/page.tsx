@@ -6,6 +6,7 @@ import ContactFormSection from "@/components/sections/contact/ContactFormSection
 import CommonQuestions, { VISITOR_FAQS } from "@/components/sections/shared/CommonQuestions";
 import api from "@/config/api/apiList";
 import routes from "@/config/routes";
+import { pageTitle } from "@/config/seo";
 import { GetMetaData } from "@/lib/metadata/getMetaData";
 import { getWebPageJsonLd } from "@/lib/metadata/jsonLdSchemas/webPageLd";
 import { getBreadcrumbJsonLd } from "@/lib/metadata/jsonLdSchemas/breadcrumbLd";
@@ -15,10 +16,14 @@ import contactBanner from "@/assets/images/museum-image-1.jpg";
 
 const PAGE_NAME = "Contact Us";
 const PAGE_DESCRIPTION =
-  "Get in touch with Museon to plan your visit, book a guided tour, or ask about exhibitions, events and memberships.";
+  "Contact the Bangladesh Army Corps of Engineers for general enquiries, information requests and official communication.";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return await GetMetaData({ url: api.page.contact, siteUrl: routes.contact });
+  return await GetMetaData({
+    url: api.page.contact,
+    siteUrl: routes.contact,
+    fallback: { title: pageTitle(PAGE_NAME), description: PAGE_DESCRIPTION },
+  });
 }
 
 export default function ContactPage() {

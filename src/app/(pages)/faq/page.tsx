@@ -8,6 +8,7 @@ import SectionBadge from "@/components/common/typography/SectionBadge";
 import { Accordion } from "@/components/common/accordion/Accordion";
 import api from "@/config/api/apiList";
 import routes from "@/config/routes";
+import { pageTitle } from "@/config/seo";
 import { ALL_FAQS, FAQ_GROUPS } from "@/lib/faq/faqs";
 import { GetMetaData } from "@/lib/metadata/getMetaData";
 import { getWebPageJsonLd } from "@/lib/metadata/jsonLdSchemas/webPageLd";
@@ -16,8 +17,18 @@ import { getFaqPageJsonLd } from "@/lib/metadata/jsonLdSchemas/faqPageLd";
 
 import faqBanner from "@/assets/images/who-we-are-image-4.jpg";
 
+const PAGE_DESCRIPTION =
+  "Answers to common questions about the Bangladesh Army Corps of Engineers: its role, activities, events and how to get in touch.";
+
 export async function generateMetadata(): Promise<Metadata> {
-  return await GetMetaData({ url: api.page.faq, siteUrl: routes.faq });
+  return await GetMetaData({
+    url: api.page.faq,
+    siteUrl: routes.faq,
+    fallback: {
+      title: pageTitle("Frequently Asked Questions"),
+      description: PAGE_DESCRIPTION,
+    },
+  });
 }
 
 export default function FaqPage() {
@@ -28,7 +39,7 @@ export default function FaqPage() {
           path: routes.faq,
           name: "Frequently Asked Questions",
           description:
-            "Answers to common questions about visiting Museon: opening hours, tickets, collections, events, photography and accessibility.",
+            PAGE_DESCRIPTION,
         }),
         getBreadcrumbJsonLd([
           { name: "Home", path: routes.home },

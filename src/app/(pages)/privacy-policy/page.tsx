@@ -7,7 +7,7 @@ import JourneyCard from "@/components/sections/shared/JourneyCard";
 import api from "@/config/api/apiList";
 import routes from "@/config/routes";
 import { CONTACT_INFO } from "@/config/static";
-import { SITE_INFORMATION } from "@/config/seo";
+import { pageTitle, SITE_INFORMATION } from "@/config/seo";
 import { GetMetaData } from "@/lib/metadata/getMetaData";
 import { getWebPageJsonLd } from "@/lib/metadata/jsonLdSchemas/webPageLd";
 import { getBreadcrumbJsonLd } from "@/lib/metadata/jsonLdSchemas/breadcrumbLd";
@@ -19,7 +19,14 @@ const BRAND = SITE_INFORMATION.appName;
 const LAST_UPDATED = "2026-11-10";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return await GetMetaData({ url: api.page.privacyPolicy, siteUrl: routes.privacyPolicy });
+  return await GetMetaData({
+    url: api.page.privacyPolicy,
+    siteUrl: routes.privacyPolicy,
+    fallback: {
+      title: pageTitle("Privacy Policy"),
+      description: `How the ${SITE_INFORMATION.appName} collects, uses and protects your personal information.`,
+    },
+  });
 }
 
 type PolicySection = { id: string; title: string; body: React.ReactNode };
@@ -158,7 +165,7 @@ export default function PrivacyPolicyPage() {
         getWebPageJsonLd({
           path: routes.privacyPolicy,
           name: "Privacy Policy",
-          description: `How ${BRAND} collects, uses and protects your personal information.`,
+          description: `How the ${BRAND} collects, uses and protects your personal information.`,
         }),
         getBreadcrumbJsonLd([
           { name: "Home", path: routes.home },

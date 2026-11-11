@@ -4,13 +4,12 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import NavLink from "@/components/common/link/NavLink";
 import { cn } from "@/utils/helpers/cn";
-// import { smoothScrollTo } from "@/utils/smoothScroll";
 import {
   getNavChildPath,
   getNavPath,
   isGroupItem,
 } from "@/utils/helpers/navPaths";
-import smoothScrollTo from "@/utils/helpers/smoothScrollTo";
+import { scrollToHash, splitHashPath } from "@/utils/helpers/scrollToHash";
 
 type Props = {
   navItems: any;
@@ -136,26 +135,23 @@ const NavItems = ({ navItems }: Props) => {
                       <NavLink
                         key={child.slug}
                         href={childPath}
+                        scroll={!childPath.includes("#")}
                         hover={false}
                         aria-current={childActive ? "page" : undefined}
                         onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
                           setOpenDropdown(null);
 
-                          const hash = new URL(
-                            childPath,
-                            window.location.origin,
-                          ).hash;
-
-                          if (hash) {
+                          // Same page + section exists: scroll smoothly in place.
+                          // Otherwise let the link navigate; SmoothScroll then
+                          // scrolls to the hash once the new page renders.
+                          const { pathname: targetPath, hash } =
+                            splitHashPath(childPath);
+                          if (
+                            hash &&
+                            targetPath === pathname &&
+                            scrollToHash(hash)
+                          ) {
                             e.preventDefault();
-
-                            const target =
-                              document.querySelector<HTMLElement>(hash);
-
-                            smoothScrollTo(target, {
-                              offset: -100,
-                              duration: 1.1,
-                            });
                           }
                         }}
                         className={cn(

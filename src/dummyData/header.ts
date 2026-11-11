@@ -23,24 +23,15 @@ export const headerData = {
       slug: "events",
     },
 
-    {
-      title: "Pages",
-      slug: "pages",
-      // Dropdown only: there is no /pages page (see utils/helpers/navPaths).
-      group: true,
-      children: [
-        { title: "Image Gallery", slug: "image-gallery", href: routes.gallery },
-        { title: "FAQ", slug: "faq", href: routes.faq },
-        {
-          title: "Privacy Policy",
-          slug: "privacy-policy",
-          href: routes.privacyPolicy,
-        },
-      ],
-    },
-    {
-      title: "Contact Us",
-      slug: "contact",
-    },
+    // {
+    //   title: "Pages",
+    //   slug: "pages",
+    //   // Dropdown only: there is no /pages page (see utils/helpers/navPaths).
+    //   group: true,
+    //   children: [
+    //     { title: "Gallery", slug: "gallery", href: routes.gallery },
+    //   ],
+    // },
+    { title: "Gallery", slug: "gallery", href: routes.gallery },
   ],
 };
