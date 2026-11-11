@@ -45,15 +45,27 @@ const Icon = ({ d, className }: { d: string; className?: string }) => (
 
 const getLenis = () => (window as unknown as { __lenis?: Lenis }).__lenis;
 
+/**
+ * Lightbox entry. For a video, `src` is the poster (used for the thumbnail
+ * strip) and `videoSrc` is the clip played in the viewer.
+ */
+export type LightboxItem = GalleryImage & { videoSrc?: string };
+
+const PlayGlyph = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+    <path d="M8 5v14l11-7z" />
+  </svg>
+);
+
 /* ------------------------------ Lightbox ------------------------------ */
 
-const Lightbox = ({
+export const Lightbox = ({
   images,
   index,
   onClose,
   onIndex,
 }: {
-  images: GalleryImage[];
+  images: LightboxItem[];
   index: number;
   onClose: () => void;
   onIndex: (i: number) => void;
@@ -97,8 +109,9 @@ const Lightbox = ({
     <div
       role="dialog"
       aria-modal="true"
-      aria-label={`Image ${index + 1} of ${count}: ${img.caption}`}
+      aria-label={`${img.videoSrc ? "Video" : "Image"} ${index + 1} of ${count}: ${img.caption}`}
       data-lenis-prevent
+      data-cursor="hide"
       className="gallery-lightbox fixed inset-0 z-[100] flex flex-col bg-surface-deep/95 backdrop-blur-xl"
       onClick={(e) => e.target === e.currentTarget && onClose()}
       onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
@@ -137,14 +150,28 @@ const Lightbox = ({
           key={index}
           className="gallery-lightbox-img relative h-full w-full max-w-[1200px]"
         >
-          <Image
-            src={img.src}
-            alt={img.alt}
-            fill
-            sizes="100vw"
-            className="object-contain"
-            priority
-          />
+          {img.videoSrc ? (
+            <video
+              src={img.videoSrc}
+              poster={
+                typeof img.src === "string" ? img.src || undefined : img.src.src
+              }
+              controls
+              autoPlay
+              playsInline
+              aria-label={img.alt}
+              className="absolute inset-0 h-full w-full object-contain"
+            />
+          ) : (
+            <Image
+              src={img.src}
+              alt={img.alt}
+              fill
+              sizes="100vw"
+              className="object-contain"
+              priority
+            />
+          )}
         </div>
 
         <button
@@ -182,22 +209,29 @@ const Lightbox = ({
               <button
                 type="button"
                 onClick={() => onIndex(i)}
-                aria-label={`Show image ${i + 1}: ${t.caption}`}
+                aria-label={`Show ${t.videoSrc ? "video" : "image"} ${i + 1}: ${t.caption}`}
                 aria-current={i === index || undefined}
                 className={cn(
-                  "relative block h-12 w-16 cursor-pointer overflow-hidden rounded-lg transition-[opacity,box-shadow] duration-300 md:h-14 md:w-20",
+                  "relative block h-12 w-16 cursor-pointer overflow-hidden rounded-lg bg-white/10 transition-[opacity,box-shadow] duration-300 md:h-14 md:w-20",
                   i === index
                     ? "opacity-100 ring-2 ring-accent"
                     : "opacity-45 hover:opacity-80",
                 )}
               >
-                <Image
-                  src={t.src}
-                  alt=""
-                  fill
-                  sizes="80px"
-                  className="object-cover"
-                />
+                {t.src && (
+                  <Image
+                    src={t.src}
+                    alt=""
+                    fill
+                    sizes="80px"
+                    className="object-cover"
+                  />
+                )}
+                {t.videoSrc && (
+                  <span className="absolute inset-0 flex items-center justify-center bg-black/30 text-white">
+                    <PlayGlyph className="ml-0.5 h-4 w-4" />
+                  </span>
+                )}
               </button>
             </li>
           ))}
@@ -238,6 +272,7 @@ const ImageGallery = ({
       <ContentContainer size="narrow" className="h-auto">
         <Reveal
           once
+          data-cursor="hide"
           className="columns-1 gap-5 sm:columns-2 lg:columns-3 lg:gap-[30px]"
         >
           {images.map((img, i) => (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
@@ -10,6 +10,16 @@ import SectionHeading from "@/components/common/typography/SectionHeading";
 import SliderArrowIcon from "@/assets/icons/SliderArrowIcon";
 import { cn } from "@/utils/helpers/cn";
 import type { GalleryMedia } from "@/lib/gallery/gallery";
+import { Lightbox, type LightboxItem } from "./ImageGallery";
+
+/** Slider items as lightbox entries (videos use their poster as the thumbnail). */
+const toLightboxItems = (items: GalleryMedia[]): LightboxItem[] =>
+  items.map((item, i) => {
+    const caption = item.caption ?? item.alt ?? `Item ${i + 1}`;
+    return item.type === "video"
+      ? { src: item.poster ?? "", alt: item.alt, caption, videoSrc: item.src }
+      : { src: item.src, alt: item.alt, caption };
+  });
 
 type Props = {
   items: GalleryMedia[];
@@ -142,6 +152,18 @@ const GallerySlider = ({
 }: Props) => {
   const swiperRef = useRef<SwiperType | null>(null);
   const { active, inactive } = CARD_SIZES[useCardSizeKey()];
+  const lightboxItems = useMemo(() => toLightboxItems(items), [items]);
+  const [open, setOpen] = useState<number | null>(null);
+
+  // Pause autoplay while the viewer is open; resume when it closes.
+  const openAt = useCallback((i: number) => {
+    swiperRef.current?.autoplay?.stop();
+    setOpen(i);
+  }, []);
+  const close = useCallback(() => {
+    setOpen(null);
+    if (autoplay) swiperRef.current?.autoplay?.start();
+  }, [autoplay]);
 
   // Each slide reserves the midpoint of the two widths, so the wide active card
   // overlaps into the gap instead of leaving empty space around small cards.
@@ -161,7 +183,7 @@ const GallerySlider = ({
     >
       <SectionHeading badge={badge} lines={titleLines} tone="light" />
 
-      <div className="relative mt-10 h-[470px] md:mt-14 lg:px-[5vw] xl:px-[8vw] 2xl:px-[10vw]">
+      <div data-cursor="hide" className="relative mt-10 h-[470px] md:mt-14 lg:px-[5vw] xl:px-[8vw] 2xl:px-[10vw]">
         <Swiper
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
@@ -175,7 +197,16 @@ const GallerySlider = ({
           watchSlidesProgress
           speed={700}
           autoplay={
-            autoplay ? { delay: 3500, disableOnInteraction: false } : false
+            autoplay
+              ? {
+                  delay: 3500,
+                  disableOnInteraction: false,
+                  // Don't wait for a CSS transitionend before resuming: the
+                  // instant (no-animation) re-layout on mount never fires one,
+                  // which left autoplay paused until the first manual swipe.
+                  waitForTransition: false,
+                }
+              : false
           }
           coverflowEffect={{
             rotate: 0,
@@ -185,13 +216,21 @@ const GallerySlider = ({
             slideShadows: false,
           }}
           pagination={{ clickable: true }}
+          // Swiper only fires onClick for taps, not drags.
+          onClick={(swiper) => {
+            const i = Number(
+              (swiper.clickedSlide as HTMLElement | undefined)?.dataset.index,
+            );
+            if (!Number.isNaN(i)) openAt(i % items.length);
+          }}
           className="gallery-coverflow !h-full !pb-[50px]"
         >
           {slides.map((item, index) => (
             <SwiperSlide
               key={index}
+              data-index={index}
               style={{ width: slideWidth }}
-              className="!flex !h-full cursor-pointer items-center justify-center select-none"
+              className="group/slide !flex !h-full cursor-zoom-in items-center justify-center select-none"
             >
               {({ isActive }) => {
                 const size = isActive ? active : inactive;
@@ -206,7 +245,7 @@ const GallerySlider = ({
                     }}
                   >
                     {item.type === "video" ? (
-                      <SlideVideo item={item} isActive={isActive} />
+                      <SlideVideo item={item} isActive={isActive && open === null} />
                     ) : (
                       <ImageComponent
                         src={item.src}
@@ -216,6 +255,21 @@ const GallerySlider = ({
                         className="object-cover"
                       />
                     )}
+
+                    {/* Expand hint on the centre slide */}
+                    <span
+                      aria-hidden
+                      className={cn(
+                        "pointer-events-none absolute top-3 right-3 z-[2] flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-primary shadow-md transition-[opacity,transform] duration-500",
+                        isActive
+                          ? "scale-90 opacity-0 group-hover/slide:scale-100 group-hover/slide:opacity-100"
+                          : "opacity-0",
+                      )}
+                    >
+                      <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                      </svg>
+                    </span>
 
                     {item.caption && (
                       <div
@@ -243,6 +297,28 @@ const GallerySlider = ({
           onClick={() => swiperRef.current?.slideNext()}
         />
       </div>
+
+      {/* Keyboard users: open the viewer without clicking a slide */}
+      {items.length > 0 && (
+        <div className="mt-6 flex justify-center">
+          <button
+            type="button"
+            onClick={() => openAt(0)}
+            className="sr-only focus:not-sr-only focus:rounded-full focus:bg-primary focus:px-5 focus:py-2 focus:font-dmSans focus:text-white"
+          >
+            Open gallery viewer
+          </button>
+        </div>
+      )}
+
+      {open !== null && (
+        <Lightbox
+          images={lightboxItems}
+          index={open}
+          onClose={close}
+          onIndex={setOpen}
+        />
+      )}
     </section>
   );
 };
