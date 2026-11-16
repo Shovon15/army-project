@@ -3,8 +3,16 @@
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 import { scrollToHashWhenReady } from "@/utils/helpers/scrollToHash";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import type Lenis from "lenis";
+
+/** True when this page load is a browser reload (F5 / reload button). */
+const isReload = () =>
+  (
+    performance.getEntriesByType("navigation")[0] as
+      | PerformanceNavigationTiming
+      | undefined
+  )?.type === "reload";
 
 // `useSearchParams()` opts its nearest Suspense boundary out of server
 // rendering. Keeping it in this leaf — which renders nothing and sits behind
@@ -14,8 +22,22 @@ function ScrollToTopOnRouteChange({ lenis }: { lenis: Lenis | null }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const routeKey = `${pathname}?${searchParams.toString()}`;
+  const firstRunRef = useRef(true);
 
   useEffect(() => {
+    const firstRun = firstRunRef.current;
+    firstRunRef.current = false;
+
+    // Reloading a "/#section" URL: drop the hash and start at the top
+    // instead of jumping back to that section.
+    if (firstRun && window.location.hash && isReload()) {
+      const { pathname: path, search } = window.location;
+      window.history.replaceState(window.history.state, "", path + search);
+      window.scrollTo(0, 0);
+      lenis?.scrollTo(0, { immediate: true, force: true });
+      return;
+    }
+
     // Arrived via a "/#section" link: scroll to that section, not the top.
     const hash = window.location.hash;
     if (hash) return scrollToHashWhenReady(hash);

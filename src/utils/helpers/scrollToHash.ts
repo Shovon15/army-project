@@ -1,4 +1,5 @@
 import smoothScrollTo from "@/utils/helpers/smoothScrollTo";
+import { scrollSectionToTop } from "@/utils/helpers/scrollSectionToTop";
 
 /** Splits "/#about" into { pathname: "/", hash: "#about" }. */
 export const splitHashPath = (path: string) => {
@@ -16,7 +17,9 @@ const findHashTarget = (hash: string) =>
 export const scrollToHash = (hash: string, offset = 0) => {
   const target = findHashTarget(hash);
   if (!target) return false;
-  smoothScrollTo(target, { offset, duration: 1.1 });
+  // Offset 0 (the default): section top lands at the top of the screen.
+  if (offset === 0) scrollSectionToTop(target);
+  else smoothScrollTo(target, { offset, duration: 1.1 });
   return true;
 };
 

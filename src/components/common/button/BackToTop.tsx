@@ -99,13 +99,31 @@ const BackToTop = () => {
         ).matches;
         const lenis = (window as unknown as { __lenis?: Lenis }).__lenis;
 
+        /* Smooth scroll to exactly 0.
+           - force: works even if Lenis is stopped (e.g. right after a modal)
+           - lock: a stray wheel/touch can't cancel it halfway
+           - onComplete: snap the last sub-pixel so it always ends at 0 */
+        const easeInOutCubic = (t: number) =>
+          t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         const scrollUp = () => {
-          if (lenis) lenis.scrollTo(0, { duration: reduceMotion ? 0 : 2 });
-          else
+          const settle = () => {
+            if (window.scrollY !== 0) window.scrollTo(0, 0);
+          };
+          if (lenis) {
+            lenis.scrollTo(0, {
+              duration: reduceMotion ? 0 : 1.6,
+              easing: easeInOutCubic,
+              immediate: reduceMotion,
+              force: true,
+              lock: true,
+              onComplete: settle,
+            });
+          } else {
             window.scrollTo({
               top: 0,
               behavior: reduceMotion ? "auto" : "smooth",
             });
+          }
         };
 
         if (reduceMotion) {
@@ -154,7 +172,8 @@ const BackToTop = () => {
             { scale: 2.4, autoAlpha: 0, duration: 0.7, ease: "power2.out" },
             "<",
           )
-          .add(scrollUp, "<")
+          // Scroll starts on the click itself; the launch plays alongside.
+          .add(scrollUp, 0)
           // New arrow drops back in from below
           .fromTo(
             q("[data-arrow]"),

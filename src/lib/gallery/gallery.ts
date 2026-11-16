@@ -50,9 +50,23 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { src: post1, alt: "Classical paintings on a museum wall", caption: "Classical Art" },
 ];
 
+/** Optional grouping for a future category filter (the slider ignores it). */
+export type GalleryCategory =
+  | "Operations"
+  | "Training"
+  | "UN Missions"
+  | "Exhibits"
+  | "Events";
+
 /** An item in the coverflow slider: an image, or a video with a poster frame. */
 export type GalleryMedia =
-  | { type: "image"; src: StaticImageData | string; alt: string; caption?: string }
+  | {
+      type: "image";
+      src: StaticImageData | string;
+      alt: string;
+      caption?: string;
+      category?: GalleryCategory;
+    }
   | {
       type: "video";
       /** .mp4 URL (put files in /public/videos and use "/videos/name.mp4"). */
@@ -60,95 +74,120 @@ export type GalleryMedia =
       poster?: StaticImageData | string;
       alt: string;
       caption?: string;
+      category?: GalleryCategory;
     };
 
-// TODO: replace the sample videos (CC0 clips from MDN) with the Corps' own
-// footage, e.g. "/videos/bridge-launch.mp4" in /public/videos.
+/*
+  Field Operations Gallery (home page + /gallery).
+  Captions describe the scene only: no technical details of devices.
+  Alt text matches each caption and what the photo actually shows.
+
+  TODO: several photos carry third-party watermarks or credits (event-1.jpg,
+  event-3.jpg, event-5.jpg, 1744071310341.png). Confirm usage rights or swap
+  in the Corps' own photos before launch.
+  TODO: replace the sample videos (CC0 clips from MDN) with the Corps' own
+  footage, e.g. "/videos/bridge-launch.mp4" in /public/videos, then write
+  their captions and alt text.
+*/
 export const GALLERY_MEDIA: GalleryMedia[] = [
   {
     type: "image",
     src: armedForcesParade,
-    alt: "Soldiers marching with the national flag and regimental colours",
-    caption: "Armed Forces Day Parade",
+    alt: "Soldiers in camouflage and white gloves marching with Bangladesh national flags at a parade",
+    caption: "National Parade Colour Party",
+    category: "Events",
   },
   {
     type: "image",
     src: fieldTrainingVisit,
-    alt: "Visitors meeting soldiers in camouflage at a jungle field training camp",
-    caption: "Field Training Visit",
+    alt: "Visitors meeting soldiers in camouflage face paint at a jungle field training camp",
+    caption: "Field Training Camp Visit",
+    category: "Training",
   },
   {
     type: "image",
     src: jungleOperations,
-    alt: "Soldiers with helmet lamps moving along a misty jungle trail",
-    caption: "Jungle Operations Training",
+    alt: "Soldiers with helmet torches advancing along a misty jungle trail",
+    caption: "Jungle Patrol Exercise",
+    category: "Training",
   },
   {
     type: "video",
     src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
     poster: guardOfHonour,
-    alt: "Video highlights",
-    caption: "Video Highlights",
+    // TODO: sample clip; caption and alt to be provided with the real footage.
+    alt: "Sample video clip, caption to be provided",
+    caption: "Caption to be provided",
   },
   {
     type: "image",
     src: guardOfHonour,
-    alt: "Senior officers inspecting a guard of honour",
-    caption: "Guard Of Honour",
+    alt: "Soldiers in helmets and body armour advancing through a misty jungle stream bed",
+    caption: "Jungle Operations Training",
+    category: "Training",
   },
   {
     type: "image",
     src: bombDisposalRobot,
-    alt: "Bomb disposal technician in a protective suit beside a remote-controlled robot",
-    caption: "Bomb Disposal Robotics",
+    alt: "EOD technician in a protective bomb suit walking beside a remote-controlled disposal robot",
+    caption: "EOD Technician with Disposal Robot",
+    category: "Training",
   },
   {
     type: "image",
     src: ceremonialMarch,
-    alt: "Helmeted soldiers marching in formation with rifles",
-    caption: "Ceremonial March",
+    alt: "Helmeted soldiers in goggles marching in formation with rifles",
+    caption: "Parade Contingent on the March",
+    category: "Events",
   },
   {
     type: "image",
     src: soldierOnTarget,
-    alt: "Soldier in camouflage face paint aiming a rifle with a red-dot sight",
-    caption: "Ready On Target",
+    alt: "Soldier in camouflage face paint looking through a rifle sight",
+    caption: "Marksmanship Training",
+    category: "Training",
   },
   {
     type: "image",
     src: deminingTraining,
-    alt: "Deminers in protective visors and vests searching marked ground",
-    caption: "Demining Training",
+    alt: "Deminers in blue protective vests and visors searching marked ground during a training exercise",
+    caption: "Demining Training Exercise",
+    category: "Training",
   },
   {
     type: "video",
     src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/friday.mp4",
     poster: jungleOperations,
-    alt: "Video from the field",
-    caption: "On The Ground",
+    // TODO: sample clip; caption and alt to be provided with the real footage.
+    alt: "Sample video clip, caption to be provided",
+    caption: "Caption to be provided",
   },
   {
     type: "image",
     src: eodPartnership,
-    alt: "A Bangladesh Army officer beside a bomb disposal suit with an instructor",
-    caption: "EOD Training Partnership",
+    alt: "A Bangladesh Army officer and an instructor standing either side of an EOD protective suit",
+    caption: "EOD Protective Suit Familiarisation",
+    category: "Training",
   },
   {
     type: "image",
     src: marchPast,
-    alt: "Contingents marching past with flags and saluting",
-    caption: "Contingent March-Past",
+    alt: "Army contingent saluting as it marches past with flags during a ceremonial parade",
+    caption: "Ceremonial March-Past",
+    category: "Events",
   },
   {
     type: "image",
     src: eodRobotTraining,
-    alt: "Bomb disposal technician working alongside a tracked robot",
-    caption: "Explosive Ordnance Disposal",
+    alt: "EOD technician in a protective bomb suit working alongside a tracked remote-controlled robot",
+    caption: "EOD Countermeasures Training",
+    category: "Training",
   },
   {
     type: "image",
     src: nationalMemorial,
-    alt: "Wreaths laid at the National Martyrs' Memorial",
-    caption: "National Martyrs' Memorial",
+    alt: "Floral wreaths laid at the National Martyrs' Memorial in Savar",
+    caption: "Tribute at the National Martyrs' Memorial",
+    category: "Events",
   },
 ];

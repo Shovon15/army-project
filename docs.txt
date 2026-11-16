@@ -1,0 +1,598 @@
+Hero section:
+=====================================================================================
+
+Update ONLY the Hero section of the home page. Do not change the header, any other section, the global styles, or the routing.
+
+## Context
+This site is an interactive touch-screen kiosk for the Bangladesh Army Corps of Engineers IED Museum. It was built from a museum/art-gallery template, and the hero still contains template leftovers. The home page will lead visitors into 4 main sections:
+1. Evolution of IED (11 historical eras, from c. 1000 AD to drone-borne IEDs)
+2. World IED Incidents (UN Mission Area / Rest of the World)
+3. IED Incidents in Bangladesh (CHT / Rest of the Country)
+4. IED Statistics Disposed by Engr Units (battalion-wise disposal record)
+
+## Before editing
+- Find the existing Hero component and see how it is styled (Tailwind, CSS modules and so on), which fonts and colour tokens it uses, and how images are loaded. Use the same stack and conventions. Don't add new libraries unless one is already installed (for example, use Framer Motion only if it is already in package.json).
+
+## Hero requirements
+
+### Content
+- Eyebrow / small label: "Bangladesh Army Corps of Engineers · IED Museum"
+- Headline: "Making Every Threat Safe, Protecting Every Life" (keep the existing headline)
+- Sub-text (1–2 lines, max ~30 words): about the Corps' EOD teams detecting, neutralising and disposing of IEDs to protect lives at home and in UN missions.
+- Primary CTA: "Explore IED History" → scrolls or links to the Evolution of IED section (#evolution)
+- Secondary CTA: "View Disposal Statistics" → links to the Engr Units statistics section (#statistics)
+- Remove "Explore The Gallery" and any museum/art wording.
+
+### Visual
+- Full-viewport hero (min-height: 100vh; use 100svh where supported) with the existing EOD/bomb-disposal team image as a background (object-fit: cover).
+- Dark gradient overlay (left-to-right or bottom-to-top, roughly 60–75% opacity on the text side) so white text passes WCAG AA contrast.
+- Military/engineering tone: deep navy/olive dark base, with a single accent colour (amber/yellow, like hazard markings) for the primary CTA and the eyebrow label. Reuse existing theme colours if they fit.
+- Bold, large headline (clamp-based responsive size, e.g. clamp(2.25rem, 5vw, 4.5rem)), left-aligned on desktop and centred on mobile.
+- Optional: a subtle "Touch to explore ↓" scroll cue at the bottom centre with a gentle bounce animation.
+- Optional: a slow Ken Burns zoom on the background image (~20s, ease-in-out, alternate). Disable it when the user has prefers-reduced-motion set.
+
+### Kiosk & accessibility
+- Touch targets of at least 56px height for both CTAs, with generous padding. No hover-only interactions (hover styles are fine as an extra, but every action must work on tap).
+- Fix the background/hero image alt text so it describes the actual photo, e.g. "Bangladesh Army EOD team in protective gear conducting an IED disposal operation". If the image is purely decorative, use alt="" and role="presentation".
+- Use a proper <h1> for the headline (only one h1 on the page).
+- Make the CTAs real <a> or <button> elements with visible focus states.
+- Text must stay readable at 1920×1080 (main kiosk screen), 1080×1920 (portrait kiosk), tablet and mobile.
+
+### Bilingual-ready
+- Put all hero text in a single content object/constant (e.g. heroContent.en / heroContent.bn) so a Bangla/English toggle can be added later. Fill in only the English for now, and leave bn as a TODO with the same keys.
+
+### Performance
+- Use the framework's optimised image component if one is available (for example, next/image with priority and sizes="100vw").
+- Don't layout-shift: reserve the hero height before the image loads.
+
+## Deliverable
+- Change only the Hero component file (and its own style file if it has one).
+- Afterwards, list exactly which files you changed and summarise the changes in 3–5 bullets.
+- Don't touch the marquee, About, Why Choose Us, Events, Experts, Gallery, Testimonials or Footer sections. They will be updated separately.
+
+
+=====================================================================================
+=====================================================================================
+2. Four large section tiles, just below the hero
+
+Replace the scrolling marquee/ticker section that sits directly below the Hero (the one with "Rare Art Collections", "Guided Museum Tours" and so on) with a new "Quick Access" section of 4 large touch tiles. Change ONLY this section. Do not touch the Hero, header, global styles, routing or any other section.
+
+## Context
+This site is an interactive touch-screen kiosk for the Bangladesh Army Corps of Engineers IED Museum. Right after the hero, visitors should see the museum's 4 main topics as big tappable cards so they can jump to any of them in one touch. The project already uses GSAP, so use it for all animation.
+
+## Before editing
+- Find the existing marquee component and where it is rendered on the home page. Remove it from the home page (delete the component file only if nothing else imports it).
+- Check how the project uses GSAP: plain gsap + useEffect/useLayoutEffect, @gsap/react's useGSAP, ScrollTrigger registration and so on. Follow the same pattern exactly, and register plugins the same way the project already does.
+- Reuse the existing styling approach (Tailwind, CSS modules and so on), fonts and colour tokens. Match the visual style of the updated Hero: dark navy/olive base with an amber/hazard-yellow accent.
+
+## Section content
+Optional small heading above the tiles:
+- Eyebrow: "Explore the Museum"
+- Title: "Choose a Topic"
+
+The 4 tiles, in this order:
+
+1. **Evolution of IED**
+   - Teaser: "From c. 1000 AD to drone-borne IEDs, across 11 eras"
+   - Badge/meta: "11 Eras"
+   - Link: #evolution
+   - Icon idea: timeline / hourglass
+
+2. **World IED Incidents**
+   - Teaser: "Incidents in UN mission areas and around the world"
+   - Badge/meta: "UN Missions · Global"
+   - Link: #world-incidents
+   - Icon idea: globe
+
+3. **IED Incidents in Bangladesh**
+   - Teaser: "Incidents in the Chittagong Hill Tracts and the rest of the country"
+   - Badge/meta: "CHT · Nationwide"
+   - Link: #bangladesh-incidents
+   - Icon idea: map pin / Bangladesh outline
+
+4. **IED Statistics Disposed by Engr Units**
+   - Teaser: "Battalion-wise record of IEDs disposed by Engineer units"
+   - Badge/meta: "Engr Battalions"
+   - Link: #statistics
+   - Icon idea: shield / bar chart
+
+Put all text in one content array (e.g. quickAccessContent.en / quickAccessContent.bn) with the same keys, so a Bangla/English toggle can be added later. Fill in only the English for now and leave bn as a TODO.
+
+## Tile design
+- Each tile has: a large number ("01" to "04") in the accent colour or as a faint watermark, an icon (use the project's existing icon library; if none, use inline SVG), the title, the teaser, the badge, and an arrow "→" at the bottom-right.
+- Optional: a subtle background image per tile (a relevant historical or field photo) under a dark gradient overlay. If no images are available, use a solid dark card with a thin accent border at the top or left.
+- Rounded corners, consistent padding, and equal height for all tiles.
+- Layout:
+  - Desktop/landscape kiosk (≥1280px): 4 tiles in one row.
+  - Tablet / portrait kiosk (768–1279px): 2×2 grid.
+  - Mobile (<768px): single column, stacked.
+- Each whole tile is ONE tap target (a single <a> wrapping the card), at least 56px tall for any interactive area. Make the full card clickable, not just the arrow.
+
+## GSAP animation
+- Entrance: when the section scrolls into view (ScrollTrigger, start: "top 80%", once: true), fade the tiles up from y: 40 / opacity: 0, staggered by 0.12s, ease "power3.out", duration ~0.7s. Animate the heading in first.
+- Tap/press feedback: on pointerdown, scale the tile to 0.97; on pointerup/leave, return it to 1 (gsap.to, duration ~0.15s). This must work on touch, not only on hover.
+- Hover (desktop extra only): lift slightly (y: -6), brighten the accent border, and nudge the arrow right by 6px.
+- Navigation: when a tile is tapped, smooth-scroll to its section. If ScrollToPlugin is already installed/registered, use it (offset for the sticky header height). Otherwise, use element.scrollIntoView({ behavior: "smooth" }). Don't add a new plugin package.
+- Respect prefers-reduced-motion: if it is set, skip the entrance and hover animations and show the tiles immediately (use gsap.matchMedia()).
+- Clean up properly: use gsap.context() / useGSAP scope so animations and ScrollTriggers are reverted on unmount (no duplicate triggers in React Strict Mode).
+
+## Accessibility
+- Wrap the tiles in a <section> with aria-labelledby pointing to the "Choose a Topic" heading (use an <h2>).
+- Give each tile a <h3> for its title. Mark icons aria-hidden="true".
+- Visible focus ring on each tile (keyboard users).
+- Text contrast must meet WCAG AA on top of any image overlay.
+
+## Section anchors
+- The links point to #evolution, #world-incidents, #bangladesh-incidents and #statistics. If those sections don't exist yet, keep the links, add a TODO comment, and DON'T create placeholder sections.
+
+## Deliverable
+- Change only the files needed for this section, plus the home page file to swap the marquee for the new component.
+- Afterwards, list exactly which files you changed, and summarise the changes in 3–5 bullets.
+- Don't touch the Hero, About, Why Choose Us, Events, Experts, Gallery, Testimonials or Footer sections.
+
+
+
+
+=====================================================================================
+=====================================================================================
+
+3. Key numbers strip (replaces “Why Choose Us”)
+Add a new "Key Numbers" statistics strip to the home page in the position where the "Why Choose Us" section currently appears (the section with 500+ artworks, 120+ exhibitions, 75+ artists, 1M+ annual visitors).
+
+## IMPORTANT: Do not delete anything
+- Do NOT delete, rename or modify the existing "Why Choose Us" component file, or any other existing component file.
+- Create a NEW component (e.g. KeyNumbers / KeyStatsStrip) in the same folder structure the project uses for home page sections.
+- On the home page file only, stop rendering "Why Choose Us" by commenting out its JSX (and its import, if the linter complains about unused imports), with a comment such as:
+  // Replaced by <KeyNumbers /> — kept for reference, do not delete
+- Render the new component in exactly the same position.
+- Don't change the Hero, the Quick Access tiles, the header, global styles, routing, or any other section.
+
+## Context
+This site is an interactive touch-screen kiosk for the Bangladesh Army Corps of Engineers IED Museum. This strip shows the museum's headline figures at a glance, and each number links to the section that explains it. The project already uses GSAP, so use it for all animation.
+
+## Before editing
+- Check how the project uses GSAP (plain gsap + useEffect/useLayoutEffect, or @gsap/react's useGSAP) and how ScrollTrigger is registered. Follow the same pattern.
+- Reuse the existing styling approach, fonts and colour tokens. Match the updated Hero and Quick Access sections: dark navy/olive base with an amber/hazard-yellow accent.
+- If the existing "Why Choose Us" section has a soldier photo that fits the EOD theme, you may reuse that same image asset (import it; don't move or rename it).
+
+## Content
+Optional heading:
+- Eyebrow: "By the Numbers"
+- Title: "Protecting Lives, One Device at a Time"
+
+4 stat items, in this order:
+
+1. value: 0, suffix: "+", label: "IEDs Disposed by Engr Units", link: #statistics
+2. value: 0, suffix: "", label: "Engineer Battalions Involved", link: #statistics
+3. value: 0, suffix: "+", label: "IED Incidents in CHT", link: #bangladesh-incidents
+4. value: 0, suffix: "+", label: "IED Incidents in UN Mission Areas", link: #world-incidents
+
+- The values are PLACEHOLDERS. The client will provide the real figures. Put all stats in one config/content file (e.g. keyNumbersContent with en and bn keys, plus numeric values in one place) so the numbers can be updated without touching the component. Add a clear TODO comment: "Replace with official figures from the Corps of Engineers".
+- Leave bn labels as a TODO with the same keys (for a future Bangla/English toggle). Format numbers with thousands separators (Intl.NumberFormat). Bangla digits will come later via locale "bn-BD".
+- Optional: a small "Data as of [date]" note under the strip, also driven from config.
+
+## Design
+- A full-width band with a dark background (optionally a subtle image or a diagonal hazard-stripe texture at low opacity), clearly separated from the sections above and below.
+- Each stat has: a small icon (use the project's icon library, or inline SVG), a very large number in the accent colour (clamp(2.5rem, 5vw, 4.5rem), tabular-nums so the digits don't jitter while counting), a short label underneath, and a small "View details →" link text.
+- Thin vertical dividers between stats on desktop.
+- Layout:
+  - ≥1280px (landscape kiosk / desktop): 4 in one row.
+  - 768–1279px (tablet / portrait kiosk): 2×2 grid.
+  - <768px: 2×2 grid with smaller numbers, or a single column if the text wraps badly.
+- Make each stat item ONE tap target (an <a> wrapping the whole item), at least 56px tall, with a visible focus ring. Tapping it smooth-scrolls to the linked section (use ScrollToPlugin if it is already registered in the project, with an offset for the sticky header; otherwise use scrollIntoView({ behavior: "smooth" })). Don't install new packages.
+
+## GSAP animation
+- When the strip enters the viewport (ScrollTrigger, start "top 80%", once: true):
+  1. Fade and slide in the heading (y: 30 → 0).
+  2. Stagger the stat items in (opacity 0 → 1, y: 40 → 0, stagger 0.12, ease "power3.out").
+  3. Count up each number from 0 to its value over ~2s, ease "power2.out", by tweening a plain object { val: 0 } and writing the rounded, formatted value into the number element in onUpdate. Don't re-render React state on every frame.
+- Tap feedback: scale the item to 0.97 on pointerdown and back to 1 on pointerup/leave (works on touch).
+- Hover (desktop only): the number lifts slightly and the "View details →" arrow nudges right.
+- prefers-reduced-motion: use gsap.matchMedia(). Show the final numbers immediately, with no count-up and no movement.
+- Use gsap.context() / the useGSAP scope so everything reverts on unmount (no duplicate ScrollTriggers in React Strict Mode).
+- Kiosk idle reset: export a reset function, or re-run the count-up when the section re-enters view after the page has been scrolled back to the top. If this adds complexity, skip it and leave a TODO.
+
+## Accessibility
+- Use a <section> with aria-labelledby pointing to the <h2> title.
+- The real final value must be available to screen readers: put an aria-label on each stat with the full final text (e.g. "1,250+ IEDs disposed by Engr units"), and mark the animating number aria-hidden="true". Otherwise screen readers would announce the counting.
+- Mark icons aria-hidden="true". Text contrast must meet WCAG AA.
+
+## Section anchors
+- The links point to #statistics, #bangladesh-incidents and #world-incidents. If those sections don't exist yet, keep the links with a TODO comment. Don't create placeholder sections.
+
+## Deliverable
+- New files: the KeyNumbers component (plus its own style file if the project uses them) and the content/config file.
+- Modified file: the home page only (Why Choose Us commented out, KeyNumbers added in the same place).
+- Afterwards, list exactly which files you created or changed, confirm that no existing component file was deleted or edited, and summarise the changes in 3–5 bullets.
+
+=====================================================================================
+=====================================================================================
+4. Evolution of IED as a horizontal timeline
+
+Add a new "Evolution of IED" horizontal timeline section to the home page.
+
+## IMPORTANT: Do not delete anything
+- Do NOT delete, rename or modify any existing component file.
+- Create NEW component(s) only. On the home page file, ADD the new section. Don't remove or reorder other sections.
+- Don't change global styles, routing, the header, or any other section.
+- If a "World IED Incidents" detail panel/modal component already exists, you may import and reuse it, but don't modify it.
+
+## Placement
+- Insert this section directly after the KeyNumbers strip and before the "World IED Incidents" section (id="world-incidents"). If any of these are missing, place it after the Quick Access tiles, with a TODO comment.
+- The section root must have id="evolution" (the Hero CTA "Explore IED History" and the Quick Access tile already link to this anchor).
+
+## Context
+This site is an interactive touch-screen kiosk for the Bangladesh Army Corps of Engineers IED Museum. This section tells the history of the improvised explosive device across 11 eras, as a swipeable horizontal timeline. The project already uses GSAP, so use it for all animation.
+
+## Before editing
+- Check how the project uses GSAP (plain gsap + useEffect/useLayoutEffect, or @gsap/react's useGSAP) and which plugins are registered (ScrollTrigger, ScrollToPlugin, Draggable, InertiaPlugin, Observer). Use only what is already available. Don't install packages.
+- Reuse the existing styling approach, fonts and colour tokens: dark navy/olive base with an amber accent, as in the sections above.
+
+## Data
+Create a content file (e.g. evolutionContent) with section text in en, plus bn with the same keys as a TODO:
+- Eyebrow: "A Thousand Years of Threat"
+- Title: "Evolution of IED"
+- Intro (1–2 lines): how improvised explosive devices evolved from early gunpowder weapons into today's drone-borne threats.
+
+An eras array with exactly these 11 entries, in order:
+1. period: "c. 1000–1300", title: "Song & Jin Dynasty"
+2. period: "1585", title: "Siege of Antwerp"
+3. period: "1861–1865", title: "US Civil War Torpedoes"
+4. period: "1867", title: "Invention of Dynamite"
+5. period: "1914–1918", title: "WWI Booby Traps"
+6. period: "1939–1945", title: "WWII Sabotage"
+7. period: "1946–1975", title: "Guerrilla Conflicts"
+8. period: "1970s–1972", title: "Term 'IED' & the Wheelbarrow"
+9. period: "1983–2009", title: "VBIEDs & Suicide Vests"
+10. period: "2001–2014", title: "Asymmetric Warfare & EFPs"
+11. period: "2015–Present", title: "Drone-Borne IEDs"
+
+Each era has: id, period, title, shortText (1 line, for the card), fullText (2–4 short paragraphs, for the detail view), image (optional, path), imageCaption (optional), keyFacts (optional array of 2–3 short bullet strings), and source (optional).
+- Write shortText as a neutral 1-line historical teaser. Write fullText as a PLACEHOLDER: "Placeholder – museum curators to provide approved text." Add a TODO: "Replace with text approved by the Corps of Engineers."
+- Content rule (also add this as a comment in the file): the text is historical and educational only (context, significance, and how forces countered the threat). Never include construction methods, components, formulations or technical make-up.
+
+## Layout & UI
+- Section header: eyebrow, h2 title, intro text, plus "← →" navigation buttons on the right of the header (desktop) or below the rail (mobile).
+- Timeline rail:
+  - A horizontal track with a thin line running through it and one node/dot per era on the line. Above or below each node is an era card.
+  - Use native horizontal scrolling with CSS scroll-snap (scroll-snap-type: x mandatory; each card scroll-snap-align: start or center) so touch swiping feels natural on the kiosk. Don't use a pinned/scroll-jacked vertical-to-horizontal ScrollTrigger effect, because it is confusing on a touch kiosk.
+  - If GSAP Draggable + InertiaPlugin are ALREADY registered in the project, you may use them for mouse drag on desktop. Otherwise, add simple pointer-drag-to-scroll for mouse users without any plugin.
+  - Card width: ~360px at desktop and ~80vw on mobile, so the next card always peeks in (this shows users they can swipe).
+  - Hide the scrollbar visually but keep it scrollable.
+- Era card: period in large accent text, title, shortText, image thumbnail (if any; otherwise an era number watermark "01"–"11"), and "Read more →". The whole card is ONE tap target (a <button>), at least 56px tall.
+- Progress indicator under the rail: "03 / 11" plus a thin progress bar that fills as the user scrolls through the rail.
+- Prev/next buttons: at least 56×56px. They scroll the rail by one card (using ScrollToPlugin on the rail if it is registered; otherwise scrollBy({ behavior: "smooth" })). Disable them at the ends.
+- Era tabs (optional, desktop only): a compact row of the 11 period labels above the rail. Tapping one jumps to that era, and the active one is highlighted as the rail scrolls (use IntersectionObserver on the cards).
+- Detail view: tapping a card opens a full-screen overlay (kiosk-friendly) with a large image plus caption, period, title, fullText, key facts and source, along with:
+  - "← Previous era" / "Next era →" buttons inside the overlay, so visitors can read through all 11 without closing it.
+  - A large close button (at least 56px), close on backdrop tap and on Esc, focus trap, and focus returned to the card on close.
+  - Auto-close after 60s idle (configurable constant).
+- Visual touches: the line could change subtly from an "old" sepia tone at era 1 to the modern accent colour at era 11 (a gradient along the line). Keep it subtle.
+
+## GSAP animation
+- Section entrance (ScrollTrigger, start "top 75%", once: true): the header fades up, the timeline line draws from left to right (scaleX 0 → 1, transform-origin left, ~1s), then the nodes pop in (scale 0 → 1, stagger 0.05), then the visible cards fade up (y: 40 → 0, stagger 0.08).
+- Progress bar: update it on the rail's scroll event with gsap.quickTo (or quickSetter) for smoothness. Don't use React state per frame.
+- Active card: the card nearest the centre of the rail scales to 1 and full opacity, and the others go to 0.92 / 0.7 opacity (tweened, ~0.3s).
+- Detail overlay: fade the backdrop in, then slide/scale the content in. When switching eras inside the overlay, cross-fade the content (out x: -30, in x: 30 → 0, direction-aware).
+- Tap feedback: scale 0.97 on pointerdown for cards and buttons.
+- prefers-reduced-motion (gsap.matchMedia()): no line draw, no stagger, no scale effects. Instant states.
+- Use gsap.context() / the useGSAP scope with full cleanup (no duplicate ScrollTriggers in React Strict Mode).
+- Kiosk: when the section re-enters view after the page has been scrolled back to the top, reset the rail to era 1 (scrollLeft = 0).
+
+## Accessibility
+- <section id="evolution" aria-labelledby="..."> with an <h2>.
+- The rail is a <ul> (role="list") with an aria-label, e.g. "IED history timeline, 11 eras". Each card is in an <li>, and each card button has an aria-label (e.g. "1585, Siege of Antwerp, read more").
+- The rail is keyboard-scrollable (tabindex="0"), and left/right arrow keys move between cards.
+- Prev/next buttons have aria-labels and disabled states.
+- The overlay uses role="dialog", aria-modal="true" and aria-labelledby.
+- WCAG AA contrast and visible focus rings. No hover-only interactions.
+
+## Deliverable
+- New files: the section component plus sub-components (e.g. TimelineRail, EraCard, EraDetailOverlay), the content file, and style files if used.
+- Modified file: the home page only.
+- Afterwards, list every file you created or changed, confirm that no existing component was deleted or edited, and summarise the changes in 3–5 bullets.
+
+
+
+=====================================================================================
+=====================================================================================
+5. World IED Incidents
+Add a new "World IED Incidents" section to the home page.
+
+## IMPORTANT: Do not delete anything
+- Do NOT delete, rename or modify any existing component file.
+- Create NEW component(s) only. On the home page file, ADD the new section. Don't remove or reorder other sections, except as described in "Placement" below.
+- Don't change global styles, routing, the header, or any other section.
+
+## Placement
+- Insert this section after the "Evolution of IED" section if it exists. If it doesn't exist yet, insert it after the KeyNumbers strip, and add a comment: // TODO: Evolution of IED section goes above this.
+- The section root must have id="world-incidents" (the Quick Access tiles and the KeyNumbers strip already link to this anchor).
+
+## Context
+This site is an interactive touch-screen kiosk for the Bangladesh Army Corps of Engineers IED Museum. This section covers IED incidents worldwide in two groups:
+- 2.1 IED Incidents in UN Mission Areas (where Bangladesh Army peacekeepers serve)
+- 2.2 IED Incidents in the Rest of the World
+The project already uses GSAP, so use it for all animation.
+
+## Before editing
+- Check how the project uses GSAP (plain gsap + useEffect/useLayoutEffect, or @gsap/react's useGSAP), and how ScrollTrigger and any other plugins are registered. Follow the same pattern.
+- Check package.json for an existing map library (react-simple-maps, d3-geo, leaflet and so on). If one is installed, use it. If none is installed, DON'T install one. Use an inline/static SVG world map instead:
+  - Look for an existing world map SVG in /public or the assets folder.
+  - If there isn't one, expect it at /public/maps/world.svg (equirectangular projection, viewBox 0 0 1000 500), and leave a TODO saying the file must be added. Until it exists, render a dark placeholder panel with a subtle grid, so the pins still show.
+  - Position pins by converting lat/lng to x/y with a simple equirectangular projection: x = (lng + 180) / 360 * width, y = (90 - lat) / 180 * height.
+
+## Data (placeholders; the client will provide real records)
+Create a content file (e.g. worldIncidentsContent) with:
+- Section text in en, plus bn with the same keys as a TODO:
+  - Eyebrow: "Global Threat"
+  - Title: "World IED Incidents"
+  - Intro (1–2 lines): IEDs remain one of the deadliest threats to soldiers, peacekeepers and civilians worldwide.
+  - Tab labels: "UN Mission Areas" and "Rest of the World"
+- An incidents array. Each item has:
+  id, category ("un" | "world"), title, country, missionName (optional, for UN, e.g. "MINUSMA", "MINUSCA", "MONUSCO"), location, lat, lng, date (ISO), summary (2–3 lines), casualties (optional, as an object or text), bangladeshContingentInvolved (boolean, UN only), image (optional), source (optional, text).
+- Add 4–5 PLACEHOLDER entries per category with realistic structure but clearly fake text ("Placeholder incident – replace with official record"). Put a TODO at the top: "Replace with verified records provided by the Corps of Engineers."
+- Content rule (also add this as a comment in the file): summaries describe the event, impact and response only. Never include device construction, components or technical make-up.
+
+## Layout & UI
+- Section header: eyebrow, h2 title, intro text.
+- Tabs: two large touch tabs, "UN Mission Areas" and "Rest of the World", each showing a count badge (e.g. "UN Mission Areas · 5"). At least 56px tall. Default tab: UN Mission Areas.
+- Main area:
+  - Desktop/landscape kiosk (≥1280px): the map on the left (~60%) and the incident list on the right (~40%), which scrolls internally if needed.
+  - Tablet/portrait (768–1279px): the map on top and the list below.
+  - Mobile (<768px): hide the map or make it small, and show the list as the main view.
+- Map:
+  - Dark world map (land in a muted navy/olive, borders subtle).
+  - Pins only for the active tab. The UN pins use the accent colour (amber); the Rest of the World pins use a secondary colour (e.g. muted red). Pins for UN incidents that involved a Bangladesh contingent get a small ring or flag marker.
+  - Each pin has a pulsing ring (GSAP, repeat: -1, yoyo) and a touch area of at least 44×44px (an invisible larger hit area around the dot).
+  - Tapping a pin highlights the matching card in the list (scroll it into view inside the list) and opens the detail panel.
+- Incident list cards: country/mission tag, title, date (formatted, e.g. "12 Mar 2019"), location, and a 1-line summary. The active card gets an accent border. Tapping a card highlights its pin on the map and opens the detail panel.
+- Detail panel: a modal or slide-in drawer showing the image (if any), title, mission/country, location, date, the full summary, casualties (if provided), a "Bangladesh contingent involved" badge (UN only), and the source.
+  - Large close button (at least 56px), close on backdrop tap and on Esc, focus trapped while open, focus returned to the triggering element on close.
+  - Auto-close after 60 seconds of no interaction (kiosk), as a constant that can be changed.
+- Empty state: if a category has no incidents, show "Records will be added soon".
+- Match the visual style of the Hero/Quick Access/KeyNumbers sections: dark navy/olive base with an amber accent, the same fonts, and the same radii and spacing.
+
+## GSAP animation
+- Section entrance (ScrollTrigger, start "top 75%", once: true): the header fades up, then the tabs, then the map fades in, then the pins drop in with a stagger (scale 0 → 1, ease "back.out(2)", stagger 0.08), then the cards slide in (x: 30 → 0, stagger 0.06).
+- Tab switch: the current pins and cards fade/scale out (~0.25s), the new ones animate in with the same stagger. Use a gsap timeline and kill any running timeline before starting a new one, so rapid tapping doesn't break it.
+- Pin pulse: an infinite subtle scale/opacity ring. Pause it while the section is off-screen (ScrollTrigger onToggle) to save GPU on a kiosk running all day.
+- Detail panel: slide/fade in (drawer x: 100% → 0, or modal scale 0.95 → 1 plus fade), and reverse on close.
+- Tap feedback on cards and tabs: scale 0.97 on pointerdown.
+- prefers-reduced-motion (gsap.matchMedia()): no pulse, no stagger, instant state changes.
+- Use gsap.context() / the useGSAP scope with full cleanup (no duplicate ScrollTriggers in React Strict Mode).
+
+## Accessibility
+- <section id="world-incidents" aria-labelledby="..."> with an <h2>.
+- Tabs use role="tablist" / role="tab" / role="tabpanel", aria-selected and arrow-key navigation.
+- Each map pin is a <button> with aria-label (e.g. "IED incident, Mali, 12 March 2019"). The list is the accessible equivalent of the map.
+- The detail panel uses role="dialog", aria-modal="true" and aria-labelledby.
+- WCAG AA contrast, visible focus rings, no hover-only interactions.
+
+## Deliverable
+- New files: the section component (split it into sub-components such as IncidentMap, IncidentList and IncidentDetail if that keeps it clean), the content/data file, and style files if the project uses them.
+- Modified file: the home page only (the new section added).
+- Afterwards, list every file you created or changed, confirm that no existing component was deleted or edited, and summarise the changes in 3–5 bullets.
+
+=====================================================================================
+=====================================================================================
+6. IED Incidents in Bangladesh
+Add a new "IED Incidents in Bangladesh" section to the home page.
+
+## IMPORTANT: Do not delete anything
+- Do NOT delete, rename or modify any existing component file.
+- Create NEW component(s) only. On the home page file, ADD the new section. Don't remove or reorder other sections.
+- Don't change global styles, routing, the header, or any other section.
+- If the "World IED Incidents" section already exists and has reusable pieces (an incident detail panel, a tab component, a card), you may IMPORT and reuse them, but don't modify them. If you need different behaviour, create a new component.
+
+## Placement
+- Insert this section directly after the "World IED Incidents" section (id="world-incidents"). If that doesn't exist yet, insert it after the KeyNumbers strip, with a TODO comment.
+- The section root must have id="bangladesh-incidents" (the Quick Access tiles and the KeyNumbers strip already link to this anchor).
+
+## Context
+This site is an interactive touch-screen kiosk for the Bangladesh Army Corps of Engineers IED Museum. This section covers IED incidents inside Bangladesh in two groups:
+- 3.1 IED Incidents in the Chittagong Hill Tracts (CHT: Rangamati, Khagrachari and Bandarban districts)
+- 3.2 IED Incidents in the Rest of the Country
+The project already uses GSAP, so use it for all animation.
+
+## Before editing
+- Check how the project uses GSAP and how its plugins are registered, and follow the same pattern.
+- Check package.json for a map library. If one is installed, use it. If not, DON'T install one. Use a static SVG map of Bangladesh:
+  - Look for an existing Bangladesh SVG in /public or the assets folder.
+  - If there isn't one, expect it at /public/maps/bangladesh-districts.svg, with each district as a <path> carrying an id or data-name (e.g. data-name="Rangamati"). Leave a TODO saying the file must be added. Until it exists, render a placeholder panel and keep the list fully working.
+  - Position pins by lat/lng using a linear projection based on Bangladesh's bounding box (about lat 20.5–26.7, lng 88.0–92.7) mapped to the SVG viewBox. Put the bounds in config so they can be tuned to the actual SVG.
+
+## Data (placeholders; the client will provide real records)
+Create a content file (e.g. bangladeshIncidentsContent) with:
+- Section text in en, plus bn with the same keys as a TODO:
+  - Eyebrow: "On Home Soil"
+  - Title: "IED Incidents in Bangladesh"
+  - Intro (1–2 lines): how Engineer units of the Bangladesh Army respond to IED threats across the country, from the hill tracts to urban areas.
+  - Tab labels: "Chittagong Hill Tracts" and "Rest of the Country"
+- An incidents array. Each item has:
+  id, region ("cht" | "country"), title, district, upazila/area (optional), lat, lng, date (ISO), summary (2–3 lines), respondingUnit (optional, e.g. an Engr battalion name), outcome (e.g. "Safely disposed", "Detonated – casualties", text), image (optional), source (optional).
+- Add 4–5 PLACEHOLDER entries per region with clearly fake text ("Placeholder incident – replace with official record"). Put a TODO at the top: "Replace with verified records provided by the Corps of Engineers."
+- Content rule (also add this as a comment in the file): summaries describe the event, location, response and outcome only. Never include device construction, components or technical make-up, and don't name civilian victims.
+
+## Layout & UI
+- Section header: eyebrow, h2 title, intro text.
+- Optional mini stats row under the header (driven from the data, computed rather than hard-coded): "Total incidents", "CHT", "Rest of country", "Safely disposed". Simple GSAP count-up, the same style as the KeyNumbers strip but smaller.
+- Tabs: two large touch tabs with count badges ("Chittagong Hill Tracts · 5" / "Rest of the Country · 4"), at least 56px tall. Default tab: CHT.
+- Main area:
+  - ≥1280px: the Bangladesh map on the left (~45%; the country is tall and narrow, so give it height) and the incident timeline/list on the right (~55%).
+  - 768–1279px: the map on top (limited height), and the list below.
+  - <768px: list first, map collapsed or small.
+- Map:
+  - Dark base map. The 3 CHT districts (Rangamati, Khagrachari, Bandarban) are always tinted with the accent colour at low opacity and outlined, with a "CHT" label.
+  - When the CHT tab is active, the CHT districts glow or brighten and the rest of the country dims. When "Rest of the Country" is active, the CHT tint fades back and the other districts become normal.
+  - Pins only for the active tab, with a pulsing ring and a touch area of at least 44×44px.
+  - Tapping a pin highlights its card in the list and opens the detail panel. Optionally, tapping a district filters the list to that district (with a visible "Filtered: Rangamati ✕" chip to clear it).
+- Incident list: a vertical timeline sorted by date (newest first), with a vertical line and dots. Each card shows the date, district, title, an outcome badge (green for "Safely disposed", red/amber for other outcomes) and a 1-line summary. Tapping a card highlights its pin and opens the detail panel.
+- Detail panel: a modal or drawer with the image, title, district/area, date, full summary, responding unit, outcome badge and source.
+  - Large close button (at least 56px), close on backdrop tap and on Esc, focus trap, focus returned on close, and auto-close after 60s idle (configurable constant).
+- Empty state: "Records will be added soon".
+- Same visual system as the previous sections: dark navy/olive base, amber accent, same fonts, radii and spacing.
+
+## GSAP animation
+- Section entrance (ScrollTrigger, start "top 75%", once: true): the header, then the mini stats count-up, then the map fades in and the CHT region draws/fills in (the stroke-dashoffset outline animation is optional), then the pins drop in with a stagger (scale 0 → 1, "back.out(2)"), then the timeline line grows (scaleY 0 → 1, transform-origin top) and the cards slide in (stagger 0.06).
+- Tab switch: one timeline that cross-fades the region highlight on the map, swaps the pins (out, then staggered in) and swaps the cards. Kill the previous timeline before starting a new one.
+- Pin pulse: infinite, but paused while the section is off-screen (ScrollTrigger onToggle).
+- Detail panel: animate open and close.
+- Tap feedback: scale 0.97 on pointerdown for tabs, cards and pins.
+- prefers-reduced-motion (gsap.matchMedia()): no pulse, no stagger, no count-up. Show the final states instantly.
+- Use gsap.context() / the useGSAP scope with full cleanup.
+
+## Accessibility
+- <section id="bangladesh-incidents" aria-labelledby="..."> with an <h2>.
+- Tabs use role="tablist" / "tab" / "tabpanel", aria-selected and arrow-key support.
+- Pins are <button>s with aria-label (e.g. "IED incident, Bandarban, 4 June 2018, safely disposed").
+- Mark the SVG map aria-hidden="true" if the list fully covers the same information; otherwise give it role="img" with a summary aria-label.
+- The detail panel uses role="dialog", aria-modal="true" and aria-labelledby.
+- Outcome badges must not rely on colour alone (include the text).
+- WCAG AA contrast and visible focus rings.
+
+## Deliverable
+- New files: the section component (plus sub-components such as BangladeshMap, IncidentTimeline and the detail panel, unless you are reusing the existing one), the content/data file, and style files if used.
+- Modified file: the home page only.
+- Afterwards, list every file you created or changed, confirm that no existing component was deleted or edited, and summarise the changes in 3–5 bullets.
+
+=====================================================================================
+=====================================================================================
+7. IED Statistics Disposed by Engr Units
+Add a new "IED Statistics – Disposed by Engr Units" section to the home page.
+
+## IMPORTANT: Do not delete anything
+- Do NOT delete, rename or modify any existing component file. That includes the KeyNumbers strip: don't edit it to sync numbers; add a TODO note instead (see "Data").
+- Create NEW component(s) only. On the home page file, ADD the new section. Don't remove or reorder other sections.
+- Don't change global styles, routing, the header, or any other section.
+- If reusable components already exist (tabs, a detail drawer/modal, a timeline from the Bangladesh incidents section), you may import and reuse them, but don't modify them.
+
+## Placement
+- Insert this section directly after the "IED Incidents in Bangladesh" section (id="bangladesh-incidents"). If that doesn't exist yet, insert it after the last of the new sections, with a TODO comment.
+- The section root must have id="statistics" (the Hero CTA "View Disposal Statistics", the Quick Access tile and the KeyNumbers strip already link to this anchor).
+
+## Context
+This site is an interactive touch-screen kiosk for the Bangladesh Army Corps of Engineers IED Museum. This section shows how many IEDs each Engineer battalion has successfully disposed of, and lets visitors open each battalion's record of disposal events. The project already uses GSAP, so use it for all animation.
+
+## Before editing
+- Check how GSAP and its plugins are used/registered, and follow the same pattern.
+- Check package.json for a chart library (recharts, chart.js, nivo, visx and so on). If one is installed, you may use it. If none is installed, DON'T install one. Build the bar chart with plain HTML/CSS (or SVG) bars animated by GSAP.
+- Reuse the existing styling approach, fonts and colours: dark navy/olive base with an amber accent.
+
+## Data (placeholders; the client will provide real records)
+Create a content file (e.g. engrDisposalContent) with section text in en, plus bn with the same keys as a TODO:
+- Eyebrow: "Mission Accomplished"
+- Title: "IEDs Disposed by Engineer Units"
+- Intro (1–2 lines): the record of IEDs successfully disposed of by Engineer battalions of the Bangladesh Army.
+
+A battalions array. Each battalion has:
+id, name (PLACEHOLDER: "[Engr Battalion Name 1]", "[Engr Battalion Name 2]", "[Engr Battalion Name 3]"; make it easy to add more), shortName (optional), crest/logo image (optional), description (optional, 1–2 lines), and events: an array of disposal events, each with id, date (ISO), location, district/area, region ("cht" | "country" | "un"), title, summary (1–2 lines), quantity (number of IEDs disposed in that event), outcome (default "Disposed successfully") and image (optional).
+
+- Add 3 placeholder battalions with 4–6 placeholder events each, using clearly fake text ("Placeholder event – replace with official record").
+- ALL totals (per battalion, overall, per region, per year) must be COMPUTED from the events data. Don't hard-code totals.
+- Add a TODO at the top: "Replace with verified records provided by the Corps of Engineers. Keep the KeyNumbers strip total in sync with the computed total here (or update KeyNumbers later to import this total)."
+- Content rule (also add this as a comment in the file): summaries describe date, place, unit and outcome only. Never include device construction, components, or render-safe procedures/techniques.
+
+## Layout & UI
+1. Section header: eyebrow, h2 title, intro.
+
+2. Summary row (computed): "Total IEDs disposed", "Battalions", "Disposal operations" (event count), "Since [earliest year]". Large GSAP count-up numbers in the accent colour, with tabular-nums.
+
+3. Battalion comparison chart:
+   - A horizontal bar chart, one bar per battalion, sorted by total (highest first). The battalion name is on the left, the bar in the accent colour, and the total at the end of the bar.
+   - Optional toggle above the chart: "All time" / "By year" (a year selector that filters the totals). Only add this if it stays simple; otherwise skip it and leave a TODO.
+   - Each bar is tappable (a <button>) and opens that battalion's detail drawer.
+
+4. Battalion cards (grid):
+   - ≥1280px: 3 per row. 768–1279px: 2 per row. <768px: 1 per row.
+   - Each card shows: crest (or an initials badge), battalion name, a big total number, a "Last disposal: [date], [location]" line, a small region breakdown (CHT / Rest of country / UN) as mini badges or a tiny stacked bar (with text labels, not colour only), and a "View disposal events →" button.
+   - The whole card is ONE tap target, at least 56px tall.
+
+5. Battalion detail drawer/overlay (opened from a card or bar):
+   - Header: crest, name, description, total.
+   - Filter chips: All / CHT / Rest of country / UN (each with a count).
+   - A vertical timeline of disposal events, newest first: date, location, title, summary, quantity badge ("× 3 IEDs"), outcome badge (green, with text) and an image thumbnail if present.
+   - "← Previous battalion / Next battalion →" buttons inside the drawer.
+   - A large close button (at least 56px), close on backdrop tap and on Esc, focus trap, focus returned on close, and auto-close after 60s idle (configurable constant).
+
+- Empty states: a battalion with no events shows "Records will be added soon". No battalions at all: hide the chart and show the same message.
+- Use the same visual system as the previous sections.
+
+## GSAP animation
+- Section entrance (ScrollTrigger, start "top 75%", once: true): the header, then the summary numbers count up (tween a plain object, write the formatted value in onUpdate, ~2s, "power2.out"), then the chart bars grow from 0 to their width (scaleX 0 → 1, transform-origin left, stagger 0.1, "power3.out") while the bar values count up, then the battalion cards fade up (stagger 0.08).
+- Year/filter change: bars tween to their new widths (don't remount them), and the numbers tween to their new values.
+- Drawer: the backdrop fades, the panel slides in from the right. Timeline items stagger in (y: 20 → 0, stagger 0.05). Changing a filter cross-fades the list. Previous/next battalion cross-fades the content in the direction of travel.
+- Tap feedback: scale 0.97 on pointerdown.
+- prefers-reduced-motion (gsap.matchMedia()): final values instantly, no growth, no stagger.
+- Use gsap.context() / the useGSAP scope with full cleanup.
+
+## Accessibility
+- <section id="statistics" aria-labelledby="..."> with an <h2>.
+- Counting numbers: the animated element is aria-hidden="true", and an aria-label carries the final value (e.g. "1,250 IEDs disposed in total").
+- Chart: each bar button has an aria-label (e.g. "[Battalion Name 1], 420 IEDs disposed, open details"). Also provide a visually hidden <table> with the same data for screen readers.
+- Filter chips use aria-pressed. The drawer uses role="dialog", aria-modal="true" and aria-labelledby.
+- WCAG AA contrast, and no meaning carried by colour alone.
+
+## Deliverable
+- New files: the section component plus sub-components (e.g. DisposalSummary, BattalionBarChart, BattalionCard, BattalionDrawer), the content file, a small utility for computed totals (e.g. getBattalionTotals, getOverallTotals), and style files if used.
+- Modified file: the home page only.
+- Afterwards, list every file you created or changed, confirm that no existing component was deleted or edited (including KeyNumbers), and summarise the changes in 3–5 bullets.
+
+=====================================================================================
+=====================================================================================
+8. Gallery (keep)
+Update the existing "Our Gallery" section on the home page so it fits the IED Museum / EOD theme. KEEP the existing component and its layout, image viewer and video behaviour. This is a content-and-polish update, not a rebuild.
+
+## IMPORTANT: Minimal, safe changes
+- Do NOT delete or rename the existing Gallery component file, or any other component file.
+- Do NOT rewrite the gallery's layout logic, grid structure or the "Open gallery viewer" lightbox/viewer logic. Keep them working exactly as they do now.
+- Allowed changes to the Gallery component:
+  1. Text content (eyebrow, heading, intro, captions).
+  2. Moving hard-coded gallery items into a content/data file, IF they are hard-coded. Keep the same item shape the component already expects.
+  3. Accessibility fixes (alt text, labels, focus states).
+  4. Adding an id="gallery" anchor to the section root if it has none.
+  5. Optional GSAP entrance animation, ONLY if the section has no entrance animation already.
+- If any change would require restructuring the component, STOP and instead list the suggested change in your final summary as a TODO.
+- Don't change global styles, routing, the header, or any other section.
+
+## Placement
+- Make sure the Gallery renders after the "IED Statistics – Disposed by Engr Units" section (id="statistics"). If it is currently higher on the page, MOVE only its position in the home page file. Don't remove it.
+
+## Context
+This site is an interactive touch-screen kiosk for the Bangladesh Army Corps of Engineers IED Museum. The gallery currently uses template/museum wording. It should become a gallery of field operations, training and museum exhibits. The project already uses GSAP.
+
+## Before editing
+- Read the existing Gallery component fully: how items are defined, how images and videos are rendered, how the viewer opens and closes, and which animation (if any) it already uses.
+- Check how GSAP is used/registered in the project, and follow the same pattern.
+
+## Content changes
+Section text (put it in a content file with en, plus bn with the same keys as a TODO, if the component can take props or import content; otherwise edit the strings in place):
+- Eyebrow: "In the Field"
+- Title: "Field Operations Gallery"
+- Intro (1 line): moments from EOD operations, training, UN missions and the museum's exhibits.
+
+Gallery items:
+- Keep all the existing images and videos (don't delete media files).
+- Rewrite each caption to be neutral and accurate to what the image shows, in the EOD/engineering context (e.g. "EOD team in protective gear during a training exercise", "Bridge-launching demonstration by Engineer troops"). If you can't tell what an image shows, use a caption placeholder: "Caption to be provided" with a TODO.
+- Add an optional `category` field to each item ("Operations", "Training", "UN Missions", "Exhibits", "Events") ONLY if it doesn't break the existing item shape. If the component ignores unknown fields, that is fine; leave category filtering as a TODO in the summary unless it can be added without restructuring.
+- Remove museum/art wording anywhere in this section ("artworks", "curators", "exhibition of paintings" and so on).
+- Content rule: captions describe the scene only. No technical details of devices.
+
+## Accessibility & kiosk fixes
+- Every image needs meaningful alt text matching its new caption. Template alt text that doesn't match the image (e.g. describing a marble sculpture) must be fixed.
+- Videos: add an aria-label / title. Make sure they don't autoplay with sound (muted, playsinline). If autoplay exists, keep it muted.
+- The "Open gallery viewer" control and each tile must be real buttons/links with visible focus rings and a touch target of at least 48–56px.
+- Viewer (only if it can be done without restructuring): close on Esc, a large close button, and swipe left/right on touch. If these already exist, leave them. If they are missing and adding them requires restructuring, list them as TODOs.
+- Kiosk: if the viewer has no idle auto-close, add a TODO suggesting a 60s idle auto-close. Don't implement it if it requires restructuring.
+
+## GSAP (only if the section has no entrance animation already)
+- ScrollTrigger (start "top 80%", once: true): the header fades up, then the grid items fade/scale in (opacity 0 → 1, scale 0.96 → 1, stagger 0.06, "power2.out").
+- Use the batch approach (ScrollTrigger.batch) if the grid is long, so items animate as they enter view.
+- prefers-reduced-motion: no animation.
+- Use gsap.context() / the useGSAP scope with full cleanup, and don't interfere with the viewer's own animations.
+
+## Deliverable
+- Modified files: the Gallery component (text, accessibility, anchor and optional animation only), a new gallery content file if created, and the home page file only if the section's position had to move.
+- Afterwards, list every file you created or changed, and confirm that:
+  - no component or media file was deleted or renamed
+  - the viewer/lightbox behaviour is unchanged
+- Summarise the changes in 3–5 bullets, plus a TODO list of anything you skipped to avoid restructuring.

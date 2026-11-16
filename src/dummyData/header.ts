@@ -9,8 +9,13 @@ export const headerData = {
       title: "Home",
       slug: "home",
       children: [
-        { title: "About us", slug: "#about" },
-        { title: "Events", slug: "#events" },
+        // One entry per home-page section (ids set on each <section>).
+        { title: "Quick Access", slug: "#quick-access" },
+        { title: "Key Numbers", slug: "#key-numbers" },
+        { title: "Evolution of IED", slug: "#evolution" },
+        { title: "World IED Incidents", slug: "#world-incidents" },
+        { title: "IED Incidents in Bangladesh", slug: "#bangladesh-incidents" },
+        { title: "Disposal Statistics", slug: "#statistics" },
         { title: "Gallery", slug: "#gallery" },
       ],
     },

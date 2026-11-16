@@ -10,7 +10,10 @@ import SectionHeading from "@/components/common/typography/SectionHeading";
 import SliderArrowIcon from "@/assets/icons/SliderArrowIcon";
 import { cn } from "@/utils/helpers/cn";
 import type { GalleryMedia } from "@/lib/gallery/gallery";
+import { galleryContent } from "@/lib/gallery/galleryContent";
 import { Lightbox, type LightboxItem } from "./ImageGallery";
+
+const copy = galleryContent.en;
 
 /** Slider items as lightbox entries (videos use their poster as the thumbnail). */
 const toLightboxItems = (items: GalleryMedia[]): LightboxItem[] =>
@@ -26,6 +29,8 @@ type Props = {
   autoplay?: boolean;
   badge?: string;
   titleLines?: string[];
+  /** One line under the heading. */
+  intro?: string;
   /** Set on the section so header links like "/#gallery" can scroll to it. */
   id?: string;
 };
@@ -99,6 +104,7 @@ const SlideVideo = ({
         playsInline
         preload={isActive ? "auto" : "none"}
         aria-label={item.alt}
+        title={item.caption ?? item.alt}
         className="block h-full w-full object-cover"
       />
       {/* Play badge so a paused video reads as a video, not a photo. */}
@@ -136,7 +142,7 @@ const ArrowButton = ({
       type="button"
       onClick={onClick}
       aria-label={dir === "prev" ? "Previous slide" : "Next slide"}
-      className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-primary bg-white p-3 text-primary shadow transition-colors duration-300 hover:bg-primary hover:text-white"
+      className="pointer-events-auto flex h-14 w-14 items-center justify-center rounded-full border border-primary bg-white p-3 text-primary shadow transition-colors duration-300 hover:bg-primary hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent focus-visible:ring-offset-2"
     >
       <SliderArrowIcon className={dir === "next" ? "rotate-180" : undefined} />
     </button>
@@ -146,8 +152,9 @@ const ArrowButton = ({
 const GallerySlider = ({
   items,
   autoplay = true,
-  badge = "Our Gallery",
-  titleLines = ["Moments Of Service", "In Photos & Videos"],
+  badge = copy.eyebrow,
+  titleLines = copy.titleLines,
+  intro = copy.intro,
   id = "gallery",
 }: Props) => {
   const swiperRef = useRef<SwiperType | null>(null);
@@ -182,6 +189,11 @@ const GallerySlider = ({
       className="relative isolate w-full overflow-hidden bg-surface-light py-20 text-ink md:py-28"
     >
       <SectionHeading badge={badge} lines={titleLines} tone="light" />
+      {intro && (
+        <p className="mx-auto mt-4 max-w-[720px] px-4 text-center font-dmSans text-base leading-text text-ink-muted md:text-lg">
+          {intro}
+        </p>
+      )}
 
       <div data-cursor="hide" className="relative mt-10 h-[470px] md:mt-14 lg:px-[5vw] xl:px-[8vw] 2xl:px-[10vw]">
         <Swiper
@@ -271,6 +283,23 @@ const GallerySlider = ({
                       </svg>
                     </span>
 
+                    {/* Real tap/keyboard target over the slide. Only the
+                        centre slide is in the tab order, so focus never
+                        scrolls hidden slides into the clipped track. Taps
+                        also reach Swiper's onClick (same index, harmless);
+                        Swiper swallows the click after a drag. A pointer
+                        press must not focus it: Swiper refuses to drag
+                        when the press starts on the focused element. */}
+                    <button
+                      type="button"
+                      tabIndex={isActive ? 0 : -1}
+                      onMouseDown={(e) => e.preventDefault()}
+                      aria-label={`${copy.openItem}: ${item.caption ?? item.alt}`}
+                      onClick={() => openAt(index % items.length)}
+                      className="absolute inset-0 z-[3] min-h-14 cursor-zoom-in focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-accent"
+                      style={{ borderRadius: size.radius }}
+                    />
+
                     {item.caption && (
                       <div
                         className={cn(
@@ -304,9 +333,9 @@ const GallerySlider = ({
           <button
             type="button"
             onClick={() => openAt(0)}
-            className="sr-only focus:not-sr-only focus:rounded-full focus:bg-primary focus:px-5 focus:py-2 focus:font-dmSans focus:text-white"
+            className="sr-only focus:not-sr-only focus:inline-flex focus:min-h-14 focus:items-center focus:rounded-full focus:bg-primary focus:px-6 focus:font-dmSans focus:text-white focus:outline-none focus:ring-4 focus:ring-accent focus:ring-offset-2"
           >
-            Open gallery viewer
+            {copy.openViewer}
           </button>
         </div>
       )}

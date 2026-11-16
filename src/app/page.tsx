@@ -1,9 +1,15 @@
 import SchemaWrapper from "@/components/layout/schemaWrapper/SchemaWrapper";
 import HeroBanner from "@/components/sections/home/HeroBanner";
-import MarqueeSection from "@/components/sections/home/MarqueeSection";
+import QuickAccess from "@/components/sections/home/QuickAccess";
 import AboutMuseum from "@/components/sections/home/AboutMuseum";
 import FeaturedCollections from "@/components/sections/home/FeaturedCollections";
-import WhyChooseUs from "@/components/sections/home/WhyChooseUs";
+// Replaced by <KeyNumbers /> — kept for reference, do not delete
+// import WhyChooseUs from "@/components/sections/home/WhyChooseUs";
+import KeyNumbers from "@/components/sections/home/KeyNumbers";
+import EvolutionOfIED from "@/components/sections/home/evolution/EvolutionOfIED";
+import WorldIncidents from "@/components/sections/home/worldIncidents/WorldIncidents";
+import BangladeshIncidents from "@/components/sections/home/bangladeshIncidents/BangladeshIncidents";
+import EngrDisposalStats from "@/components/sections/home/engrDisposal/EngrDisposalStats";
 import CurrentExhibitions from "@/components/sections/home/CurrentExhibitions";
 import OurEvents from "@/components/sections/home/OurEvents";
 import MeetOurExperts from "@/components/sections/home/MeetOurExperts";
@@ -41,13 +47,21 @@ export default async function Home() {
   return (
     <SchemaWrapper jsonLd={getHomeJsonLd()}>
       <HeroBanner />
-      <MarqueeSection />
-      <AboutMuseum />
+      <QuickAccess />
+      <KeyNumbers />
+      <EvolutionOfIED />
+      <WorldIncidents />
+      <BangladeshIncidents />
+      <EngrDisposalStats />
+      <GallerySlider items={GALLERY_MEDIA} />
+      {/* <AboutMuseum /> */}
       {/* <FeaturedCollections /> */}
-      <WhyChooseUs />
+      {/* Replaced by <KeyNumbers /> — kept for reference, do not delete
+      <WhyChooseUs /> */}
+
       {/* <CurrentExhibitions /> */}
-      <OurEvents />
-      <MeetOurExperts />
+      {/* <OurEvents /> */}
+      {/* <MeetOurExperts /> */}
       {/* <WhoWeAre /> */}
       {/* Previous gallery grid, replaced by GallerySlider:
       <section className="relative isolate overflow-hidden bg-surface-light py-20 text-white md:py-28 h-full">
@@ -60,8 +74,7 @@ export default async function Home() {
           <ImageGallery images={GALLERY_IMAGES} theme={"light"} />
         </ContentContainer>
       </section> */}
-      <GallerySlider items={GALLERY_MEDIA} />
-      <Testimonials />
+      {/* <Testimonials /> */}
       {/* <LatestNews posts={posts} limit={3} /> */}
     </SchemaWrapper>
   );

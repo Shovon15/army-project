@@ -158,8 +158,11 @@ export const Lightbox = ({
               }
               controls
               autoPlay
+              // Kiosk: never autoplay with sound; visitors can unmute.
+              muted
               playsInline
               aria-label={img.alt}
+              title={img.caption}
               className="absolute inset-0 h-full w-full object-contain"
             />
           ) : (
