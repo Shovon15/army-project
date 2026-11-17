@@ -38,12 +38,12 @@ export const regionHighlight = (region: BangladeshRegion) => ({
 
 const pct = (v: number, of: number) => `${(v / of) * 100}%`;
 
-/* Map colours (original dark districts, gold CHT). Only the panel behind
+/* Map colours (navy districts, gold CHT). Only the panel behind
    the map is light. */
-const DISTRICT_FILL = "#1d2a4a";
+const DISTRICT_FILL = "var(--map-land)";
 const DISTRICT_STROKE = "rgb(255 255 255 / 0.18)";
-const CHT_FILL = "rgb(213 181 70 / 0.35)";
-const CHT_STROKE = "rgb(213 181 70 / 0.9)";
+const CHT_FILL = "rgb(var(--accent-rgb) / 0.35)";
+const CHT_STROKE = "rgb(var(--accent-rgb) / 0.9)";
 
 const BangladeshMap = ({
   incidents,

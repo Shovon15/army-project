@@ -16,7 +16,7 @@ import Crest from "./Crest";
 export const REGION_SHADE: Record<DisposalRegion, string> = {
   cht: "bg-accent",
   country: "bg-accent/55",
-  un: "bg-sky-300",
+  un: "bg-primary-light",
 };
 
 type BattalionCardProps = {

@@ -1,9 +1,10 @@
 import type { IncidentCategory } from "@/lib/home/worldIncidents";
 
-/** UN pins use the accent (amber); the rest of the world a muted red. */
+/** UN pins use the accent (gold); the rest of the world the logo crimson
+    (brightened so it reads on the dark navy panel). */
 export const PIN_COLOR: Record<IncidentCategory, string> = {
   un: "var(--accent)",
-  world: "#e0655b",
+  world: "var(--primary-light)",
 };
 
 /** Focus ring for elements on the section's surface-dark background. */
@@ -15,7 +16,7 @@ export const focusRingLight =
   "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-surface-light";
 
 /** Gold text on light backgrounds (brand gold is ~2:1 there; this is ~6:1). */
-export const goldTextOnLight = "text-[#7a5f0e]";
+export const goldTextOnLight = "text-accent-dark";
 
 export const formatIncidentDate = (
   iso: string,

@@ -19,6 +19,8 @@
      bg-primary  text-primary  border-primary/30   (crimson)
      bg-secondary text-secondary                   (royal navy)
      bg-accent   text-accent                       (gold)
+     text-accent-dark                              (gold text on light sections)
+     bg-primary-light                              (crimson marks on dark sections)
      bg-surface-dark / -deep / -card / -light      (section backgrounds)
      text-ink / text-ink-soft / text-ink-muted     (text on light sections)
    In arbitrary values / CSS use rgb(var(--primary-rgb) / 0.4) for tints.
@@ -29,11 +31,15 @@
   --primary-hover-rgb: 122 0 0; /* #7a0000 darker crimson for pressed/hover */
   --secondary-rgb: 27 0 115; /* #1b0073 royal navy */
   --accent-rgb: 213 181 70; /* #d5b546 gold: badges, lines, small details */
+  --accent-dark-rgb: 122 95 14; /* #7a5f0e gold for TEXT on light sections (≈6:1) */
+  --primary-light-rgb: 229 72 64; /* #e54840 brighter crimson for marks on dark sections */
 
   --primary: rgb(var(--primary-rgb));
   --primary-hover: rgb(var(--primary-hover-rgb));
   --secondary: rgb(var(--secondary-rgb));
   --accent: rgb(var(--accent-rgb));
+  --accent-dark: rgb(var(--accent-dark-rgb));
+  --primary-light: rgb(var(--primary-light-rgb));
   --on-primary: #ffffff; /* text on crimson (≈8:1 contrast) */
 
   /* Surfaces */
@@ -41,6 +47,7 @@
   --surface-deep: #070325; /* header bar, scrollbar track, darkest areas */
   --surface-card: #151049; /* cards on dark sections */
   --surface-light: #f6f3ea; /* light sections (warm ivory) */
+  --map-land: #241a66; /* country / district fill on map panels (navy) */
 
   /* Text on light surfaces */
   --ink: #120c33; /* headings */
@@ -60,6 +67,9 @@
   --color-primary-hover: var(--primary-hover);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
+  --color-primary-light: var(--primary-light);
+  --color-map-land: var(--map-land);
   --color-on-primary: var(--on-primary);
   --color-surface-dark: var(--surface-dark);
   --color-surface-deep: var(--surface-deep);

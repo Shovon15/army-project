@@ -145,7 +145,7 @@ const accentStroke = { ...iconStroke, stroke: "var(--accent)" };
 /* White section, dark cards. On the white section the brand gold (#d5b546)
    is only ~2:1, so gold TEXT outside the cards (the badge) uses a darker gold
    (#7a5f0e, ~6:1, WCAG AA). Inside the dark cards the brand gold is used. */
-const GOLD_TEXT = "text-[#7a5f0e]";
+const GOLD_TEXT = "text-accent-dark";
 
 const HourglassIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 48 48" className={className} fill="none" aria-hidden="true">

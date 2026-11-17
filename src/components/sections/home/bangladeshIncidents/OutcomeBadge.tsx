@@ -2,9 +2,9 @@ import type { OutcomeType } from "@/lib/home/bangladeshIncidents";
 import { cn } from "@/utils/helpers/cn";
 
 const STYLES: Record<OutcomeType, string> = {
-  disposed: "border-emerald-400/50 bg-emerald-400/10 text-emerald-300",
-  detonated: "border-red-400/50 bg-red-400/10 text-red-300",
-  other: "border-amber-400/50 bg-amber-400/10 text-amber-200",
+  disposed: "border-accent/60 bg-accent/15 text-accent",
+  detonated: "border-primary-light/60 bg-primary-light/15 text-primary-light",
+  other: "border-white/30 bg-white/10 text-white/85",
 };
 
 const GLYPH: Record<OutcomeType, string> = {

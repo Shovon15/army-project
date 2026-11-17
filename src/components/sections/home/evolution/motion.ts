@@ -30,10 +30,10 @@ export const focusRingLight =
 
 /** Gold text on light backgrounds: the brand gold is ~2:1 on ivory, this
     darker gold is ~6:1 (WCAG AA). */
-export const goldTextOnLight = "text-[#7a5f0e]";
+export const goldTextOnLight = "text-accent-dark";
 
-/** Faint "old" sepia at era 1 blending into the accent at the last era. */
+/** Logo crimson at era 1 blending into the gold accent at the last era. */
 export const eraTone = (index: number, count: number) => {
   const pct = count > 1 ? Math.round((index / (count - 1)) * 100) : 100;
-  return `color-mix(in srgb, var(--accent) ${pct}%, #8b6b47)`;
+  return `color-mix(in srgb, var(--accent) ${pct}%, var(--primary-light))`;
 };

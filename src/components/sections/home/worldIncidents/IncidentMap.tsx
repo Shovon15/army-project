@@ -23,12 +23,12 @@ type IncidentMapProps = {
 };
 
 /** Country styling on the dark panel. */
-const LAND_FILL = "#1f2b49";
+const LAND_FILL = "var(--map-land)";
 const LAND_STROKE = "rgb(255 255 255 / 0.14)";
 /** Tint for countries that have an incident on the active tab. */
 const INCIDENT_TINT = {
-  un: "rgb(213 181 70 / 0.28)",
-  world: "rgb(224 101 91 / 0.24)",
+  un: "rgb(var(--accent-rgb) / 0.28)",
+  world: "rgb(var(--primary-light-rgb) / 0.3)",
 } as const;
 /** ISO code of the home country, outlined in the accent. */
 const HOME_ISO = "BGD";
@@ -91,7 +91,7 @@ const IncidentMap = ({
       const home = path.dataset.iso === HOME_ISO;
       path.setAttribute("vector-effect", "non-scaling-stroke");
       path.setAttribute("stroke-width", home ? "1.5" : "0.75");
-      path.setAttribute("stroke", home ? "rgb(213 181 70 / 0.9)" : LAND_STROKE);
+      path.setAttribute("stroke", home ? "rgb(var(--accent-rgb) / 0.9)" : LAND_STROKE);
       path.style.fill = LAND_FILL;
       path.style.transition = "fill 400ms ease";
     });

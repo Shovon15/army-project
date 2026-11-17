@@ -303,7 +303,7 @@ const GallerySlider = ({
                     {item.caption && (
                       <div
                         className={cn(
-                          "pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent px-5 pt-10 pb-4 font-dmSans text-white text-base font-medium transition-opacity duration-500",
+                          "pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-surface-deep/85 to-transparent px-5 pt-10 pb-4 font-dmSans text-white text-base font-medium transition-opacity duration-500",
                           isActive ? "opacity-100" : "opacity-0",
                         )}
                       >
